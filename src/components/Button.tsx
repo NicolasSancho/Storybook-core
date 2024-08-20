@@ -40,7 +40,6 @@ const button = tv({
       large: 'text-lg px-6 py-3',
     },
   },
-  
   defaultVariants: {
     primary: false,
     size: 'medium',
