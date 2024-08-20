@@ -4,7 +4,7 @@
   "description": "This is a storybook components library that is going to be consume from other internal projects.",
   "main": "index.js",
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/@NicolasSancho"
+    "registry": "https://npm.pkg.github.com/"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
