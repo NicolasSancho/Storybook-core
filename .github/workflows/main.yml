@@ -3,7 +3,7 @@ name: Publish to GitHub Packages
 on:
   push:
     branches:
-      - main 
+      - main
 
 jobs:
   publish:
@@ -26,6 +26,6 @@ jobs:
       run: npm run build-storybook
 
     - name: Publish to GitHub Packages
-      run: npm publish
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      run: npm publish
