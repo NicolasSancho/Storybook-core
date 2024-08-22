@@ -1,20 +1,26 @@
 {
   "name": "@NicolasSancho/storybook-core",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "This is a storybook components library that is going to be consumed by other internal projects.",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "storybook dev -p 6006",
+    "build": "tsc",
     "build-storybook": "storybook build"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@NicolasSancho/storybook-core": "^1.0.0",
     "@chromatic-com/storybook": "^1.6.1",
     "@storybook/addon-essentials": "^8.2.8",
     "@storybook/addon-interactions": "^8.2.8",
