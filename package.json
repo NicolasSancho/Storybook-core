@@ -1,6 +1,6 @@
 {
   "name": "@NicolasSancho/storybook-core",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "This is a storybook components library that is going to be consumed by other internal projects.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -12,7 +12,7 @@
   },
   "scripts": {
     "prepare": "npm run build",
-    "build": "tsc",
+    "build": "tsc && cpx \"src/**/*.css\" dist",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -32,6 +32,7 @@
     "@storybook/react-vite": "^8.2.8",
     "@storybook/test": "^8.2.8",
     "autoprefixer": "^10.4.20",
+    "cpx": "^1.5.0",
     "plop": "^4.0.1",
     "postcss": "^8.4.41",
     "storybook": "^8.2.8",
@@ -42,5 +43,9 @@
   "dependencies": {
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
+  },
+  "peerDependencies": {
+    "tailwind-variants": "^0.2.1",
+    "tailwindcss": "^3.4.9"
   }
 }
