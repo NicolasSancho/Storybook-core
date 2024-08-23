@@ -18,11 +18,6 @@ jobs:
       with:
         node-version: '18'
 
-    - name: Log Token for Debugging  # Debugging step, remove after testing
-      run: echo "NODE_AUTH_TOKEN: $NODE_AUTH_TOKEN"
-      env:
-        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        
     - name: Install dependencies
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
