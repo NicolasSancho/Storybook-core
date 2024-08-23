@@ -1,18 +1,19 @@
 {
   "name": "@NicolasSancho/storybook-core",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "This is a storybook components library that is going to be consumed by other internal projects.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist/styles/tailwind.css"
   ],
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
   "scripts": {
     "prepare": "npm run build",
-    "build": "tsc && cpx \"src/**/*.css\" dist",
+    "build": "tsc && npx tailwindcss -i ./src/styles/tailwind.css -o ./dist/styles/tailwind.css",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -37,7 +38,7 @@
     "postcss": "^8.4.41",
     "storybook": "^8.2.8",
     "tailwind-variants": "^0.2.1",
-    "tailwindcss": "^3.4.9",
+    "tailwindcss": "^3.4.10",
     "typescript": "^5.5.4"
   },
   "dependencies": {
