@@ -1,10 +1,15 @@
 import React from 'react';
 import { tv } from 'tailwind-variants';
 
-interface {{pascalCase name}}Props {
+export interface {{pascalCase name}}Props {
   // Define props here
 }
 
+const {{camelCase name}}Styles = tv({
+  base: '{{kebabCase name}}',
+  // Define other styles here
+});
+
 export const {{pascalCase name}}: React.FC<{{pascalCase name}}Props> = (props) => {
-  return <div>{{pascalCase name}} component</div>;
+  return <div className={ {{camelCase name}}Styles() }>{{pascalCase name}} component</div>;
 };

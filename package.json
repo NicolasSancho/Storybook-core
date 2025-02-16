@@ -16,7 +16,7 @@
     "build": "tsc && npx tailwindcss -i ./src/styles/tailwind.css -o ./dist/styles/tailwind.css",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "generate": "npx plop component"
   },
   "keywords": [],
   "author": "",
@@ -34,16 +34,21 @@
     "@storybook/test": "^8.2.8",
     "autoprefixer": "^10.4.20",
     "cpx": "^1.5.0",
+    "css-loader": "^7.1.2",
     "plop": "^4.0.1",
     "postcss": "^8.4.41",
+    "sass": "^1.83.4",
+    "sass-loader": "^16.0.4",
     "storybook": "^8.2.8",
+    "style-loader": "^4.0.0",
     "tailwind-variants": "^0.2.1",
     "tailwindcss": "^3.4.10",
     "typescript": "^5.5.4"
   },
   "dependencies": {
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-feather": "^2.0.10"
   },
   "peerDependencies": {
     "tailwind-variants": "^0.2.1",
