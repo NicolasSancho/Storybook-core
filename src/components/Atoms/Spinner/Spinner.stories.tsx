@@ -1,37 +1,45 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Header } from "./Header";
-import { mockedHeaderDefault, mockedHeaderSimple, mockedHeaderLogoOnly } from "./headerMock";
+import { Spinner } from "./Spinner";
+import {
+  mockedSpinnerDefault,
+  mockedSpinnerSmall,
+  mockedSpinnerLarge,
+  mockedSpinnerSecondary,
+  mockedSpinnerBlack,
+} from "./spinnerMock";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
-  title: "Organisms/Header",
-  component: Header,
+  title: "Atoms/Spinner",
+  component: Spinner,
   parameters: {
     // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
-    layout: "fullscreen",
+    layout: "centered",
   },
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ["autodocs"],
-} satisfies Meta<typeof Header>;
+} satisfies Meta<typeof Spinner>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const Default: Story = {
-  args: {
-    children: mockedHeaderDefault.props.children,
-  },
+  args: mockedSpinnerDefault,
 };
 
-export const Simple: Story = {
-  args: {
-    children: mockedHeaderSimple.props.children,
-  },
+export const Small: Story = {
+  args: mockedSpinnerSmall,
 };
 
-export const LogoOnly: Story = {
-  args: {
-    children: mockedHeaderLogoOnly.props.children,
-  },
+export const Large: Story = {
+  args: mockedSpinnerLarge,
+};
+
+export const Secondary: Story = {
+  args: mockedSpinnerSecondary,
+};
+
+export const Black: Story = {
+  args: mockedSpinnerBlack,
 };

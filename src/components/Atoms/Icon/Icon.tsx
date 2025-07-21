@@ -29,12 +29,7 @@ const iconStyles = tv({
   },
 });
 
-export const Icon: React.FC<IconProps> = ({
-  name,
-  size,
-  color = "black",
-  ...props
-}) => {
+export const Icon: React.FC<IconProps> = ({ name, size, color = "black", ...props }) => {
   const IconComponent = IconsMap[name];
   return <IconComponent className={iconStyles({ size, color })} {...props} />;
 };

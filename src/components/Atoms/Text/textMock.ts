@@ -23,4 +23,3 @@ export const underlinedText: TextProps = {
   weight: "normal",
   underline: true,
 };
-

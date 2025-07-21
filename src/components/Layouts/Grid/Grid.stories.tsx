@@ -1,14 +1,14 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { Grid } from './Grid';
-import { mockedGrid, twoColumnGrid, fourColumnGrid } from './GridMock';
+import type { Meta, StoryObj } from "@storybook/react";
+import { Grid } from "./Grid";
+import { mockedGrid, twoColumnGrid, fourColumnGrid } from "./GridMock";
 
 const meta: Meta<typeof Grid> = {
-  title: 'Layouts/Grid',
+  title: "Layouts/Grid",
   component: Grid,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
 };
 
 export default meta;

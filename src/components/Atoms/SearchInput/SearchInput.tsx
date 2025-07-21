@@ -1,8 +1,7 @@
 import React from "react";
 import { tv } from "tailwind-variants";
 
-export interface SearchInputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface SearchInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   placeholder?: string;
   value: string;
   isInvalid?: boolean;

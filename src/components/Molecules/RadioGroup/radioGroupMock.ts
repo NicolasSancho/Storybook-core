@@ -78,4 +78,3 @@ export const mockedRadioGroupFourColumns: RadioGroupProps = {
   columns: 4, // Four column grid
   gap: "medium",
 };
-

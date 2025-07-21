@@ -1,7 +1,6 @@
 import { tv } from "tailwind-variants";
-import '../../styles/global.scss';
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+import "../../styles/global.scss";
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   /**
    * The type of the button
    */

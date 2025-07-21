@@ -39,21 +39,15 @@ export interface HeaderSlotProps {
 }
 
 const Left: React.FC<HeaderSlotProps> = ({ children, className }) => (
-  <div className={`${slotStyles({ position: "left" })} ${className}`}>
-    {children}
-  </div>
+  <div className={`${slotStyles({ position: "left" })} ${className}`}>{children}</div>
 );
 
 const Center: React.FC<HeaderSlotProps> = ({ children, className }) => (
-  <div className={`${slotStyles({ position: "center" })} ${className}`}>
-    {children}
-  </div>
+  <div className={`${slotStyles({ position: "center" })} ${className}`}>{children}</div>
 );
 
 const Right: React.FC<HeaderSlotProps> = ({ children, className }) => (
-  <div className={`${slotStyles({ position: "right" })} ${className}`}>
-    {children}
-  </div>
+  <div className={`${slotStyles({ position: "right" })} ${className}`}>{children}</div>
 );
 
 Header.Left = Left;

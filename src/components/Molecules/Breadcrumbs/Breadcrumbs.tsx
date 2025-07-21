@@ -21,11 +21,7 @@ const breadcrumbsStyles = tv({
   },
 });
 
-export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
-  items,
-  LinkComponent,
-  className,
-}) => {
+export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items, LinkComponent, className }) => {
   const styles = breadcrumbsStyles();
 
   return (
@@ -40,9 +36,9 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
               {isFirst ? (
                 <Icon name="Home" size="small" color="primary" />
               ) : (
-              <Text as="span" size="small" color="primary">
-                {label}
-              </Text>
+                <Text as="span" size="small" color="primary">
+                  {label}
+                </Text>
               )}
             </LinkComponent>
           </React.Fragment>

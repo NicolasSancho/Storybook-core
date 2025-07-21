@@ -53,11 +53,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         <Text as="p" size="small" color="base" className={styles.price()}>
           {price}
         </Text>
-        <Button
-          variant="primary"
-          onClick={onClick}
-          className="mt-2"
-        >
+        <Button variant="primary" onClick={onClick} className="mt-2">
           Add to Cart
         </Button>
       </div>

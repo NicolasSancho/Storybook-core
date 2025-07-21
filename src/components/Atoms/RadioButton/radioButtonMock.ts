@@ -31,4 +31,3 @@ export const mockedRadioButtonLongLabel: RadioButtonProps = {
   onChange: () => {},
   name: "example-group",
 };
-

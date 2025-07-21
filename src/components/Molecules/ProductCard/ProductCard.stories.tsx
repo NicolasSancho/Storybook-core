@@ -1,16 +1,16 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { action } from '@storybook/addon-actions';
-import { ProductCard } from './ProductCard';
-import { mockedProductDefault, mockedProductWithTag, mockedProductOnSale } from './productCardMock';
+import type { Meta, StoryObj } from "@storybook/react";
+import { action } from "@storybook/addon-actions";
+import { ProductCard } from "./ProductCard";
+import { mockedProductDefault, mockedProductWithTag, mockedProductOnSale } from "./productCardMock";
 
 const meta = {
-  title: 'Molecules/ProductCard',
+  title: "Molecules/ProductCard",
   component: ProductCard,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
   },
-  tags: ['autodocs'],
-  args: { onClick: action('product-clicked') },
+  tags: ["autodocs"],
+  args: { onClick: action("product-clicked") },
 } satisfies Meta<typeof ProductCard>;
 
 export default meta;

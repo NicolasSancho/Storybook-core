@@ -21,10 +21,7 @@ const detailsStyles = tv({
   },
 });
 
-export const ProductDetails: React.FC<ProductDetailsProps> = ({
-  details,
-  className,
-}) => {
+export const ProductDetails: React.FC<ProductDetailsProps> = ({ details, className }) => {
   const styles = detailsStyles();
 
   return (

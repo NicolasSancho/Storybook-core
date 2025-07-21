@@ -51,4 +51,3 @@ export const mockedProductDetailsLongValues: ProductDetailsProps = {
     { label: "Care", value: "Machine wash cold, tumble dry low, do not bleach or iron directly" },
   ],
 };
-

@@ -16,12 +16,7 @@ const labelStyles = tv({
 /**
  * Label component that reuses the Text component for styling.
  */
-export const Label: React.FC<LabelProps> = ({
-  htmlFor,
-  children,
-  className,
-  color = "base",
-}) => {
+export const Label: React.FC<LabelProps> = ({ htmlFor, children, className, color = "base" }) => {
   return (
     <label htmlFor={htmlFor} className={`${labelStyles()} ${className}`}>
       <Text as="span" color={color} size="small">

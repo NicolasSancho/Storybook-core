@@ -1,14 +1,14 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { Text } from './Text';
-import { mockedText, boldText, underlinedText } from './textMock';
+import type { Meta, StoryObj } from "@storybook/react";
+import { Text } from "./Text";
+import { mockedText, boldText, underlinedText } from "./textMock";
 
 const meta: Meta<typeof Text> = {
-  title: 'Atoms/Text',
+  title: "Atoms/Text",
   component: Text,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
 };
 
 export default meta;

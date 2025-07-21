@@ -1,6 +1,9 @@
 import { ProductGridProps } from "./ProductGrid";
-import { mockedProductDefault, mockedProductWithTag, mockedProductOnSale } from '../../Molecules/ProductCard/productCardMock';
-
+import {
+  mockedProductDefault,
+  mockedProductWithTag,
+  mockedProductOnSale,
+} from "../../Molecules/ProductCard/productCardMock";
 
 const mockedProductList = [
   mockedProductDefault,
@@ -14,18 +17,17 @@ const mockedProductList = [
 export const mockedProductGridDefault: ProductGridProps = {
   products: mockedProductList,
   columns: 3,
-  gap: 'medium',
+  gap: "medium",
 };
 
 export const mockedProductGridFourColumns: ProductGridProps = {
   products: mockedProductList,
   columns: 4,
-  gap: 'small',
+  gap: "small",
 };
 
 export const mockedProductGridLargeGap: ProductGridProps = {
   products: mockedProductList,
   columns: 2,
-  gap: 'large',
+  gap: "large",
 };
-

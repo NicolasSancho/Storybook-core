@@ -37,5 +37,5 @@ export const LargePrimary: Story = {
   args: largePrimaryIcon,
 };
 export const LargeBlack: Story = {
-  args: largeBlackIcon
+  args: largeBlackIcon,
 };

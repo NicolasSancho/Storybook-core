@@ -1,19 +1,18 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
-import { Button } from "./Button";
+import { CartIcon } from "./CartIcon";
 import {
-  mockedButtonPrimary,
-  mockedButtonSecondary,
-  mockedButtonText,
-  mockedButtonDisabled,
-  mockedButtonLarge,
-  mockedButtonSmall,
-} from "./buttonMock";
+  mockedCartIconEmpty,
+  mockedCartIconSingleItem,
+  mockedCartIconMultipleItems,
+  mockedCartIconVeryHighCount,
+  mockedCartIconPrimary,
+} from "./cartIconMock";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
-  title: "Atoms/Button",
-  component: Button,
+  title: "Molecules/CartIcon",
+  component: CartIcon,
   parameters: {
     // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
     layout: "centered",
@@ -21,33 +20,29 @@ const meta = {
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ["autodocs"],
   // Use `action` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
-  args: { onClick: action("clicked") },
-} satisfies Meta<typeof Button>;
+  args: { onClick: action("cart-clicked") },
+} satisfies Meta<typeof CartIcon>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
-export const Primary: Story = {
-  args: mockedButtonPrimary,
+export const Empty: Story = {
+  args: mockedCartIconEmpty,
 };
 
-export const Secondary: Story = {
-  args: mockedButtonSecondary,
+export const SingleItem: Story = {
+  args: mockedCartIconSingleItem,
 };
 
-export const Text: Story = {
-  args: mockedButtonText,
+export const PrimaryColor: Story = {
+  args: mockedCartIconPrimary,
 };
 
-export const Disabled: Story = {
-  args: mockedButtonDisabled,
+export const MultipleItems: Story = {
+  args: mockedCartIconMultipleItems,
 };
 
-export const Large: Story = {
-  args: mockedButtonLarge,
-};
-
-export const Small: Story = {
-  args: mockedButtonSmall,
+export const VeryHighCount: Story = {
+  args: mockedCartIconVeryHighCount,
 };

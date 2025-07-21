@@ -2,17 +2,17 @@ import React from "react";
 import { BreadcrumbsProps } from "./Breadcrumbs";
 
 // Mock LinkComponent for Storybook stories
-const MockLinkComponent = ({to, children}: {to: string;children: React.ReactNode;}) =>
+const MockLinkComponent = ({ to, children }: { to: string; children: React.ReactNode }) =>
   React.createElement(
-    'a',
+    "a",
     {
       href: to,
-      className: 'text-primary hover:text-primary-600',
+      className: "text-primary hover:text-primary-600",
     },
     children
   );
 
-const mockedItems: BreadcrumbsProps['items'] = [
+const mockedItems: BreadcrumbsProps["items"] = [
   { label: "Home", href: "/" },
   { label: "Products", href: "/products" },
   { label: "Clothing", href: "/products/clothing" },
@@ -42,9 +42,6 @@ export const mockedBreadcrumbsShort: BreadcrumbsProps = {
 };
 
 export const mockedBreadcrumbsSingle: BreadcrumbsProps = {
-  items: [
-    { label: "Home", href: "/" },
-  ],
+  items: [{ label: "Home", href: "/" }],
   LinkComponent: MockLinkComponent,
 };
-
