@@ -1,6 +1,7 @@
 import React from "react";
 import { tv } from "tailwind-variants";
 import { Icon } from "../../Atoms/Icon/Icon";
+import { Text } from "../../Atoms/Text/Text";
 
 export interface BreadcrumbsProps {
   items: {
@@ -39,7 +40,9 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
               {isFirst ? (
                 <Icon name="Home" size="small" color="primary" />
               ) : (
-                label
+              <Text as="span" size="small" color="primary">
+                {label}
+              </Text>
               )}
             </LinkComponent>
           </React.Fragment>

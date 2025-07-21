@@ -1,6 +1,7 @@
 import React from "react";
 import { tv } from "tailwind-variants";
 import { Button } from "../../Atoms/Button/Button";
+import { Text } from "../../Atoms/Text/Text";
 
 export interface ProductCardProps {
   imageUrl: string;
@@ -18,7 +19,7 @@ const productCardStyles = tv({
     imageWrapper: "relative",
     image: "w-full h-48 object-cover",
     tag: "absolute top-2 left-2 bg-black text-white text-xs px-2 py-1 rounded",
-    body: "p-2 flex flex-col gap-1",
+    body: "p-2 flex flex-col",
     title: "text-sm font-medium",
     subTitle: "text-sm text-gray-600",
     price: "text-sm text-gray-600",
@@ -43,9 +44,15 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         {tag && <span className={styles.tag()}>{tag}</span>}
       </div>
       <div className={styles.body()}>
-        <h3 className={styles.title()}>{title}</h3>
-        <h3 className={styles.subTitle()}>{brand}</h3>
-        <p className={styles.price()}>{price}</p>
+        <Text as="h3" size="small" weight="semibold" className={styles.title()}>
+          {title}
+        </Text>
+        <Text as="h3" size="small" color="base" className={styles.subTitle()}>
+          {brand}
+        </Text>
+        <Text as="p" size="small" color="base" className={styles.price()}>
+          {price}
+        </Text>
         <Button
           variant="primary"
           onClick={onClick}
