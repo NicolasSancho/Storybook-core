@@ -18,3 +18,9 @@ export const largePrimaryIcon: IconProps = {
   color: 'primary',
 };
 
+
+export const largeBlackIcon: IconProps = {
+  name: 'Home',
+  size: 'large',
+  color: 'black',
+};

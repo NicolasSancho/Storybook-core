@@ -5,7 +5,7 @@ import { IconsMap } from "./iconsMap";
 export interface IconProps {
   name: keyof typeof IconsMap;
   size?: "small" | "medium" | "large";
-  color?: "primary" | "secondary";
+  color?: "primary" | "secondary" | "black";
   // Define other props here
 }
 
@@ -20,6 +20,7 @@ const iconStyles = tv({
     color: {
       primary: "text-primary",
       secondary: "text-secondary",
+      black: "text-black",
     },
   },
   defaultVariants: {
@@ -31,7 +32,7 @@ const iconStyles = tv({
 export const Icon: React.FC<IconProps> = ({
   name,
   size,
-  color = "primary",
+  color = "black",
   ...props
 }) => {
   const IconComponent = IconsMap[name];
