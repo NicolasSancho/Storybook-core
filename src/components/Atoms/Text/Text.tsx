@@ -3,7 +3,7 @@ import { tv } from "tailwind-variants";
 
 export interface TextProps {
   as?: React.ElementType;
-  color?: "lighter" | "light" | "base" | "dark" | "darker";
+  color?: "lighter" | "light" | "base" | "dark" | "darker" | "primary" | "secondary";
   size?: "small" | "medium" | "large";
   weight?: "normal" | "bold" | "semibold";
   underline?: boolean;
@@ -20,6 +20,8 @@ const textStyles = tv({
       base: "text-gray-500",
       dark: "text-gray-700",
       darker: "text-gray-900",
+      primary: "text-primary",
+      secondary: "text-secondary",
     },
     size: {
       small: "text-sm",
@@ -54,9 +56,7 @@ export const Text: React.FC<TextProps> = ({
   className = "",
 }) => {
   return (
-    <Component
-      className={`${textStyles({ color, size, weight, underline })} ${className}`}
-    >
+    <Component className={`${textStyles({ color, size, weight, underline })} ${className}`}>
       {children}
     </Component>
   );

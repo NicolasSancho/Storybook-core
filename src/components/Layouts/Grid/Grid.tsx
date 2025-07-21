@@ -10,7 +10,7 @@ export interface GridProps {
 }
 
 const gridStyles = tv({
-  base: "grid",
+  base: "grid w-full",
   variants: {
     columns: {
       1: "grid-cols-1",

@@ -1,9 +1,10 @@
 {
   "name": "@NicolasSancho/storybook-core",
-  "version": "1.0.9",
+  "version": "1.1.0",
   "description": "This is a storybook components library that is going to be consumed by other internal projects.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "type": "module",
   "files": [
     "dist",
     "dist/styles/tailwind.css"
@@ -16,13 +17,24 @@
     "build": "tsc && npx tailwindcss -i ./src/styles/tailwind.css -o ./dist/styles/tailwind.css",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
+    "lint": "eslint ./src --ext .ts,.tsx",
+    "format": "prettier --write ./src",
     "generate": "npx plop component"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NicolasSancho/Storybook-core.git"
+  },
+  "homepage": "https://github.com/NicolasSancho/Storybook-core#readme",
+  "bugs": {
+    "url": "https://github.com/NicolasSancho/Storybook-core/issues"
+  },
   "devDependencies": {
     "@chromatic-com/storybook": "^1.6.1",
+    "@eslint/js": "^9.31.0",
     "@storybook/addon-essentials": "^8.2.8",
     "@storybook/addon-interactions": "^8.2.8",
     "@storybook/addon-links": "^8.2.8",
@@ -32,11 +44,18 @@
     "@storybook/react": "^8.2.8",
     "@storybook/react-vite": "^8.2.8",
     "@storybook/test": "^8.2.8",
+    "@typescript-eslint/eslint-plugin": "^8.38.0",
+    "@typescript-eslint/parser": "^8.38.0",
     "autoprefixer": "^10.4.20",
     "cpx": "^1.5.0",
     "css-loader": "^7.1.2",
+    "eslint": "^9.31.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
     "plop": "^4.0.1",
     "postcss": "^8.4.41",
+    "prettier": "^3.6.2",
     "sass": "^1.83.4",
     "sass-loader": "^16.0.4",
     "storybook": "^8.2.8",
@@ -46,11 +65,11 @@
     "typescript": "^5.5.4"
   },
   "dependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
     "react-feather": "^2.0.10"
   },
   "peerDependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "tailwind-variants": "^0.2.1",
     "tailwindcss": "^3.4.9"
   }

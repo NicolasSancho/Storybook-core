@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Icon } from "./Icon";
-import { mockedIcon, smallSecondaryIcon, largePrimaryIcon } from "./iconMock";
+import { mockedIcon, smallSecondaryIcon, largePrimaryIcon, largeBlackIcon } from "./iconMock";
 import { IconsMap } from "./iconsMap";
 
 const iconNames = Object.keys(IconsMap) as (keyof typeof IconsMap)[];
@@ -35,4 +35,7 @@ export const SmallSecondary: Story = {
 
 export const LargePrimary: Story = {
   args: largePrimaryIcon,
+};
+export const LargeBlack: Story = {
+  args: largeBlackIcon,
 };
