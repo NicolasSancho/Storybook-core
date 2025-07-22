@@ -8,6 +8,7 @@ export interface CartIconProps {
   onClick?: () => void;
   className?: string;
   color?: "primary" | "secondary" | "black";
+  size?: "small" | "medium" | "large";
 }
 
 const cartIconStyles = tv({
@@ -21,13 +22,14 @@ export const CartIcon: React.FC<CartIconProps> = ({
   count = 0,
   onClick,
   color = "black",
+  size = "medium",
   className,
 }) => {
   const styles = cartIconStyles();
 
   return (
     <div className={`${styles.base()} ${className}`} onClick={onClick}>
-      <Icon name="ShoppingCart" color={color} size="medium" />
+      <Icon name="ShoppingCart" color={color} size={size} />
       {count > 0 && (
         <Text as="span" className={styles.badge()}>
           {count}

@@ -7,6 +7,7 @@ import {
   mockedCartIconMultipleItems,
   mockedCartIconVeryHighCount,
   mockedCartIconPrimary,
+  mockedCartIconLarge,
 } from "./cartIconMock";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
@@ -45,4 +46,8 @@ export const MultipleItems: Story = {
 
 export const VeryHighCount: Story = {
   args: mockedCartIconVeryHighCount,
+};
+
+export const Large: Story = {
+  args: mockedCartIconLarge
 };

@@ -1,9 +1,10 @@
 import React from "react";
 import { Header } from "./Header";
+import { Image } from "../../Atoms/Image/Image";
 
 // Standalone mock components
 const Logo: React.FC = () => (
-  <img src="/src/components/assets/logo.png" alt="Logo" className="h-8 w-auto" />
+  <Image src="/src/components/assets/logo.png" alt="Logo" className="h-8 w-auto" />
 );
 
 const Brand: React.FC = () => <span className="text-xl font-bold text-gray-900">ZARA</span>;

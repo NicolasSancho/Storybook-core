@@ -9,7 +9,7 @@ export interface ImageProps {
 }
 
 const imageStyles = tv({
-  base: "w-full h-auto",
+  base: "h-full w-auto max-h-full object-contain",
   // Define other styles here
 });
 

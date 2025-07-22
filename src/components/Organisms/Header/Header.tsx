@@ -6,12 +6,18 @@ export interface HeaderProps {
   className?: string;
 }
 
+export interface HeaderSlotProps {
+  children: React.ReactNode;
+  className?: string;
+  position: "left" | "center" | "right";
+}
+
 const headerStyles = tv({
-  base: "w-full flex items-center justify-between px-4 py-2 bg-white shadow",
+  base: "w-full flex items-center justify-between px-4 h-16 bg-white shadow",
 });
 
 const slotStyles = tv({
-  base: "flex items-center gap-2 flex-row",
+  base: "flex items-center gap-2 flex-row h-full",
   variants: {
     position: {
       left: "flex-1 justify-start",
@@ -19,37 +25,39 @@ const slotStyles = tv({
       right: "flex-1 justify-end",
     },
   },
+  defaultVariants: {
+    position: "left",
+  },
 });
 
+const Slot: React.FC<HeaderSlotProps> = ({ children, className, position }) => (
+  <div className={`${slotStyles({ position })} ${className ?? ""}`}>
+    {children}
+  </div>
+);
+
 export const Header: React.FC<HeaderProps> & {
-  Left: React.FC<HeaderSlotProps>;
-  Center: React.FC<HeaderSlotProps>;
-  Right: React.FC<HeaderSlotProps>;
+  Left: React.FC<Omit<HeaderSlotProps, "position">>;
+  Center: React.FC<Omit<HeaderSlotProps, "position">>;
+  Right: React.FC<Omit<HeaderSlotProps, "position">>;
 } = ({ children, className }) => {
-  return (
-    <header role="banner" className={`${headerStyles()} ${className}`}>
-      {children}
-    </header>
-  );
+  return <header className={`${headerStyles()} ${className ?? ""}`}>{children}</header>;
 };
 
-export interface HeaderSlotProps {
-  children: React.ReactNode;
-  className?: string;
-}
-
-const Left: React.FC<HeaderSlotProps> = ({ children, className }) => (
-  <div className={`${slotStyles({ position: "left" })} ${className}`}>{children}</div>
+Header.Left = ({ children, className }) => (
+  <Slot position="left" className={className}>
+    {children}
+  </Slot>
 );
 
-const Center: React.FC<HeaderSlotProps> = ({ children, className }) => (
-  <div className={`${slotStyles({ position: "center" })} ${className}`}>{children}</div>
+Header.Center = ({ children, className }) => (
+  <Slot position="center" className={className}>
+    {children}
+  </Slot>
 );
 
-const Right: React.FC<HeaderSlotProps> = ({ children, className }) => (
-  <div className={`${slotStyles({ position: "right" })} ${className}`}>{children}</div>
+Header.Right = ({ children, className }) => (
+  <Slot position="right" className={className}>
+    {children}
+  </Slot>
 );
-
-Header.Left = Left;
-Header.Center = Center;
-Header.Right = Right;
