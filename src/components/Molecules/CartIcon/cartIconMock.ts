@@ -30,3 +30,10 @@ export const mockedCartIconPrimary: CartIconProps = {
   onClick: () => {},
   color: "primary",
 };
+
+// Large size - shows different icon size
+export const mockedCartIconLarge: CartIconProps = {
+  count: 2,
+  onClick: () => {},
+  size: "large",
+};

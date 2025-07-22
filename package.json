@@ -1,6 +1,6 @@
 {
   "name": "@NicolasSancho/storybook-core",
-  "version": "1.1.3",
+  "version": "1.1.5",
   "description": "This is a storybook components library that is going to be consumed by other internal projects.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
