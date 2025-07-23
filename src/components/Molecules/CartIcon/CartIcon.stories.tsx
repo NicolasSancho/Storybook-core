@@ -49,5 +49,5 @@ export const VeryHighCount: Story = {
 };
 
 export const Large: Story = {
-  args: mockedCartIconLarge
+  args: mockedCartIconLarge,
 };

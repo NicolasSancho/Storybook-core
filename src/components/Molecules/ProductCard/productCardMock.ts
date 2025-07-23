@@ -18,3 +18,11 @@ export const mockedProductOnSale = {
   tag: "Sale",
   price: "$14.99",
 };
+
+export const mockedProductCardClickable = {
+  ...mockedProductDefault,
+  buttonLabel: "Add to Cart",
+  onProductClick: () => {
+    console.log("Product clicked");
+  },
+};

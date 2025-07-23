@@ -1,7 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 import { ProductCard } from "./ProductCard";
-import { mockedProductDefault, mockedProductWithTag, mockedProductOnSale } from "./productCardMock";
+import {
+  mockedProductDefault,
+  mockedProductWithTag,
+  mockedProductOnSale,
+  mockedProductCardClickable,
+} from "./productCardMock";
 
 const meta = {
   title: "Molecules/ProductCard",
@@ -26,4 +31,8 @@ export const WithTag: Story = {
 
 export const OnSale: Story = {
   args: mockedProductOnSale,
+};
+
+export const Clickable: Story = {
+  args: mockedProductCardClickable,
 };
