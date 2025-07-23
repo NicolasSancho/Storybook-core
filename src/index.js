@@ -1,4 +1,3 @@
-
 // Atoms
 export * from "./components/Atoms/Button/Button";
 export * from "./components/Atoms/Spinner/Spinner";
@@ -25,4 +24,3 @@ export * from "./components/Organisms/ProductGrid/ProductGrid";
 
 // Styles
 import "./styles/tailwind.css";
-
