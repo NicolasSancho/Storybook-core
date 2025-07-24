@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { action } from "@storybook/addon-actions";
 import { ProductCard } from "./ProductCard";
 import {
   mockedProductDefault,
   mockedProductWithTag,
   mockedProductOnSale,
   mockedProductCardClickable,
+  mockedProductCardNoButton,
 } from "./productCardMock";
 
 const meta = {
@@ -15,7 +15,6 @@ const meta = {
     layout: "centered",
   },
   tags: ["autodocs"],
-  args: { onClick: action("product-clicked") },
 } satisfies Meta<typeof ProductCard>;
 
 export default meta;
@@ -35,4 +34,8 @@ export const OnSale: Story = {
 
 export const Clickable: Story = {
   args: mockedProductCardClickable,
+};
+
+export const NoButton: Story = {
+  args: mockedProductCardNoButton,
 };
