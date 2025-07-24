@@ -37,7 +37,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   price,
   tag,
   buttonLabel = "Add to Cart",
-  onClick,
+  onClick = undefined,
   onProductClick,
   className,
 }) => {
@@ -73,9 +73,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         ) : (
           productContent
         )}
-        <Button variant="primary" onClick={onClick} className="mt-2">
-          {buttonLabel}
-        </Button>
+        {onClick && (
+          <Button variant="primary" onClick={onClick} className="mt-2">
+            {buttonLabel}
+          </Button>
+        )}
       </div>
     </div>
   );
