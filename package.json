@@ -1,6 +1,6 @@
 {
   "name": "@NicolasSancho/storybook-core",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "description": "This is a storybook components library that is going to be consumed by other internal projects.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -10,7 +10,8 @@
     "dist/styles/tailwind.css"
   ],
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
+    "registry": "https://npm.pkg.github.com/",
+    "access": "restricted"
   },
   "scripts": {
     "prepare": "npm run build",
