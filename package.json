@@ -15,7 +15,7 @@
   },
   "scripts": {
     "prepare": "npm run build",
-    "build": "tsc && npx tailwindcss -i ./src/styles/tailwind.css -o ./dist/styles/tailwind.css",
+    "build": "rm -rf dist && tsc -p tsconfig.build.json && npx tailwindcss -i ./src/styles/tailwind.css -o ./dist/styles/tailwind.css",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "lint": "eslint ./src --ext .ts,.tsx",
