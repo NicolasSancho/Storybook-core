@@ -28,7 +28,7 @@ export const CartIcon: React.FC<CartIconProps> = ({
   const styles = cartIconStyles();
 
   return (
-    <div className={`${styles.base()} ${className}`} onClick={onClick}>
+    <div className={styles.base({ className })} onClick={onClick}>
       <Icon name="ShoppingCart" color={color} size={size} />
       {count > 0 && (
         <Text as="span" className={styles.badge()}>

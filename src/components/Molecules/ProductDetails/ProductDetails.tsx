@@ -25,7 +25,7 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({ details, classNa
   const styles = detailsStyles();
 
   return (
-    <ul className={`${styles.base()} ${className}`}>
+    <ul className={styles.base({ className })}>
       {details.map((item, idx) => (
         <li key={idx} className={styles.item()}>
           <Text as="span" weight="semibold" className={styles.label()}>

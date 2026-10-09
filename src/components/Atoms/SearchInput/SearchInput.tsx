@@ -49,7 +49,7 @@ export const SearchInput: React.FC<SearchInputProps> = ({
       placeholder={placeholder}
       value={value}
       onChange={onChange}
-      className={`${searchInputStyles({ variantSize, isInvalid })} ${className}`}
+      className={searchInputStyles({ variantSize, isInvalid, className })}
       {...props}
     />
   );

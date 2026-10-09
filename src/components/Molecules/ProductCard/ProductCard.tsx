@@ -19,7 +19,7 @@ const productCardStyles = tv({
   base: "rounded-lg border shadow-sm flex flex-col overflow-hidden",
   slots: {
     imageWrapper: "relative",
-    image: "w-full h-48 object-cover",
+    image: "w-full aspect-[3/4] object-cover",
     tag: "absolute top-2 left-2 bg-black text-white text-xs px-2 py-1 rounded",
     body: "p-2 flex flex-col",
     productInfo: "flex flex-col",
@@ -64,7 +64,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   );
 
   return (
-    <div className={`${styles.base} ${className}`}>
+    <div className={styles.base({ className })}>
       <div className={styles.body()}>
         {onProductClick ? (
           <div className={styles.clickableArea()} onClick={onProductClick}>

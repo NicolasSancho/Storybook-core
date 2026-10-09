@@ -29,7 +29,7 @@ export const RadioButton: React.FC<RadioButtonProps> = ({
   const styles = radioButtonStyles();
 
   return (
-    <label className={`${styles.base()} ${className}`}>
+    <label className={styles.base({ className })}>
       <input
         type="radio"
         name={name}

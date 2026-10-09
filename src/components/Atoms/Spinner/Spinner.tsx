@@ -34,7 +34,7 @@ export const Spinner: React.FC<SpinnerProps> = ({
 }) => {
   return (
     <span
-      className={`${spinnerStyles({ size })} ${colorMap[color]} ${className}`}
+      className={spinnerStyles({ size, className: [colorMap[color], className] })}
       role="status"
       aria-label="loading"
     />

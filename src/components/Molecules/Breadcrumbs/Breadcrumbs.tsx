@@ -25,7 +25,7 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items, LinkComponent, 
   const styles = breadcrumbsStyles();
 
   return (
-    <nav className={`${styles.base()} ${className}`} aria-label="Breadcrumb">
+    <nav className={styles.base({ className })} aria-label="Breadcrumb">
       {items.map(({ label, href }, index) => {
         const isFirst = index === 0;
 
