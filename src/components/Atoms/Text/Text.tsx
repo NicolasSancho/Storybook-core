@@ -56,7 +56,7 @@ export const Text: React.FC<TextProps> = ({
   className = "",
 }) => {
   return (
-    <Component className={`${textStyles({ color, size, weight, underline })} ${className}`}>
+    <Component className={textStyles({ color, size, weight, underline, className })}>
       {children}
     </Component>
   );

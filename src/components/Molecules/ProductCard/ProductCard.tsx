@@ -16,17 +16,19 @@ export interface ProductCardProps {
 }
 
 const productCardStyles = tv({
-  base: "rounded-lg border shadow-sm flex flex-col overflow-hidden",
+  base: "relative rounded-lg border shadow-sm flex flex-col overflow-hidden",
   slots: {
     imageWrapper: "relative",
-    image: "w-full h-48 object-cover",
+    image: "w-full aspect-[3/4] object-cover",
     tag: "absolute top-2 left-2 bg-black text-white text-xs px-2 py-1 rounded",
     body: "p-2 flex flex-col",
     productInfo: "flex flex-col",
     title: "text-sm font-medium",
+    titleButton:
+      "text-left after:absolute after:inset-0 after:content-[''] focus-visible:outline-none focus-visible:after:ring-2 focus-visible:after:ring-primary focus-visible:after:rounded-lg",
     subTitle: "text-sm text-gray-600",
     price: "text-sm text-gray-600",
-    clickableArea: "cursor-pointer",
+    action: "relative z-10 mt-2",
   },
 });
 
@@ -43,38 +45,32 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 }) => {
   const styles = productCardStyles();
 
-  const productContent = (
-    <>
-      <div className={styles.imageWrapper()}>
-        <img src={imageUrl} alt={title} className={styles.image()} />
-        {tag && <span className={styles.tag()}>{tag}</span>}
-      </div>
-      <div className={styles.productInfo()}>
-        <Text as="h3" size="small" weight="semibold" className={styles.title()}>
-          {title}
-        </Text>
-        <Text as="h3" size="small" color="base" className={styles.subTitle()}>
-          {brand}
-        </Text>
-        <Text as="p" size="small" color="base" className={styles.price()}>
-          {price}
-        </Text>
-      </div>
-    </>
-  );
-
   return (
-    <div className={`${styles.base} ${className}`}>
+    <div className={styles.base({ className })}>
       <div className={styles.body()}>
-        {onProductClick ? (
-          <div className={styles.clickableArea()} onClick={onProductClick}>
-            {productContent}
-          </div>
-        ) : (
-          productContent
-        )}
+        <div className={styles.imageWrapper()}>
+          <img src={imageUrl} alt="" className={styles.image()} />
+          {tag && <span className={styles.tag()}>{tag}</span>}
+        </div>
+        <div className={styles.productInfo()}>
+          <Text as="h3" size="small" weight="semibold" className={styles.title()}>
+            {onProductClick ? (
+              <button type="button" onClick={onProductClick} className={styles.titleButton()}>
+                {title}
+              </button>
+            ) : (
+              title
+            )}
+          </Text>
+          <Text as="p" size="small" color="base" className={styles.subTitle()}>
+            {brand}
+          </Text>
+          <Text as="p" size="small" color="base" className={styles.price()}>
+            {price}
+          </Text>
+        </div>
         {onClick && (
-          <Button variant="primary" onClick={onClick} className="mt-2">
+          <Button variant="primary" onClick={onClick} className={styles.action()}>
             {buttonLabel}
           </Button>
         )}

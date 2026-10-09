@@ -12,9 +12,9 @@ module.exports = {
           darker: "#003366",
         },
         secondary: {
-          DEFAULT: "#f28b2d",
-          lighter: "#f5a623",
-          darker: "#d86e00",
+          DEFAULT: "#c2410c", // 5.2:1 with white (WCAG AA)
+          lighter: "#f28b2d", // original brand orange: decorative use only, fails AA with white
+          darker: "#9a3412", // 7.3:1 with white
         },
         text: {
           25: "rgb(var(--gray-25))",

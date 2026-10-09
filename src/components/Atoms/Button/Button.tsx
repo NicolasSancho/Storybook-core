@@ -23,12 +23,13 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 }
 
 const buttonStyles = tv({
-  base: "font-bold text-white focus:outline-none inline-flex items-center",
+  base: "font-bold text-white inline-flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
   variants: {
     variant: {
-      primary: "rounded bg-primary text-white hover:bg-primary-darker",
-      secondary: "rounded bg-secondary text-white hover:bg-secondary-darker",
-      text: "text-text-dark hover:underline",
+      primary: "rounded bg-primary text-white enabled:hover:bg-primary-darker",
+      secondary:
+        "rounded bg-secondary text-white enabled:hover:bg-secondary-darker focus-visible:ring-secondary",
+      text: "rounded text-primary enabled:hover:underline",
     },
     size: {
       small: "text-xs px-2 py-1",
@@ -50,6 +51,7 @@ const buttonStyles = tv({
  */
 export const Button: React.FC<ButtonProps> = ({
   variant,
+  type = "button",
   size = "medium",
   disabled = false,
   children,
@@ -58,6 +60,7 @@ export const Button: React.FC<ButtonProps> = ({
 }) => {
   return (
     <button
+      type={type}
       className={buttonStyles({ variant, size, className, disabled })}
       disabled={disabled}
       {...props}

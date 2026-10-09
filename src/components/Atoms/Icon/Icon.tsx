@@ -6,7 +6,11 @@ export interface IconProps {
   name: keyof typeof IconsMap;
   size?: "small" | "medium" | "large";
   color?: "primary" | "secondary" | "black";
-  // Define other props here
+  /**
+   * Accessible name for icons that convey meaning on their own.
+   * Without it the icon is treated as decorative and hidden from screen readers.
+   */
+  ariaLabel?: string;
 }
 
 const iconStyles = tv({
@@ -29,7 +33,11 @@ const iconStyles = tv({
   },
 });
 
-export const Icon: React.FC<IconProps> = ({ name, size, color = "black", ...props }) => {
+export const Icon: React.FC<IconProps> = ({ name, size, color = "black", ariaLabel }) => {
   const IconComponent = IconsMap[name];
-  return <IconComponent className={iconStyles({ size, color })} {...props} />;
+  const a11yProps = ariaLabel
+    ? { role: "img", "aria-label": ariaLabel }
+    : { "aria-hidden": true, focusable: false };
+
+  return <IconComponent className={iconStyles({ size, color })} {...a11yProps} />;
 };

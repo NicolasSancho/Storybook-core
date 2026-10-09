@@ -1,13 +1,12 @@
 {
   "name": "@NicolasSancho/storybook-core",
-  "version": "1.1.8",
-  "description": "This is a storybook components library that is going to be consumed by other internal projects.",
+  "version": "1.2.0",
+  "description": "Accessible React + Tailwind component library built with tailwind-variants and documented in Storybook.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "type": "module",
   "files": [
-    "dist",
-    "dist/styles/tailwind.css"
+    "dist"
   ],
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/",
@@ -15,16 +14,23 @@
   },
   "scripts": {
     "prepare": "npm run build",
-    "build": "tsc && npx tailwindcss -i ./src/styles/tailwind.css -o ./dist/styles/tailwind.css",
+    "build": "rm -rf dist && tsc -p tsconfig.build.json && npx tailwindcss -i ./src/styles/tailwind.css -o ./dist/styles/tailwind.css",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "lint": "eslint ./src --ext .ts,.tsx",
     "format": "prettier --write ./src",
     "generate": "npx plop component"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "react",
+    "tailwindcss",
+    "tailwind-variants",
+    "components",
+    "storybook",
+    "design-system"
+  ],
+  "author": "NicolasSancho (https://github.com/NicolasSancho)",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/NicolasSancho/Storybook-core.git"

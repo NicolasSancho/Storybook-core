@@ -4,6 +4,10 @@ import { Icon } from "../../Atoms/Icon/Icon";
 import { Text } from "../../Atoms/Text/Text";
 
 export interface BreadcrumbsProps {
+  /**
+   * Trail from the root to the current page. The first item renders as a home icon
+   * (its label is kept for screen readers) and the last item is the current page.
+   */
   items: {
     label: string;
     href?: string;
@@ -13,10 +17,12 @@ export interface BreadcrumbsProps {
 }
 
 const breadcrumbsStyles = tv({
-  base: "flex items-center gap-1 text-sm text-gray-600",
+  base: "text-sm text-gray-600",
   slots: {
+    list: "flex items-center gap-1",
     item: "flex items-center gap-1",
     link: "no-underline text-inherit hover:underline text-primary",
+    current: "text-gray-600",
     separator: "text-gray-400",
   },
 });
@@ -25,25 +31,45 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items, LinkComponent, 
   const styles = breadcrumbsStyles();
 
   return (
-    <nav className={`${styles.base()} ${className}`} aria-label="Breadcrumb">
-      {items.map(({ label, href }, index) => {
-        const isFirst = index === 0;
+    <nav className={styles.base({ className })} aria-label="Breadcrumb">
+      <ol className={styles.list()}>
+        {items.map(({ label, href }, index) => {
+          const isFirst = index === 0;
+          const isLast = index === items.length - 1;
 
-        return (
-          <React.Fragment key={index}>
-            {!isFirst && <span className={styles.separator()}>/</span>}
-            <LinkComponent to={href || "/"} className={styles.link()}>
-              {isFirst ? (
-                <Icon name="Home" size="small" color="primary" />
-              ) : (
-                <Text as="span" size="small" color="primary">
-                  {label}
-                </Text>
+          const content = isFirst ? (
+            <>
+              <Icon name="Home" size="small" color="primary" />
+              <span className="sr-only">{label}</span>
+            </>
+          ) : isLast ? (
+            label
+          ) : (
+            <Text as="span" size="small" color="primary">
+              {label}
+            </Text>
+          );
+
+          return (
+            <li key={index} className={styles.item()}>
+              {!isFirst && (
+                <span className={styles.separator()} aria-hidden="true">
+                  /
+                </span>
               )}
-            </LinkComponent>
-          </React.Fragment>
-        );
-      })}
+              {isLast ? (
+                <span className={styles.current()} aria-current="page">
+                  {content}
+                </span>
+              ) : (
+                <LinkComponent to={href || "/"} className={styles.link()}>
+                  {content}
+                </LinkComponent>
+              )}
+            </li>
+          );
+        })}
+      </ol>
     </nav>
   );
 };

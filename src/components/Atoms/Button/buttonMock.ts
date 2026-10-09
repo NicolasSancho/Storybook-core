@@ -21,7 +21,7 @@ export const mockedButtonText: ButtonProps = {
   size: "medium",
   disabled: false,
   children: "Text Button",
-  className: "text-button",
+  className: "button-text",
 };
 
 export const mockedButtonDisabled: ButtonProps = {

@@ -14,6 +14,13 @@ const meta = {
   parameters: {
     layout: "centered",
   },
+  decorators: [
+    (Story) => (
+      <div className="w-[300px]">
+        <Story />
+      </div>
+    ),
+  ],
   tags: ["autodocs"],
 } satisfies Meta<typeof ProductCard>;
 

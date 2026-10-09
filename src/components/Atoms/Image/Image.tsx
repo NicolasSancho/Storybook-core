@@ -14,5 +14,5 @@ const imageStyles = tv({
 });
 
 export const Image: React.FC<ImageProps> = ({ src, alt, className, ...props }) => {
-  return <img src={src} alt={alt} className={`${imageStyles()} ${className}`} {...props} />;
+  return <img src={src} alt={alt} className={imageStyles({ className })} {...props} />;
 };

@@ -23,7 +23,7 @@ const searchInputStyles = tv({
     },
     isInvalid: {
       true: "border border-red-500 focus:border-red-500 focus:ring-red-500",
-      false: "border border-gray-300 focus:border-primary",
+      false: "border border-gray-300 focus:border-primary focus:ring-primary",
     },
   },
   defaultVariants: {
@@ -41,15 +41,20 @@ export const SearchInput: React.FC<SearchInputProps> = ({
   variantSize = "medium",
   ...props
 }) => {
+  // Fall back to a generic accessible name only when the consumer hasn't labelled the input
+  // (a visible <Label htmlFor>, aria-labelledby or their own aria-label).
+  const hasLabel = Boolean(props.id || props["aria-labelledby"] || props["aria-label"]);
+
   return (
     <input
-      type="text"
-      id="search-input"
+      type="search"
       name="search"
+      aria-label={hasLabel ? undefined : "Search"}
+      aria-invalid={isInvalid || undefined}
       placeholder={placeholder}
       value={value}
       onChange={onChange}
-      className={`${searchInputStyles({ variantSize, isInvalid })} ${className}`}
+      className={searchInputStyles({ variantSize, isInvalid, className })}
       {...props}
     />
   );

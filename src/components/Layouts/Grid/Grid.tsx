@@ -43,7 +43,7 @@ export const Grid: React.FC<GridProps> = ({
   ...props
 }) => {
   return (
-    <div className={`${gridStyles({ columns, gap })} ${className}`} {...props}>
+    <div className={gridStyles({ columns, gap, className })} {...props}>
       {children}
     </div>
   );

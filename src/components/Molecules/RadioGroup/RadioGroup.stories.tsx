@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
+import { useEffect, useState } from "react";
 import { RadioGroup } from "./RadioGroup";
 import {
   mockedRadioGroupDefault,
@@ -21,6 +22,25 @@ const meta = {
   tags: ["autodocs"],
   // Use `action` to spy on the onChange arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
   args: { onChange: action("radio-group-changed") },
+  // RadioGroup is controlled: keep the selection in local state so clicks update it.
+  // (useArgs only updates the primary story on the autodocs page.)
+  render: function Render(args) {
+    const [value, setValue] = useState(args.value);
+
+    // Keep in sync when `value` is changed from the Controls panel.
+    useEffect(() => setValue(args.value), [args.value]);
+
+    return (
+      <RadioGroup
+        {...args}
+        value={value}
+        onChange={(newValue) => {
+          setValue(newValue);
+          action("radio-group-changed")(newValue);
+        }}
+      />
+    );
+  },
 } satisfies Meta<typeof RadioGroup>;
 
 export default meta;
