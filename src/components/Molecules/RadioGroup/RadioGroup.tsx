@@ -1,5 +1,6 @@
 import React from "react";
 import { RadioButton } from "../../Atoms/RadioButton/RadioButton";
+import { Text } from "../../Atoms/Text/Text";
 import { Grid } from "../../Layouts/Grid/Grid";
 
 export interface RadioGroupOption {
@@ -8,6 +9,11 @@ export interface RadioGroupOption {
 }
 
 export interface RadioGroupProps {
+  /**
+   * Visible label for the group, rendered as the fieldset legend.
+   * Strongly recommended: without it screen readers can't tell what the options are for.
+   */
+  label?: string;
   name: string;
   options: RadioGroupOption[];
   value: string | number;
@@ -18,6 +24,7 @@ export interface RadioGroupProps {
 }
 
 export const RadioGroup: React.FC<RadioGroupProps> = ({
+  label,
   name,
   options,
   value,
@@ -27,17 +34,26 @@ export const RadioGroup: React.FC<RadioGroupProps> = ({
   className,
 }) => {
   return (
-    <Grid columns={columns} gap={gap} className={className}>
-      {options.map((option) => (
-        <RadioButton
-          key={option.value}
-          name={name}
-          label={option.label}
-          value={option.value}
-          checked={value === option.value}
-          onChange={onChange}
-        />
-      ))}
-    </Grid>
+    <fieldset>
+      {label && (
+        <legend className="mb-2 font-medium">
+          <Text as="span" size="small">
+            {label}
+          </Text>
+        </legend>
+      )}
+      <Grid columns={columns} gap={gap} className={className}>
+        {options.map((option) => (
+          <RadioButton
+            key={option.value}
+            name={name}
+            label={option.label}
+            value={option.value}
+            checked={value === option.value}
+            onChange={onChange}
+          />
+        ))}
+      </Grid>
+    </fieldset>
   );
 };
