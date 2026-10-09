@@ -2,7 +2,6 @@ import { RadioGroupProps } from "./RadioGroup";
 
 // Default state - single column layout (default)
 export const mockedRadioGroupDefault: RadioGroupProps = {
-  name: "default-group",
   options: [
     { label: "Option 1", value: "option1" },
     { label: "Option 2", value: "option2" },
@@ -16,7 +15,6 @@ export const mockedRadioGroupDefault: RadioGroupProps = {
 
 // Two columns layout - shows horizontal arrangement
 export const mockedRadioGroupTwoColumns: RadioGroupProps = {
-  name: "two-columns-group",
   options: [
     { label: "Option A", value: "a" },
     { label: "Option B", value: "b" },
@@ -31,7 +29,6 @@ export const mockedRadioGroupTwoColumns: RadioGroupProps = {
 
 // Three columns layout - compact horizontal layout
 export const mockedRadioGroupThreeColumns: RadioGroupProps = {
-  name: "three-columns-group",
   options: [
     { label: "Small", value: "small" },
     { label: "Medium", value: "medium" },
@@ -48,7 +45,6 @@ export const mockedRadioGroupThreeColumns: RadioGroupProps = {
 
 // Large gap spacing - shows different gap sizes
 export const mockedRadioGroupLargeGap: RadioGroupProps = {
-  name: "large-gap-group",
   options: [
     { label: "First", value: "first" },
     { label: "Second", value: "second" },
@@ -62,7 +58,6 @@ export const mockedRadioGroupLargeGap: RadioGroupProps = {
 
 // Four columns with many options - shows grid with more items
 export const mockedRadioGroupFourColumns: RadioGroupProps = {
-  name: "four-columns-group",
   options: [
     { label: "Red", value: "red" },
     { label: "Blue", value: "blue" },
