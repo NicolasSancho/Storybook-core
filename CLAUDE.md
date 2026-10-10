@@ -144,19 +144,21 @@ trailingComma es5, 2 spaces). Beyond that, in new or modified code:
 
 ## Publishing / CI
 
-- Every push to `main` publishes (`.github/workflows/main.yml`, Node 24, `NPM_TOKEN`).
-  The publish does not wait for the checks below.
+- Every push to `main` publishes (`.github/workflows/main.yml`, Node 24, `NPM_TOKEN`),
+  but only after the `checks` job (the reusable `ci.yml`, described below) passes on
+  that commit.
 - Bump the version as the last commit on the branch before merging, or the publish
   fails on a duplicate version:
   `npm version <patch|minor> --no-git-tag-version` (updates package.json and the lockfile).
   Use at least `minor` when a change is visible to consumers (colors, behavior, new props).
-- `.github/workflows/ci.yml` runs on every PR and every push to `main`: on PRs it fails if
-  the `package.json` version equals the one on the base branch, then `npm ci` (which
-  triggers `prepare` → `npm run build`), `npx tsc --noEmit`, `npm run lint`,
-  `npx prettier --check ./src`, `npm run build-storybook` and `npm test`. Keep it green
-  before merging.
-- The publish workflow only runs `npm ci` and `npm run build-storybook` before
-  publishing; it does not lint or run tests.
+- `.github/workflows/ci.yml` runs on every PR and is called by `main.yml` on every push
+  to `main` (it has no push trigger of its own, so the checks do not run twice). On PRs
+  it fails if the `package.json` version equals the one on the base branch, then
+  `npm ci` (which triggers `prepare` → `npm run build`), `npx tsc --noEmit`,
+  `npm run lint`, `npx prettier --check ./src`, `npm run build-storybook` and `npm test`.
+  Keep it green before merging.
+- After the checks pass, the publish job runs `npm ci`, `npm run build-storybook` and
+  `npm publish`.
 
 ## Known limitations (do not fix unless requested)
 
