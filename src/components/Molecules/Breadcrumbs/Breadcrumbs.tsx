@@ -51,7 +51,7 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items, LinkComponent, 
           );
 
           return (
-            <li key={index} className={styles.item()}>
+            <li key={href ?? label} className={styles.item()}>
               {!isFirst && (
                 <span className={styles.separator()} aria-hidden="true">
                   /

@@ -25,7 +25,11 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
   return (
     <Grid columns={columns} gap={gap} className={productGridStyles({ className })}>
       {products.map((product, idx) => (
-        <ProductCard key={idx} {...product} onProductClick={getOnProductClick?.(product, idx)} />
+        <ProductCard
+          key={product.id ?? product.title}
+          {...product}
+          onProductClick={getOnProductClick?.(product, idx)}
+        />
       ))}
     </Grid>
   );

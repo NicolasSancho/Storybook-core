@@ -26,8 +26,8 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({ details, classNa
 
   return (
     <ul className={styles.base({ className })}>
-      {details.map((item, idx) => (
-        <li key={idx} className={styles.item()}>
+      {details.map((item) => (
+        <li key={item.label} className={styles.item()}>
           <Text as="span" weight="semibold" className={styles.label()}>
             {item.label}
           </Text>
