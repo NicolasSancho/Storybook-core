@@ -1,43 +1,29 @@
 import { ProductGridProps } from "./ProductGrid";
 import { mockedProductDefault } from "../../Molecules/ProductCard/productCardMock";
 
-const mockedProductList = [
-  mockedProductDefault,
-  mockedProductDefault,
-  mockedProductDefault,
-  mockedProductDefault,
-  mockedProductDefault,
-  mockedProductDefault,
-  mockedProductDefault,
-  mockedProductDefault,
-];
+// Each product needs a unique id: ProductGrid uses it as the React key.
+const mockedProductList = Array.from({ length: 8 }, (_, index) => ({
+  ...mockedProductDefault,
+  id: `product-${index + 1}`,
+}));
 
 export const mockedProductGridDefault: ProductGridProps = {
   products: mockedProductList,
   columns: 3,
   gap: "medium",
-  getOnProductClick: () => {
-    console.log("Product clicked");
-    return () => {};
-  },
+  getOnProductClick: () => () => {},
 };
 
 export const mockedProductGridFourColumns: ProductGridProps = {
   products: mockedProductList,
   columns: 4,
   gap: "small",
-  getOnProductClick: () => {
-    console.log("Product clicked");
-    return () => {};
-  },
+  getOnProductClick: () => () => {},
 };
 
 export const mockedProductGridLargeGap: ProductGridProps = {
   products: mockedProductList,
   columns: 2,
   gap: "large",
-  getOnProductClick: () => {
-    console.log("Product clicked");
-    return () => {};
-  },
+  getOnProductClick: () => () => {},
 };

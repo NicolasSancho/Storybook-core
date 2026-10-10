@@ -4,9 +4,9 @@ import React from "react";
 export const mockedGrid: GridProps = {
   children: (
     <>
-      <div className="bg-primary p-4">Item 1</div>
-      <div className="bg-secondary p-4">Item 2</div>
-      <div className="bg-primary p-4">Item 3</div>
+      <div className="bg-primary p-4 text-white">Item 1</div>
+      <div className="bg-secondary p-4 text-white">Item 2</div>
+      <div className="bg-primary p-4 text-white">Item 3</div>
     </>
   ),
   columns: 3,
@@ -16,8 +16,8 @@ export const mockedGrid: GridProps = {
 export const twoColumnGrid: GridProps = {
   children: (
     <>
-      <div className="bg-primary p-4">Item 1</div>
-      <div className="bg-secondary p-4">Item 2</div>
+      <div className="bg-primary p-4 text-white">Item 1</div>
+      <div className="bg-secondary p-4 text-white">Item 2</div>
     </>
   ),
   columns: 2,
@@ -27,10 +27,10 @@ export const twoColumnGrid: GridProps = {
 export const fourColumnGrid: GridProps = {
   children: (
     <>
-      <div className="bg-primary p-4">Item 1</div>
-      <div className="bg-secondary p-4">Item 2</div>
-      <div className="bg-primary p-4">Item 3</div>
-      <div className="bg-secondary p-4">Item 4</div>
+      <div className="bg-primary p-4 text-white">Item 1</div>
+      <div className="bg-secondary p-4 text-white">Item 2</div>
+      <div className="bg-primary p-4 text-white">Item 3</div>
+      <div className="bg-secondary p-4 text-white">Item 4</div>
     </>
   ),
   columns: 4,
