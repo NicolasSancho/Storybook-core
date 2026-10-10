@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { action } from "storybook/actions";
+import { expect, within } from "storybook/test";
 import { CartIcon } from "./CartIcon";
 import {
   mockedCartIconEmpty,
@@ -42,6 +43,10 @@ export const PrimaryColor: Story = {
 
 export const MultipleItems: Story = {
   args: mockedCartIconMultipleItems,
+  play: async ({ args, canvasElement }) => {
+    // The badge shows the count whenever the cart has items.
+    await expect(within(canvasElement).getByText(String(args.count))).toBeInTheDocument();
+  },
 };
 
 export const VeryHighCount: Story = {
