@@ -31,7 +31,7 @@ const slotStyles = tv({
 });
 
 const Slot: React.FC<HeaderSlotProps> = ({ children, className, position }) => (
-  <div className={`${slotStyles({ position })} ${className ?? ""}`}>{children}</div>
+  <div className={slotStyles({ position, className })}>{children}</div>
 );
 
 export const Header: React.FC<HeaderProps> & {
@@ -39,7 +39,7 @@ export const Header: React.FC<HeaderProps> & {
   Center: React.FC<Omit<HeaderSlotProps, "position">>;
   Right: React.FC<Omit<HeaderSlotProps, "position">>;
 } = ({ children, className }) => {
-  return <header className={`${headerStyles()} ${className ?? ""}`}>{children}</header>;
+  return <header className={headerStyles({ className })}>{children}</header>;
 };
 
 Header.Left = ({ children, className }) => (
