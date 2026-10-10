@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Icon } from "./Icon";
 import { mockedIcon, smallSecondaryIcon, largePrimaryIcon, largeBlackIcon } from "./iconMock";
 import { IconsMap } from "./iconsMap";
