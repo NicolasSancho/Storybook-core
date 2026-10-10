@@ -32,8 +32,8 @@ on GitHub Packages (restricted). Storybook is the development and documentation 
 - `npm run generate`: Plop scaffold (Atoms / Molecules / Organisms only)
 - `npm test`: Vitest with `@storybook/addon-vitest`; runs every story in headless Chromium
   (Playwright) as a smoke test, plus any `play` functions. Config in `vitest.config.ts`.
-- Test tooling is installed, but don't write tests or add test tooling (other test
-  libraries, addons, CI steps) unless explicitly asked.
+- Tests are `play` functions in the stories (see "Tests" under Stories). Don't add test
+  tooling (other test libraries, addons, CI steps) unless explicitly asked.
 
 ## Architecture
 
@@ -122,6 +122,22 @@ conformance. Do not claim WCAG conformance without appropriate testing.
   page it only updates the first story.
 - Story args override meta args, so a mock's placeholder `onChange: () => {}` replaces
   the meta-level `action(...)`.
+
+### Tests
+
+- Tests are `play` functions in `<Name>.stories.tsx`, using `expect`, `fn`, `userEvent` and
+  `within` from `storybook/test`. No `*.test.tsx` files and no other test library.
+- Put the `play` on the existing story that already shows the state. Create a separate
+  story only when the interaction changes what is rendered (see RadioGroup, where the
+  selection moves), so the visual stories keep their documented state.
+- Query by role and accessible name (`getByRole`), not by test id or class. Don't assert on
+  Tailwind classes.
+- Mock handlers are no-ops (`() => {}`). Pass `fn()` spies in the story's `args` when the
+  test asserts on a handler.
+- Test real behavior only: conditional rendering, generated accessible names, handlers,
+  keyboard use. Skip presentational components and assertions that would pass for any
+  implementation.
+- Check that a new test can fail: break the code under test and confirm the story fails.
 
 ## Code style
 

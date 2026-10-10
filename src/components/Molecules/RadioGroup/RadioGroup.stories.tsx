@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { action } from "storybook/actions";
+import { expect, userEvent, within } from "storybook/test";
 import { useEffect, useState } from "react";
 import { RadioGroup } from "./RadioGroup";
 import {
@@ -65,4 +66,41 @@ export const LargeGap: Story = {
 
 export const FourColumns: Story = {
   args: mockedRadioGroupFourColumns,
+};
+
+// Interaction tests: they run in the Interactions panel and in `npm test`.
+export const SelectsOnClick: Story = {
+  args: { ...mockedRadioGroupDefault, label: "Choose an option" },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // The legend gives the group its accessible name.
+    await expect(canvas.getByRole("group", { name: "Choose an option" })).toBeInTheDocument();
+    await expect(canvas.getByRole("radio", { name: "Option 1" })).toBeChecked();
+
+    await userEvent.click(canvas.getByRole("radio", { name: "Option 3" }));
+
+    await expect(canvas.getByRole("radio", { name: "Option 3" })).toBeChecked();
+    await expect(canvas.getByRole("radio", { name: "Option 1" })).not.toBeChecked();
+  },
+};
+
+export const KeyboardNavigation: Story = {
+  args: { ...mockedRadioGroupDefault, label: "Choose an option" },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // A radio group is a single tab stop: Tab lands on the checked option.
+    await userEvent.tab();
+    await expect(canvas.getByRole("radio", { name: "Option 1" })).toHaveFocus();
+
+    // Arrow keys move both focus and selection.
+    await userEvent.keyboard("{ArrowDown}");
+    await expect(canvas.getByRole("radio", { name: "Option 2" })).toBeChecked();
+    await expect(canvas.getByRole("radio", { name: "Option 2" })).toHaveFocus();
+
+    await userEvent.keyboard("{ArrowUp}{ArrowUp}");
+    // Selection wraps from the first option to the last.
+    await expect(canvas.getByRole("radio", { name: "Option 3" })).toBeChecked();
+  },
 };
