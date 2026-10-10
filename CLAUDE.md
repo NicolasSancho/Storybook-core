@@ -30,7 +30,10 @@ on GitHub Packages (restricted). Storybook is the development and documentation 
 - `npx tsc --noEmit`: typecheck (no dedicated script)
 - `npm run lint` / `npm run format`
 - `npm run generate`: Plop scaffold (Atoms / Molecules / Organisms only)
-- There are no tests yet; don't add test tooling unless asked.
+- `npm test`: Vitest with `@storybook/addon-vitest`; runs every story in headless Chromium
+  (Playwright) as a smoke test, plus any `play` functions. Config in `vitest.config.ts`.
+- Test tooling is installed, but don't write tests or add test tooling (other test
+  libraries, addons, CI steps) unless explicitly asked.
 
 ## Architecture
 
