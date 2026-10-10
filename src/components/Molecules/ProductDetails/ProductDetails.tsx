@@ -15,7 +15,7 @@ export interface ProductDetailsProps {
 const detailsStyles = tv({
   base: "flex flex-col gap-1",
   slots: {
-    item: "flex justify-between text-sm text-gray-700 gap-2",
+    item: "flex justify-between text-sm text-neutral-700 gap-2",
     label: "font-medium",
     value: "",
   },

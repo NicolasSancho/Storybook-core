@@ -25,7 +25,7 @@ const spinnerStyles = tv({
     color: {
       primary: "border-primary border-t-transparent",
       secondary: "border-secondary border-t-transparent",
-      gray: "border-gray-400 border-t-transparent",
+      gray: "border-neutral-400 border-t-transparent",
     },
   },
   defaultVariants: {

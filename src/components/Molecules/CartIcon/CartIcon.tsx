@@ -24,7 +24,7 @@ const cartIconStyles = tv({
     },
   },
   slots: {
-    badge: "absolute -top-1 -right-1 bg-red-600 text-white text-xs rounded-full px-1",
+    badge: "absolute -top-1 -right-1 bg-danger text-white text-xs rounded-full px-1",
   },
 });
 
