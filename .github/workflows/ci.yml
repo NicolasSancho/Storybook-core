@@ -19,6 +19,22 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # Every push to main publishes, so the version on main is the published one.
+      # Skipped on push to main, where it would race with the publish workflow.
+      - name: Check version bump
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: |
+          git fetch --no-tags --depth=1 origin "$BASE_REF"
+          base=$(git show FETCH_HEAD:package.json | node -p "JSON.parse(require('fs').readFileSync(0, 'utf8')).version")
+          head=$(node -p "require('./package.json').version")
+          if [ "$base" = "$head" ]; then
+            echo "::error::Version $head is already on $BASE_REF. Run: npm version <patch|minor> --no-git-tag-version"
+            exit 1
+          fi
+          echo "Version $base -> $head"
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
