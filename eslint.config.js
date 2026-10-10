@@ -3,6 +3,7 @@ import tseslint from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
+import storybook from 'eslint-plugin-storybook';
 
 export default [
   {
@@ -44,4 +45,5 @@ export default [
         'react/jsx-uses-vars': 'warn',
     },
   },
+  ...storybook.configs['flat/recommended'],
 ];
