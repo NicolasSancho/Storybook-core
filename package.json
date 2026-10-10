@@ -17,6 +17,7 @@
     "build": "rm -rf dist && tsc -p tsconfig.build.json && npx tailwindcss -i ./src/styles/tailwind.css -o ./dist/styles/tailwind.css",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
+    "test": "vitest run",
     "lint": "eslint ./src --ext .ts,.tsx",
     "format": "prettier --write ./src",
     "generate": "npx plop component"
@@ -45,6 +46,7 @@
     "@storybook/addon-docs": "^10.6.1",
     "@storybook/addon-links": "^10.6.1",
     "@storybook/addon-onboarding": "^10.6.1",
+    "@storybook/addon-vitest": "^10.6.1",
     "@storybook/react": "^10.6.1",
     "@storybook/react-vite": "^10.6.1",
     "@typescript-eslint/eslint-plugin": "^8.38.0",
@@ -62,7 +64,11 @@
     "storybook": "^10.6.1",
     "tailwind-variants": "^0.2.1",
     "tailwindcss": "^3.4.10",
-    "typescript": "^5.5.4"
+    "typescript": "^5.5.4",
+    "vitest": "^5.0.3",
+    "@vitest/browser-playwright": "^5.0.3",
+    "@vitest/coverage-v8": "^5.0.3",
+    "playwright": "^1.64.0"
   },
   "dependencies": {
     "react-feather": "^2.0.10"
