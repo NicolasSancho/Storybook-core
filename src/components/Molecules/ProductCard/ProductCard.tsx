@@ -4,6 +4,8 @@ import { Button } from "../../Atoms/Button/Button";
 import { Text } from "../../Atoms/Text/Text";
 
 export interface ProductCardProps {
+  /** Optional unique id, used as the React key when rendered in a list (falls back to `title`). */
+  id?: string;
   imageUrl: string;
   title: string;
   brand: string;

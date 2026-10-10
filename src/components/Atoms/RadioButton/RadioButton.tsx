@@ -14,7 +14,7 @@ export interface RadioButtonProps {
 const radioButtonStyles = tv({
   base: "flex items-center gap-2 cursor-pointer",
   slots: {
-    input: "form-radio text-primary",
+    input: "text-primary",
   },
 });
 

@@ -28,7 +28,7 @@ module.exports = function (plop) {
       {
         type: "add",
         path: "src/components/{{type}}/{{pascalCase name}}/{{camelCase name}}Mock.ts",
-        templateFile: "plop-templates/componentMock.tsx.hbs",
+        templateFile: "plop-templates/componentMock.ts.hbs",
       },
       /*{
                 type: 'add',
