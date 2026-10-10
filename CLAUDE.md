@@ -70,24 +70,27 @@ on GitHub Packages (restricted). Storybook is the development and documentation 
   - Custom class names starting with a Tailwind prefix (`text-button`, `border-card`)
     are read as utilities and can silently remove real ones. Avoid them in mocks and
     `className` props.
+  - tailwind-merge only knows Tailwind's own scales, so custom radius, shadow or size
+    names (`rounded-btn`, `shadow-card`, `w-icon-small`) would not be overridden by a
+    consumer's `className` (both classes stay). Don't add them; colors are safe.
 - Use the tokens in `tailwind.config.js`:
   - Colors: `primary` (also `-50..950`; `-600` is the lightest step usable as text on
-    white) and `secondary` (+ `-darker`). `secondary-lighter` is the original brand orange
-    and fails contrast with white text: decorative use only. Semantic: `danger`, `success`,
+    white) and `secondary` (also `-50..950`; `-700` is `DEFAULT` and the lightest step
+    usable as text on white; `-800` is `darker`). `secondary-lighter` is the original brand
+    orange and fails contrast with white text: decorative use only. Semantic: `danger`, `success`,
     `warning`, each with `DEFAULT` (text/icons) and `subtle` (background). Use them instead
     of Tailwind's `red-*` / `green-*` / `yellow-*`, and never rely on color alone.
   - Neutrals: `neutral-{25..950}`; never Tailwind's default `gray-*`. Jobs: 900 body text,
     600 secondary text, 500 placeholder, 400 input borders (needs 3:1), 200 dividers and
     card borders, 50 page background. 100 to 300 are never text.
-  - Radius: `rounded-btn`, `rounded-card` (existing components still use `rounded` /
-    `rounded-lg`; use tokens in new code, don't migrate old code unless asked)
-  - Shadow: `shadow-card`; icon sizes: `w/h-icon-{small,medium,large}`
-  - Font sizes are overridden: `sm` 14px, `base` 16px, `lg` 20px, `xl` 24px
+  - Radius, shadow and icon sizes use Tailwind's scale: `rounded` (4px) for controls,
+    `rounded-lg` (8px) for cards, `rounded-full` for pills, `shadow-sm` for cards, icons
+    `w/h-4`, `w/h-6`, `w/h-8` (see Icon).
+  - Font sizes are a closed scale (only these exist): `xs` 12px, `sm` 14px, `base` 16px,
+    `lg` 20px, `xl` 24px, `2xl` 32px. Avoid `xs` on interactive text.
   - Breakpoints: `xs` 0, `sm` 640, **`md` 940** (not Tailwind's 768), `lg` 1024, `xl` 1280
-- Gray scale: the `--gray-*` variables live in `src/styles/tailwind.css`. The config exposes
-  them as `neutral-{25..950}` (supports opacity, e.g. `bg-neutral-900/50`) and, for
-  backward compatibility, under the `text` color key (`text-text-{25..950}`). Use `neutral`
-  in new code.
+- Gray scale: the `--gray-*` variables in `src/styles/tailwind.css` (the only custom CSS
+  variables) feed `neutral-{25..950}`, which supports opacity (e.g. `bg-neutral-900/50`).
 - Every `Text` color option must reach 4.5:1 on white; don't add pale shades as text colors.
 - Icons: react-feather, registered in `Atoms/Icon/iconsMap.ts`.
 - `tailwindcss` and `tailwind-variants` are peerDependencies; keep them there.
