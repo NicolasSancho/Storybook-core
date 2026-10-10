@@ -145,13 +145,18 @@ trailingComma es5, 2 spaces). Beyond that, in new or modified code:
 ## Publishing / CI
 
 - Every push to `main` publishes (`.github/workflows/main.yml`, Node 24, `NPM_TOKEN`).
+  The publish does not wait for the checks below.
 - Bump the version as the last commit on the branch before merging, or the publish
   fails on a duplicate version:
   `npm version <patch|minor> --no-git-tag-version` (updates package.json and the lockfile).
   Use at least `minor` when a change is visible to consumers (colors, behavior, new props).
-- CI runs `npm ci` (which triggers `prepare` → `npm run build`, so tsc errors fail the
-  publish _after_ merge) and `npm run build-storybook`. CI does NOT lint; run lint and
-  typecheck locally before opening a PR.
+- `.github/workflows/ci.yml` runs on every PR and every push to `main`: on PRs it fails if
+  the `package.json` version equals the one on the base branch, then `npm ci` (which
+  triggers `prepare` → `npm run build`), `npx tsc --noEmit`, `npm run lint`,
+  `npx prettier --check ./src`, `npm run build-storybook` and `npm test`. Keep it green
+  before merging.
+- The publish workflow only runs `npm ci` and `npm run build-storybook` before
+  publishing; it does not lint or run tests.
 
 ## Known limitations (do not fix unless requested)
 
@@ -162,6 +167,5 @@ trailingComma es5, 2 spaces). Beyond that, in new or modified code:
 - RadioButton's `form-radio` class has no effect (`@tailwindcss/forms` isn't installed).
 - `eslint-plugin-react-hooks` is registered but none of its rules are enabled.
 - `.eslintrc.json` is an unused leftover; `eslint.config.js` is the real config.
-- `tailwind.config.js` has an unused `require("@storybook/blocks")`.
 - `plop-templates/componentMock.tsx.hbs` generates a `.ts` file despite its name.
 - `Button.stories.ts` is `.ts` while all other stories are `.tsx`.
