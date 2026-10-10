@@ -43,6 +43,10 @@ export default [
         'react/prop-types': 'off',
         'react/jsx-uses-react': 'off',
         'react/jsx-uses-vars': 'warn',
+
+        // React Hooks rules
+        'react-hooks/rules-of-hooks': 'error',
+        'react-hooks/exhaustive-deps': 'warn',
     },
   },
   ...storybook.configs['flat/recommended'],
