@@ -24,7 +24,7 @@ const iconStyles = tv({
     color: {
       primary: "text-primary",
       secondary: "text-secondary",
-      black: "text-black",
+      black: "text-neutral-950",
     },
   },
   defaultVariants: {

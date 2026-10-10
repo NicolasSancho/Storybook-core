@@ -11,6 +11,14 @@ const meta: Meta<typeof Label> = {
   },
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ["autodocs"],
+  // `color` comes from `Pick<TextProps, "color">`, which docgen cannot resolve: it records a type
+  // without a name, and the `color` name matcher then warns. Declaring the enum fixes both.
+  argTypes: {
+    color: {
+      type: { name: "enum", value: ["base", "dark", "darker", "primary", "secondary"] },
+      control: "select",
+    },
+  },
 };
 
 export default meta;

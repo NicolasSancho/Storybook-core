@@ -17,13 +17,13 @@ export interface BreadcrumbsProps {
 }
 
 const breadcrumbsStyles = tv({
-  base: "text-sm text-gray-600",
+  base: "text-sm text-neutral-600",
   slots: {
     list: "flex items-center gap-1",
     item: "flex items-center gap-1",
     link: "no-underline text-inherit hover:underline text-primary",
-    current: "text-gray-600",
-    separator: "text-gray-400",
+    current: "text-neutral-600",
+    separator: "text-neutral-400",
   },
 });
 

@@ -7,16 +7,18 @@ const Logo: React.FC = () => (
   <Image src="/src/components/assets/logo.png" alt="Logo" className="h-8 w-auto" />
 );
 
-const Brand: React.FC = () => <span className="text-xl font-bold text-gray-900">ZARA</span>;
+const Brand: React.FC = () => (
+  <span className="whitespace-nowrap text-xl font-bold text-neutral-900">ZARA</span>
+);
 
 const CartButton: React.FC = () => (
-  <button className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900">
+  <button className="flex items-center gap-2 whitespace-nowrap px-2 py-2 text-sm font-medium text-neutral-700 hover:text-neutral-900">
     Cart (0)
   </button>
 );
 
 const UserButton: React.FC = () => (
-  <button className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900">
+  <button className="whitespace-nowrap px-2 py-2 text-sm font-medium text-neutral-700 hover:text-neutral-900">
     Sign In
   </button>
 );

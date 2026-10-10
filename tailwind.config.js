@@ -2,6 +2,15 @@
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}", "./.storybook/**/*.{js,jsx,ts,tsx}"],
   theme: {
+    // Closed type scale (not `extend`): these are the only text sizes that exist.
+    fontSize: {
+      xs: "12px",
+      sm: "14px",
+      base: "16px",
+      lg: "20px",
+      xl: "24px",
+      "2xl": "32px",
+    },
     extend: {
       colors: {
         primary: {
@@ -21,6 +30,17 @@ module.exports = {
           darker: "#003366",
         },
         secondary: {
+          50: "#fff7ed",
+          100: "#ffedd5",
+          200: "#fed7aa",
+          300: "#fdba74",
+          400: "#fb923c",
+          500: "#f97316",
+          600: "#ea580c",
+          700: "#c2410c", // same as DEFAULT; 5.2:1 with white, lightest step usable for text
+          800: "#9a3412", // same as darker
+          900: "#7c2d12",
+          950: "#431407",
           DEFAULT: "#c2410c", // 5.2:1 with white (WCAG AA)
           lighter: "#f28b2d", // original brand orange: decorative use only, fails AA with white
           darker: "#9a3412", // 7.3:1 with white
@@ -39,8 +59,9 @@ module.exports = {
           DEFAULT: "#92400e", // 7.1:1 with white
           subtle: "#fef3c7",
         },
-        // Same gray scale as `text`, under a name that also reads well for borders and backgrounds
-        // (`bg-neutral-100`, `border-neutral-400`). 100 to 300 are never for text.
+        // Gray scale (`--gray-*` in src/styles/tailwind.css). Jobs: 900 body text, 600 secondary
+        // text, 500 placeholder, 400 input borders (3:1), 200 dividers, 50 page background.
+        // 100 to 300 are never for text.
         neutral: {
           25: "rgb(var(--gray-25) / <alpha-value>)",
           50: "rgb(var(--gray-50) / <alpha-value>)",
@@ -55,52 +76,6 @@ module.exports = {
           900: "rgb(var(--gray-900) / <alpha-value>)",
           950: "rgb(var(--gray-950) / <alpha-value>)",
         },
-        text: {
-          25: "rgb(var(--gray-25))",
-          50: "rgb(var(--gray-50))",
-          100: "rgb(var(--gray-100))",
-          200: "rgb(var(--gray-200))",
-          300: "rgb(var(--gray-300))",
-          400: "rgb(var(--gray-400))",
-          500: "rgb(var(--gray-500))",
-          600: "rgb(var(--gray-600))",
-          700: "rgb(var(--gray-700))",
-          800: "rgb(var(--gray-800))",
-          900: "rgb(var(--gray-900))",
-          950: "rgb(var(--gray-950))",
-        },
-      },
-      fontSize: {
-        sm: "14px",
-        base: "16px",
-        lg: "20px",
-        xl: "24px",
-      },
-      borderRadius: {
-        btn: "4px",
-        card: "8px",
-      },
-      boxShadow: {
-        card: "0 1px 3px rgba(0, 0, 0, 0.1)",
-      },
-      spacing: {
-        1: "0.25rem", // 4px
-        2: "0.5rem", // 8px
-        3: "0.75rem", // 12px
-        4: "1rem", // 16px
-        5: "1.25rem", // 20px
-        6: "1.5rem", // 24px
-        8: "2rem", // 32px
-        10: "2.5rem", // 40px
-        12: "3rem", // 48px
-        16: "4rem", // 64px
-        20: "5rem", // 80px
-        24: "6rem", // 96px
-        32: "8rem", // 128px
-        40: "10rem", // 160px
-        48: "12rem", // 192px
-        56: "14rem", // 224px
-        64: "16rem", // 256px
       },
       screens: {
         xs: "0px",
@@ -108,16 +83,6 @@ module.exports = {
         md: "940px",
         lg: "1024px",
         xl: "1280px",
-      },
-      width: {
-        "icon-small": "1rem", // 16px
-        "icon-medium": "1.5rem", // 24px
-        "icon-large": "2rem", // 32px
-      },
-      height: {
-        "icon-small": "1rem", // 16px
-        "icon-medium": "1.5rem", // 24px
-        "icon-large": "2rem", // 32px
       },
     },
   },
