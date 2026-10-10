@@ -74,8 +74,9 @@ on GitHub Packages (restricted). Storybook is the development and documentation 
   - Shadow: `shadow-card`; icon sizes: `w/h-icon-{small,medium,large}`
   - Font sizes are overridden: `sm` 14px, `base` 16px, `lg` 20px, `xl` 24px
   - Breakpoints: `xs` 0, `sm` 640, **`md` 940** (not Tailwind's 768), `lg` 1024, `xl` 1280
-- Don't use `text-{25..950}` yet: they point to `--gray-*` CSS variables that are not
-  loaded (see Known limitations), so they render no color.
+- Gray scale: the `--gray-*` variables live in `src/styles/tailwind.css` and the config
+  exposes them under the `text` color key, so the classes are `text-text-{25..950}`
+  (not `text-{25..950}`).
 - Icons: react-feather, registered in `Atoms/Icon/iconsMap.ts`.
 - `tailwindcss` and `tailwind-variants` are peerDependencies; keep them there.
   Consumers must import `@NicolasSancho/storybook-core/dist/styles/tailwind.css`.
@@ -162,12 +163,4 @@ trailingComma es5, 2 spaces). Beyond that, in new or modified code:
 
 ## Known limitations (do not fix unless requested)
 
-- `--gray-*` CSS variables (`src/components/styles/variables.scss`) are not imported
-  anywhere, so the `text-{25..950}` tokens render no color.
-- Array-index keys in ProductGrid, ProductDetails and Breadcrumbs.
-- Header builds `className` by string concatenation instead of passing it to `tv()`.
-- RadioButton's `form-radio` class has no effect (`@tailwindcss/forms` isn't installed).
-- `eslint-plugin-react-hooks` is registered but none of its rules are enabled.
-- `.eslintrc.json` is an unused leftover; `eslint.config.js` is the real config.
-- `plop-templates/componentMock.tsx.hbs` generates a `.ts` file despite its name.
-- `Button.stories.ts` is `.ts` while all other stories are `.tsx`.
+None at the moment.
