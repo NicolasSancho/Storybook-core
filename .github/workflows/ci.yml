@@ -1,10 +1,10 @@
 name: CI
 
+# Runs on PRs and is called by main.yml before publishing, so pushes to main are not
+# a trigger here (they would run the checks twice).
 on:
   pull_request:
-  push:
-    branches:
-      - main
+  workflow_call:
 
 # Cancel superseded runs of the same PR; never cancel runs on main
 concurrency:
