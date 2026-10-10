@@ -3,7 +3,10 @@ import { tv } from "tailwind-variants";
 
 export interface TextProps {
   as?: React.ElementType;
-  color?: "lighter" | "light" | "base" | "dark" | "darker" | "primary" | "secondary";
+  /**
+   * Text color. Every option reaches the 4.5:1 text contrast on white.
+   */
+  color?: "base" | "dark" | "darker" | "primary" | "secondary";
   size?: "small" | "medium" | "large";
   weight?: "normal" | "bold" | "semibold";
   underline?: boolean;
@@ -15,11 +18,9 @@ const textStyles = tv({
   base: "font-sans",
   variants: {
     color: {
-      lighter: "text-gray-100",
-      light: "text-gray-300",
-      base: "text-gray-500",
-      dark: "text-gray-700",
-      darker: "text-gray-900",
+      base: "text-neutral-500",
+      dark: "text-neutral-700",
+      darker: "text-neutral-900",
       primary: "text-primary",
       secondary: "text-secondary",
     },

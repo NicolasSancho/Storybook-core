@@ -11,12 +11,12 @@ export const primaryLabel: LabelProps = {
   htmlFor: "input-id",
   children: "Primary Label",
   className: "",
-  color: "dark",
+  color: "primary",
 };
 
 export const secondaryLabel: LabelProps = {
   htmlFor: "input-id",
   children: "Secondary Label",
   className: "",
-  color: "light",
+  color: "secondary",
 };
