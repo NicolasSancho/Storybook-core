@@ -22,7 +22,8 @@ on GitHub Packages (restricted). Storybook is the development and documentation 
 
 ## Commands
 
-- `npm run storybook`: dev server on :6006
+- `npm run storybook`: dev server on :6006. Restart it after editing `tailwind.config.js` or
+  adding a file whose classes are used nowhere else; the compiled CSS can be stale until then.
 - `npm run build-storybook`: static Storybook build (CI runs this)
 - `npm run build`: cleans `dist/`, `tsc -p tsconfig.build.json` → `dist/` (stories and
   mocks excluded), then Tailwind CLI → `dist/styles/tailwind.css`.
@@ -43,6 +44,9 @@ on GitHub Packages (restricted). Storybook is the development and documentation 
   - `<Name>.stories.tsx`: `title: "<Type>/<Name>"`, `tags: ["autodocs"]`, args from the mock
   - `<camelName>Mock.ts`: `mocked<Name>...` objects typed as `<Name>Props`
 - Layouts components are created by hand (Plop doesn't offer that type).
+- `src/components/Foundations/<Topic>/` holds documentation-only stories (e.g. `Colors`): a
+  `<Topic>.stories.tsx` with no component, no mock, no `src/index.js` export. Keep the values
+  it shows in sync with `tailwind.config.js`.
 - Every new component must be exported manually from `src/index.js` (Plop doesn't do it).
   `src/index.js` is plain JS (`allowJs`) and also imports `./styles/tailwind.css`.
 - Components import each other via relative paths (`../../Atoms/Button/Button`).
@@ -67,16 +71,24 @@ on GitHub Packages (restricted). Storybook is the development and documentation 
     are read as utilities and can silently remove real ones. Avoid them in mocks and
     `className` props.
 - Use the tokens in `tailwind.config.js`:
-  - Colors: `primary` / `secondary` (+ `-darker`). `secondary-lighter` is the original
-    brand orange and fails contrast with white text: decorative use only.
+  - Colors: `primary` (also `-50..950`; `-600` is the lightest step usable as text on
+    white) and `secondary` (+ `-darker`). `secondary-lighter` is the original brand orange
+    and fails contrast with white text: decorative use only. Semantic: `danger`, `success`,
+    `warning`, each with `DEFAULT` (text/icons) and `subtle` (background). Use them instead
+    of Tailwind's `red-*` / `green-*` / `yellow-*`, and never rely on color alone.
+  - Neutrals: `neutral-{25..950}`; never Tailwind's default `gray-*`. Jobs: 900 body text,
+    600 secondary text, 500 placeholder, 400 input borders (needs 3:1), 200 dividers and
+    card borders, 50 page background. 100 to 300 are never text.
   - Radius: `rounded-btn`, `rounded-card` (existing components still use `rounded` /
     `rounded-lg`; use tokens in new code, don't migrate old code unless asked)
   - Shadow: `shadow-card`; icon sizes: `w/h-icon-{small,medium,large}`
   - Font sizes are overridden: `sm` 14px, `base` 16px, `lg` 20px, `xl` 24px
   - Breakpoints: `xs` 0, `sm` 640, **`md` 940** (not Tailwind's 768), `lg` 1024, `xl` 1280
-- Gray scale: the `--gray-*` variables live in `src/styles/tailwind.css` and the config
-  exposes them under the `text` color key, so the classes are `text-text-{25..950}`
-  (not `text-{25..950}`).
+- Gray scale: the `--gray-*` variables live in `src/styles/tailwind.css`. The config exposes
+  them as `neutral-{25..950}` (supports opacity, e.g. `bg-neutral-900/50`) and, for
+  backward compatibility, under the `text` color key (`text-text-{25..950}`). Use `neutral`
+  in new code.
+- Every `Text` color option must reach 4.5:1 on white; don't add pale shades as text colors.
 - Icons: react-feather, registered in `Atoms/Icon/iconsMap.ts`.
 - `tailwindcss` and `tailwind-variants` are peerDependencies; keep them there.
   Consumers must import `@NicolasSancho/storybook-core/dist/styles/tailwind.css`.
