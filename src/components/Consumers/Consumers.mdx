@@ -4,22 +4,15 @@ import { Meta } from "@storybook/addon-docs/blocks";
 
 # Using the library
 
-`@NicolasSancho/storybook-core` is a set of accessible React components styled with Tailwind CSS v4.
+`@nicolassancho/storybook-core` is a set of accessible React components styled with Tailwind CSS v4.
 This page covers what an app needs to consume it, with examples for the Next.js App Router.
 
 ## Install
 
-The package is published to GitHub Packages. Point the scope at that registry and authenticate with
-a GitHub token that has the `read:packages` permission:
-
-```ini
-# .npmrc
-@NicolasSancho:registry=https://npm.pkg.github.com
-//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
-```
+The package is public on npm, so no registry or token setup is needed:
 
 ```bash
-npm install @NicolasSancho/storybook-core
+npm install @nicolassancho/storybook-core
 ```
 
 The library expects these peer dependencies in the app: `react` and `react-dom` (18.3.1 or newer,
@@ -37,8 +30,8 @@ library's compiled files for classes:
 ```css
 /* app/globals.css */
 @import "tailwindcss";
-@import "@NicolasSancho/storybook-core/styles/theme.css";
-@source "../node_modules/@NicolasSancho/storybook-core/dist";
+@import "@nicolassancho/storybook-core/styles/theme.css";
+@source "../node_modules/@nicolassancho/storybook-core/dist";
 ```
 
 The `@source` line is required. Tailwind skips `node_modules` when it looks for classes, so without it
@@ -49,7 +42,7 @@ the components render unstyled. Adjust the relative path to where your CSS file 
 Import components from the package root. Unused components are dropped from your bundle.
 
 ```tsx
-import { Button, Text } from "@NicolasSancho/storybook-core";
+import { Button, Text } from "@nicolassancho/storybook-core";
 
 export default function Page() {
   return (
@@ -71,7 +64,7 @@ image renders a plain `<img>` by default. To use your framework's components, pa
 ```tsx
 import Image from "next/image";
 import Link from "next/link";
-import { Breadcrumbs, ProductGrid } from "@NicolasSancho/storybook-core";
+import { Breadcrumbs, ProductGrid } from "@nicolassancho/storybook-core";
 
 export default function Page() {
   return (
@@ -137,7 +130,7 @@ server page:
 "use client";
 
 import { useState } from "react";
-import { Button, SearchInput, Text } from "@NicolasSancho/storybook-core";
+import { Button, SearchInput, Text } from "@nicolassancho/storybook-core";
 
 export function SearchBar() {
   const [query, setQuery] = useState("");
@@ -157,8 +150,8 @@ Prefer a real link over a handler when the action is navigation: a link needs no
 
 ## What the package exposes
 
-- `@NicolasSancho/storybook-core`: every component and its types.
-- `@NicolasSancho/storybook-core/styles/theme.css`: the design tokens.
+- `@nicolassancho/storybook-core`: every component and its types.
+- `@nicolassancho/storybook-core/styles/theme.css`: the design tokens.
 
 Other paths, such as files inside `dist/`, are not part of the public API. The package is built for
 bundlers (Next.js, Vite, webpack).

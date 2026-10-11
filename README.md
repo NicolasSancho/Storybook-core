@@ -1,17 +1,17 @@
 # Storybook-core
 
 An accessible React component library styled with Tailwind CSS v4 and `tailwind-variants`, and
-documented in Storybook. It is published to GitHub Packages as `@NicolasSancho/storybook-core`.
+documented in Storybook. It is published to npm as `@nicolassancho/storybook-core`.
 
 ## Using the library
 
-Install `@NicolasSancho/storybook-core` from GitHub Packages, then add the design tokens and the
+Install `@nicolassancho/storybook-core` from npm, then add the design tokens and the
 source scan to your Tailwind v4 stylesheet:
 
 ```css
 @import "tailwindcss";
-@import "@NicolasSancho/storybook-core/styles/theme.css";
-@source "../node_modules/@NicolasSancho/storybook-core/dist";
+@import "@nicolassancho/storybook-core/styles/theme.css";
+@source "../node_modules/@nicolassancho/storybook-core/dist";
 ```
 
 The library ships its design tokens (colors, font sizes, breakpoints), not compiled CSS: your app's
@@ -19,7 +19,7 @@ Tailwind generates the classes, and `@source` is what makes it scan the library.
 `tailwindcss` (v4), `tailwind-variants` (v3) and `tailwind-merge` (v3) are peer dependencies.
 
 ```tsx
-import { Button } from "@NicolasSancho/storybook-core";
+import { Button } from "@nicolassancho/storybook-core";
 
 const App = () => <Button variant="primary">Click Me</Button>;
 ```
