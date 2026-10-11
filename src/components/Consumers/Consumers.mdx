@@ -1,0 +1,171 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Consumers" />
+
+# Using the library
+
+`@NicolasSancho/storybook-core` is a set of accessible React components styled with Tailwind CSS v4.
+This page covers what an app needs to consume it, with examples for the Next.js App Router.
+
+## Install
+
+The package is published to GitHub Packages. Point the scope at that registry and authenticate with
+a GitHub token that has the `read:packages` permission:
+
+```ini
+# .npmrc
+@NicolasSancho:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
+```
+
+```bash
+npm install @NicolasSancho/storybook-core
+```
+
+The library expects these peer dependencies in the app: `react` and `react-dom` (18.3.1 or newer,
+below 20), `tailwindcss` (v4), `tailwind-variants` (v3) and `tailwind-merge` (v3).
+
+```bash
+npm install tailwindcss tailwind-variants tailwind-merge
+```
+
+## Set up the styles
+
+The library ships its design tokens, not compiled CSS. Import the tokens and tell Tailwind to scan the
+library's compiled files for classes:
+
+```css
+/* app/globals.css */
+@import "tailwindcss";
+@import "@NicolasSancho/storybook-core/styles/theme.css";
+@source "../node_modules/@NicolasSancho/storybook-core/dist";
+```
+
+The `@source` line is required. Tailwind skips `node_modules` when it looks for classes, so without it
+the components render unstyled. Adjust the relative path to where your CSS file lives.
+
+## Quick start
+
+Import components from the package root. Unused components are dropped from your bundle.
+
+```tsx
+import { Button, Text } from "@NicolasSancho/storybook-core";
+
+export default function Page() {
+  return (
+    <>
+      <Text as="h1" size="large" weight="bold">
+        Hello
+      </Text>
+      <Button>Shop now</Button>
+    </>
+  );
+}
+```
+
+## Links and images
+
+Anything that navigates takes an `href`, and renders a plain `<a>` by default. Anything that shows an
+image renders a plain `<img>` by default. To use your framework's components, pass them in:
+
+```tsx
+import Image from "next/image";
+import Link from "next/link";
+import { Breadcrumbs, ProductGrid } from "@NicolasSancho/storybook-core";
+
+export default function Page() {
+  return (
+    <>
+      <Breadcrumbs
+        LinkComponent={Link}
+        items={[
+          { label: "Home", href: "/" },
+          { label: "Shirts", href: "/shirts" },
+          { label: "Basic T-Shirt" },
+        ]}
+      />
+      <ProductGrid
+        LinkComponent={Link}
+        ImageComponent={Image}
+        products={[
+          {
+            id: "basic-t-shirt",
+            title: "Basic T-Shirt",
+            brand: "Acme",
+            price: "$19.99",
+            href: "/products/basic-t-shirt",
+            imageUrl: "/basic-t-shirt.jpg",
+            imageProps: { width: 300, height: 400, sizes: "25vw" },
+          },
+        ]}
+      />
+    </>
+  );
+}
+```
+
+- `LinkComponent` receives `href`, `className` and `children` (plus `onClick` where the component has
+  one). `ImageComponent` receives `src`, `alt`, `className` and the attributes in `imageProps`.
+- A product card with an `href` is a real link stretched over the whole card, so middle-click, new tab
+  and crawlable URLs work. Its image is decorative (`alt=""`), because the title names the card.
+- `ProductGrid` forwards its `LinkComponent` and `ImageComponent` to every card. A product can bring
+  its own.
+- Pass the imported component directly, or define your own outside the render function. A component
+  defined inline is a new component on every render, so React remounts it and the links lose their
+  state.
+
+```tsx
+// Remounts on every render:
+const Bad = () => <Breadcrumbs LinkComponent={(props) => <Link {...props} />} items={items} />;
+
+// Stable:
+const Good = () => <Breadcrumbs LinkComponent={Link} items={items} />;
+```
+
+## Next.js App Router
+
+The components hold no state and use no browser APIs, so they carry no `"use client"` directive and
+render from Server Components. Static usage needs nothing special: the examples above are Server
+Components. `Header` and its `Header.Left`, `Header.Center` and `Header.Right` slots work there too.
+
+An event handler (`onClick`, `onChange`) is a function, and Next cannot pass a function from a Server
+Component. Keep the interactive part in a small Client Component in your app, and render it from the
+server page:
+
+```tsx
+// app/search-bar.tsx
+"use client";
+
+import { useState } from "react";
+import { Button, SearchInput, Text } from "@NicolasSancho/storybook-core";
+
+export function SearchBar() {
+  const [query, setQuery] = useState("");
+  const [submitted, setSubmitted] = useState("");
+
+  return (
+    <>
+      <SearchInput value={query} onChange={(event) => setQuery(event.target.value)} />
+      <Button onClick={() => setSubmitted(query)}>Search</Button>
+      {submitted && <Text>Searching for {submitted}</Text>}
+    </>
+  );
+}
+```
+
+Prefer a real link over a handler when the action is navigation: a link needs no JavaScript.
+
+## What the package exposes
+
+- `@NicolasSancho/storybook-core`: every component and its types.
+- `@NicolasSancho/storybook-core/styles/theme.css`: the design tokens.
+
+Other paths, such as files inside `dist/`, are not part of the public API. The package is built for
+bundlers (Next.js, Vite, webpack).
+
+## Accessibility
+
+- Give inputs an accessible name: `SearchInput` falls back to "Search", and you can pass your own
+  `aria-label` or a visible `Label`.
+- Icons are decorative by default. Pass `ariaLabel` when an icon carries meaning on its own.
+- Use `alt=""` for purely decorative images, and a real description otherwise.

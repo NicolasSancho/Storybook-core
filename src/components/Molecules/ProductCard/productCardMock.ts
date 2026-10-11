@@ -31,3 +31,9 @@ export const mockedProductCardNoButton = {
   ...mockedProductDefault,
   title: "Display Only Product",
 };
+
+export const mockedProductCardLink = {
+  ...mockedProductDefault,
+  href: "/products/basic-t-shirt",
+  onClick: () => {},
+};

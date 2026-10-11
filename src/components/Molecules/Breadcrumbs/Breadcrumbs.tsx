@@ -12,7 +12,16 @@ export interface BreadcrumbsProps {
     label: string;
     href?: string;
   }[];
-  LinkComponent: React.ElementType<{ to: string; children: React.ReactNode; className?: string }>;
+  /**
+   * Component used to render each link. Receives `href`, `className` and `children`, so a
+   * framework link (e.g. `next/link`) can be passed directly. Defaults to a plain `<a>`.
+   * Define it outside the render function: an inline definition remounts the links.
+   */
+  LinkComponent?: React.ElementType<{
+    href: string;
+    children: React.ReactNode;
+    className?: string;
+  }>;
   className?: string;
 }
 
@@ -27,7 +36,11 @@ const breadcrumbsStyles = tv({
   },
 });
 
-export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items, LinkComponent, className }) => {
+export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
+  items,
+  LinkComponent = "a",
+  className,
+}) => {
   const styles = breadcrumbsStyles();
 
   return (
@@ -51,7 +64,7 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items, LinkComponent, 
           );
 
           return (
-            <li key={href ?? label} className={styles.item()}>
+            <li key={`${label}-${href ?? ""}`} className={styles.item()}>
               {!isFirst && (
                 <span className={styles.separator()} aria-hidden="true">
                   /
@@ -62,7 +75,7 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items, LinkComponent, 
                   {content}
                 </span>
               ) : (
-                <LinkComponent to={href || "/"} className={styles.link()}>
+                <LinkComponent href={href || "/"} className={styles.link()}>
                   {content}
                 </LinkComponent>
               )}

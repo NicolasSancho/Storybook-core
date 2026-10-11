@@ -8,6 +8,16 @@ export interface ProductGridProps {
   columns?: 2 | 3 | 4 | 6;
   gap?: "small" | "medium" | "large";
   className?: string;
+  /**
+   * Link component used by every card that has an `href`. A product can override it with
+   * its own `LinkComponent`. See `ProductCard`.
+   */
+  LinkComponent?: ProductCardProps["LinkComponent"];
+  /**
+   * Image component used by every card. A product can override it with its own
+   * `ImageComponent`. See `ProductCard`.
+   */
+  ImageComponent?: ProductCardProps["ImageComponent"];
   getOnProductClick?: (product: ProductCardProps, index: number) => () => void;
 }
 
@@ -20,6 +30,8 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
   columns = 3,
   gap = "medium",
   className,
+  LinkComponent,
+  ImageComponent,
   getOnProductClick = () => undefined, // optional click handler for each product card
 }) => {
   return (
@@ -27,6 +39,8 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
       {products.map((product, idx) => (
         <ProductCard
           key={product.id ?? product.title}
+          LinkComponent={LinkComponent}
+          ImageComponent={ImageComponent}
           {...product}
           onProductClick={getOnProductClick?.(product, idx)}
         />

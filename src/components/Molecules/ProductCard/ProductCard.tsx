@@ -1,6 +1,7 @@
 import React from "react";
 import { tv } from "tailwind-variants";
 import { Button } from "../../Atoms/Button/Button";
+import { Image, ImageProps } from "../../Atoms/Image/Image";
 import { Text } from "../../Atoms/Text/Text";
 
 export interface ProductCardProps {
@@ -13,20 +14,53 @@ export interface ProductCardProps {
   tag?: string;
   buttonLabel?: string;
   onClick?: () => void;
+  /**
+   * Handler for opening the product. Without `href` the title renders as a stretched button.
+   * With `href` it is passed to the link as `onClick`.
+   */
   onProductClick?: () => void;
+  /**
+   * Product URL. The title renders as a real link stretched over the whole card, so
+   * middle-click, new tab and crawlable links work. Takes precedence over a button.
+   */
+  href?: string;
+  /**
+   * Component used to render the link when `href` is set. Receives `href`, `onClick`,
+   * `className` and `children`, so a framework link (e.g. `next/link`) can be passed
+   * directly. Defaults to a plain `<a>`. Define it outside the render function: an inline
+   * definition remounts the link.
+   */
+  LinkComponent?: React.ElementType<{
+    href: string;
+    onClick?: () => void;
+    children: React.ReactNode;
+    className?: string;
+  }>;
+  /**
+   * Component used to render the product image. Receives `src`, `alt`, `className` and the
+   * attributes in `imageProps`, so a framework image (e.g. `next/image`) can be passed
+   * directly. Defaults to a plain `<img>`. Define it outside the render function: an inline
+   * definition remounts the image.
+   */
+  ImageComponent?: ImageProps["ImageComponent"];
+  /**
+   * Extra `<img>` attributes for the product image, such as `srcSet`, `sizes`, `width`,
+   * `height` or `loading`. The image is decorative (`alt=""`): the title already names the card.
+   */
+  imageProps?: Omit<ImageProps, "src" | "alt" | "className" | "ImageComponent">;
   className?: string;
 }
 
 const productCardStyles = tv({
   base: "relative rounded-lg border border-neutral-200 shadow-xs flex flex-col overflow-hidden",
   slots: {
-    imageWrapper: "relative",
-    image: "w-full aspect-3/4 object-cover",
+    imageWrapper: "relative aspect-3/4",
+    image: "w-full h-full object-cover",
     tag: "absolute top-2 left-2 bg-neutral-950 text-white text-xs px-2 py-1 rounded-sm",
     body: "p-2 flex flex-col",
     productInfo: "flex flex-col",
     title: "text-sm font-medium",
-    titleButton:
+    titleAction:
       "text-left after:absolute after:inset-0 after:content-[''] focus-visible:outline-hidden focus-visible:after:ring-2 focus-visible:after:ring-primary focus-visible:after:rounded-lg",
     subTitle: "text-sm text-neutral-600",
     price: "text-sm text-neutral-600",
@@ -43,26 +77,45 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   buttonLabel = "Add to Cart",
   onClick = undefined,
   onProductClick,
+  href,
+  LinkComponent = "a",
+  ImageComponent,
+  imageProps,
   className,
 }) => {
   const styles = productCardStyles();
+
+  let titleContent: React.ReactNode = title;
+  if (href) {
+    titleContent = (
+      <LinkComponent href={href} onClick={onProductClick} className={styles.titleAction()}>
+        {title}
+      </LinkComponent>
+    );
+  } else if (onProductClick) {
+    titleContent = (
+      <button type="button" onClick={onProductClick} className={styles.titleAction()}>
+        {title}
+      </button>
+    );
+  }
 
   return (
     <div className={styles.base({ className })}>
       <div className={styles.body()}>
         <div className={styles.imageWrapper()}>
-          <img src={imageUrl} alt="" className={styles.image()} />
+          <Image
+            src={imageUrl}
+            alt=""
+            ImageComponent={ImageComponent}
+            className={styles.image()}
+            {...imageProps}
+          />
           {tag && <span className={styles.tag()}>{tag}</span>}
         </div>
         <div className={styles.productInfo()}>
           <Text as="h3" size="small" weight="semibold" className={styles.title()}>
-            {onProductClick ? (
-              <button type="button" onClick={onProductClick} className={styles.titleButton()}>
-                {title}
-              </button>
-            ) : (
-              title
-            )}
+            {titleContent}
           </Text>
           <Text as="p" size="small" color="base" className={styles.subTitle()}>
             {brand}

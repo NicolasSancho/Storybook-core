@@ -1,10 +1,22 @@
 {
   "name": "@NicolasSancho/storybook-core",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "description": "Accessible React + Tailwind component library built with tailwind-variants and documented in Storybook.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./styles/theme.css": "./dist/styles/theme.css",
+    "./package.json": "./package.json"
+  },
   "files": [
     "dist"
   ],
