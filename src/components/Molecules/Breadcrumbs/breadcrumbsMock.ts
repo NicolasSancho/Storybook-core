@@ -2,11 +2,11 @@ import React from "react";
 import { BreadcrumbsProps } from "./Breadcrumbs";
 
 // Mock LinkComponent for Storybook stories
-const MockLinkComponent = ({ to, children }: { to: string; children: React.ReactNode }) =>
+const MockLinkComponent = ({ href, children }: { href: string; children: React.ReactNode }) =>
   React.createElement(
     "a",
     {
-      href: to,
+      href,
       className: "text-primary hover:text-primary-600",
     },
     children
