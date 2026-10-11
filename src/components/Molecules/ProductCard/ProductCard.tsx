@@ -1,6 +1,7 @@
 import React from "react";
 import { tv } from "tailwind-variants";
 import { Button } from "../../Atoms/Button/Button";
+import { Image, ImageProps } from "../../Atoms/Image/Image";
 import { Text } from "../../Atoms/Text/Text";
 
 export interface ProductCardProps {
@@ -35,14 +36,26 @@ export interface ProductCardProps {
     children: React.ReactNode;
     className?: string;
   }>;
+  /**
+   * Component used to render the product image. Receives `src`, `alt`, `className` and the
+   * attributes in `imageProps`, so a framework image (e.g. `next/image`) can be passed
+   * directly. Defaults to a plain `<img>`. Define it outside the render function: an inline
+   * definition remounts the image.
+   */
+  ImageComponent?: ImageProps["ImageComponent"];
+  /**
+   * Extra `<img>` attributes for the product image, such as `srcSet`, `sizes`, `width`,
+   * `height` or `loading`. The image is decorative (`alt=""`): the title already names the card.
+   */
+  imageProps?: Omit<ImageProps, "src" | "alt" | "className" | "ImageComponent">;
   className?: string;
 }
 
 const productCardStyles = tv({
   base: "relative rounded-lg border border-neutral-200 shadow-xs flex flex-col overflow-hidden",
   slots: {
-    imageWrapper: "relative",
-    image: "w-full aspect-3/4 object-cover",
+    imageWrapper: "relative aspect-3/4",
+    image: "w-full h-full object-cover",
     tag: "absolute top-2 left-2 bg-neutral-950 text-white text-xs px-2 py-1 rounded-sm",
     body: "p-2 flex flex-col",
     productInfo: "flex flex-col",
@@ -66,6 +79,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   onProductClick,
   href,
   LinkComponent = "a",
+  ImageComponent,
+  imageProps,
   className,
 }) => {
   const styles = productCardStyles();
@@ -89,7 +104,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({
     <div className={styles.base({ className })}>
       <div className={styles.body()}>
         <div className={styles.imageWrapper()}>
-          <img src={imageUrl} alt="" className={styles.image()} />
+          <Image
+            src={imageUrl}
+            alt=""
+            ImageComponent={ImageComponent}
+            className={styles.image()}
+            {...imageProps}
+          />
           {tag && <span className={styles.tag()}>{tag}</span>}
         </div>
         <div className={styles.productInfo()}>
