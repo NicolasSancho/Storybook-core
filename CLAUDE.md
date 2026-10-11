@@ -48,6 +48,9 @@ on GitHub Packages (restricted). Storybook is the development and documentation 
 - `src/components/Foundations/<Topic>/` holds documentation-only stories (e.g. `Colors`): a
   `<Topic>.stories.tsx` with no component, no mock, no `src/index.js` export. Keep the values
   it shows in sync with `src/styles/theme.css`.
+- `src/components/Consumers/Consumers.mdx` is the consumer guide: a docs-only MDX page with no
+  component. Update it in the same pass whenever a consumer-facing convention changes (CSS setup,
+  injection props, server/client rules, package exports).
 - Every new component must be exported manually from `src/index.js` (Plop doesn't do it).
   `src/index.js` is plain JS (`allowJs`) and imports no CSS.
 - Components import each other via relative paths (`../../Atoms/Button/Button`).
