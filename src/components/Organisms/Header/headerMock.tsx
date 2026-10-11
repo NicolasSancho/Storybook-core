@@ -3,12 +3,18 @@ import { Header } from "./Header";
 import { Image } from "../../Atoms/Image/Image";
 
 // Standalone mock components
-const Logo: React.FC = () => (
-  <Image src="/src/components/assets/logo.png" alt="Logo" className="h-8 w-auto" />
-);
+// Self-contained placeholder mark (inline SVG), so the mock needs no image file.
+const logoSrc = `data:image/svg+xml;utf8,${encodeURIComponent(
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+    <rect width="32" height="32" rx="6" fill="#00548a"/>
+    <path d="M9 22l7-13 7 13h-4l-3-6-3 6H9Z" fill="#ffffff"/>
+  </svg>`
+)}`;
+
+const Logo: React.FC = () => <Image src={logoSrc} alt="Acme logo" className="h-8 w-auto" />;
 
 const Brand: React.FC = () => (
-  <span className="whitespace-nowrap text-xl font-bold text-neutral-900">ZARA</span>
+  <span className="whitespace-nowrap text-xl font-bold text-neutral-900">ACME</span>
 );
 
 const CartButton: React.FC = () => (
