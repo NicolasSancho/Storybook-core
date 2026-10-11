@@ -2,6 +2,20 @@
 
 This is a Storybook components library that is going to be consumed by other internal projects. It uses Tailwind CSS for styling.
 
+## Using the library
+
+Install `@NicolasSancho/storybook-core` from GitHub Packages, then add the tokens and the source
+scan to your Tailwind v4 stylesheet:
+
+```css
+@import "tailwindcss";
+@import "@NicolasSancho/storybook-core/styles/theme.css";
+@source "../node_modules/@NicolasSancho/storybook-core/dist";
+```
+
+The full guide (install, links and images, the Next.js App Router) is the **Consumers** page in
+Storybook.
+
 ## Installation
 
 To install the dependencies, run:
