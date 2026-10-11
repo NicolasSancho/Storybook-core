@@ -44,7 +44,7 @@ on GitHub Packages (restricted). Storybook is the development and documentation 
   - `<Name>.tsx`: `export interface <Name>Props` + `export const <Name>: React.FC<<Name>Props>`
   - `<Name>.stories.tsx`: `title: "<Type>/<Name>"`, `tags: ["autodocs"]`, args from the mock
   - `<camelName>Mock.ts`: `mocked<Name>...` objects typed as `<Name>Props`
-- Layouts components are created by hand (Plop doesn't offer that type).
+- Layout components are created by hand (Plop doesn't offer that type).
 - `src/components/Foundations/<Topic>/` holds documentation-only stories (e.g. `Colors`): a
   `<Topic>.stories.tsx` with no component, no mock, no `src/index.js` export. Keep the values
   it shows in sync with `src/styles/theme.css`.
@@ -52,6 +52,25 @@ on GitHub Packages (restricted). Storybook is the development and documentation 
   `src/index.js` is plain JS (`allowJs`) and imports no CSS.
 - Components import each other via relative paths (`../../Atoms/Button/Button`).
 - Named exports only; no default exports from component files.
+
+## Server and client components
+
+The library is consumed from Next.js (App Router), so keep it usable from Server Components.
+
+- Components are presentational and stateless: no `useState`, `useEffect`, context or browser
+  APIs, and therefore no `"use client"` directive. Verified in a Next.js smoke test: every
+  component renders from a Server Component, and `useId` (RadioGroup) works on the server.
+- Add `"use client"` (as the first statement of the file) only when a component starts using
+  state, effects, context or browser APIs. Do not add it just because a component accepts a
+  handler: a directive does not let a Server Component pass functions, and it ships
+  JavaScript for components that would otherwise render with none.
+- Never make a component with static sub-components (`Header.Left`, `Header.Center`,
+  `Header.Right`) a client component: dotting into a client module from a Server Component
+  returns `undefined`. Export the parts as separate named exports first.
+- Handlers and function props (`onClick`, `onChange`, `LinkComponent`) cannot be passed from a
+  Server Component. Consumers wrap them in their own `"use client"` file. Keep every handler
+  prop optional so the static usage still renders on the server.
+- Prefer real links (`href`) over handlers for navigation: they need no JavaScript.
 
 ## Styling
 
@@ -76,12 +95,14 @@ on GitHub Packages (restricted). Storybook is the development and documentation 
     consumer's `className` (both classes stay). Don't add them; colors are safe.
 - Use the tokens in `src/styles/theme.css` (Tailwind v4 `@theme`; there is no
   `tailwind.config.js`):
-  - Colors: `primary` (also `-50..950`; `-600` is the lightest step usable as text on
-    white) and `secondary` (also `-50..950`; `-700` is `DEFAULT` and the lightest step
-    usable as text on white; `-800` is `darker`). `secondary-lighter` is the original brand
-    orange and fails contrast with white text: decorative use only. Semantic: `danger`, `success`,
-    `warning`, each with `DEFAULT` (text/icons) and `subtle` (background). Use them instead
-    of Tailwind's `red-*` / `green-*` / `yellow-*`, and never rely on color alone.
+  - Brand colors:
+    - `primary` (also `-50..950`; `-600` is the lightest step usable as text on white).
+    - `secondary` (also `-50..950`; `-700` is `DEFAULT` and the lightest step usable as text on
+      white; `-800` is `darker`). `secondary-lighter` is the original brand orange and fails
+      contrast with white text: decorative use only.
+  - Semantic colors: `danger`, `success`, `warning`, each with `DEFAULT` (text/icons) and
+    `subtle` (background). Use them instead of Tailwind's `red-*` / `green-*` / `yellow-*`,
+    and never rely on color alone.
   - Neutrals: `neutral-{25..950}`; never Tailwind's default `gray-*`. Jobs: 900 body text,
     600 secondary text, 500 placeholder, 400 input borders (needs 3:1), 200 dividers and
     card borders, 50 page background. 100 to 300 are never text.
@@ -122,9 +143,9 @@ conformance. Do not claim WCAG conformance without appropriate testing.
 - Hover styles use `enabled:hover:*` so disabled controls do not react to hover.
 - Icons are decorative (`aria-hidden`) by default. Pass `ariaLabel` when an icon conveys
   meaning on its own. Accessible-name props are named `ariaLabel` in Icon and CartIcon.
-- Icon-only controls must have an accessible name using `aria-label` or visually hidden
-  (`sr-only`) text when the element is controlled by the consumer (e.g. Breadcrumbs'
-  `LinkComponent` may not forward `aria-*` props).
+- Icon-only controls must have an accessible name: `aria-label`, or visually hidden (`sr-only`)
+  text when the element is rendered by the consumer (e.g. Breadcrumbs' `LinkComponent` may not
+  forward `aria-*` props).
 - Inputs need an accessible name and must expose invalid states appropriately, including
   `aria-invalid` when applicable. Never hard-code `id` values; use `useId()` or another
   appropriate mechanism to ensure uniqueness.
@@ -194,12 +215,12 @@ trailingComma es5, 2 spaces). Beyond that, in new or modified code:
   fails on a duplicate version:
   `npm version <patch|minor> --no-git-tag-version` (updates package.json and the lockfile).
   Use at least `minor` when a change is visible to consumers (colors, behavior, new props).
-- `.github/workflows/ci.yml` runs on every PR and is called by `main.yml` on every push
-  to `main` (it has no push trigger of its own, so the checks do not run twice). On PRs
-  it fails if the `package.json` version equals the one on the base branch, then
-  `npm ci` (which triggers `prepare` → `npm run build`), `npx tsc --noEmit`,
-  `npm run lint`, `npx prettier --check ./src`, `npm run build-storybook` and `npm test`.
-  Keep it green before merging.
+- `.github/workflows/ci.yml` runs on every PR and is called by `main.yml` on every push to
+  `main` (it has no push trigger of its own, so the checks do not run twice). Keep it green
+  before merging. It runs, in order:
+  - On PRs only: fails if the `package.json` version equals the one on the base branch.
+  - `npm ci` (which triggers `prepare` → `npm run build`), `npx tsc --noEmit`, `npm run lint`,
+    `npx prettier --check ./src`, `npm run build-storybook` and `npm test`.
 - After the checks pass, the publish job runs `npm ci`, `npm run build-storybook` and
   `npm publish`.
 
