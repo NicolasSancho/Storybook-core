@@ -1,5 +1,6 @@
+import type { ReactNode } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { expect, within } from "storybook/test";
+import { expect, fn, within } from "storybook/test";
 import { Breadcrumbs } from "./Breadcrumbs";
 import {
   mockedBreadcrumbsDefault,
@@ -23,7 +24,17 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+// Spy standing in for a framework link (e.g. next/link): records the props it receives.
+const linkSpy = fn(
+  ({ href, children, className }: { href: string; children: ReactNode; className?: string }) => (
+    <a href={href} className={className}>
+      {children}
+    </a>
+  )
+);
+
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
+// No LinkComponent here: the items render as plain anchors, so no setup is needed.
 export const Default: Story = {
   args: mockedBreadcrumbsDefault,
   play: async ({ canvasElement }) => {
@@ -37,6 +48,29 @@ export const Default: Story = {
     // The last item is the current page: plain text, not a link.
     await expect(canvas.queryByRole("link", { name: "Clothing" })).not.toBeInTheDocument();
     await expect(canvas.getByText("Clothing")).toHaveAttribute("aria-current", "page");
+  },
+};
+
+export const CustomLink: Story = {
+  args: { ...mockedBreadcrumbsDefault, LinkComponent: linkSpy },
+  beforeEach: () => {
+    linkSpy.mockClear();
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const received = linkSpy.mock.calls.map(([props]) => props);
+
+    // Every ancestor goes through the injected component with its href and a class.
+    await expect(received).toContainEqual(expect.objectContaining({ href: "/" }));
+    await expect(received).toContainEqual(expect.objectContaining({ href: "/products" }));
+    await expect(received.every(({ className }) => Boolean(className))).toBe(true);
+    await expect(canvas.getByRole("link", { name: "Products" })).toHaveAttribute(
+      "href",
+      "/products"
+    );
+
+    // The last item is the current page: it never reaches the injected component.
+    await expect(received.map(({ href }) => href)).not.toContain("/products/clothing");
   },
 };
 
