@@ -4,7 +4,7 @@ import { tv } from "tailwind-variants";
 
 /**
  * Documentation-only story that previews the palette. The hex values mirror
- * `tailwind.config.js` (primary, neutral, semantic); keep them in sync when the config changes.
+ * `src/styles/theme.css` (primary, neutral, semantic); keep them in sync when the theme changes.
  * Swatch colors are data, so they are applied with inline styles (Tailwind cannot generate
  * classes for runtime values).
  */
