@@ -75,14 +75,23 @@ The library is consumed from Next.js (App Router), so keep it usable from Server
   to pass.
 - Prefer real links (`href`) over handlers for navigation: they need no JavaScript.
 
-## Links
+## Links and images
 
 - Navigation uses `href`, never a router-specific prop such as `to`.
 - A component that renders links takes an optional `LinkComponent` prop, defaulting to `"a"`,
   and passes it `href`, `className` and `children` (plus `onClick` when it has one). Consumers
   pass a framework link (e.g. `next/link`) to get client-side navigation.
-- Define `LinkComponent` outside the render function: an inline definition remounts the links.
-- Document the prop in JSDoc, including the props the component passes to it.
+- Images render through the `Image` atom, which takes an optional `ImageComponent`, defaulting
+  to `"img"`, and forwards `src`, `alt`, `className` and any other `<img>` attribute
+  (`srcSet`, `sizes`, `width`, `height`, `loading`). Components that show images expose those
+  attributes through an `imageProps` prop. `ImageComponent` is typed as a minimal contract
+  (`src`, `alt`, `className`), like `LinkComponent`: extra attributes are forwarded but not
+  type-checked against it, because `next/image` narrows some (e.g. `width`).
+- Define `LinkComponent` and `ImageComponent` outside the render function: an inline definition
+  remounts them.
+- Purely decorative images use `alt=""` (e.g. the ProductCard image, since the title names the
+  card).
+- Document these props in JSDoc, including the props the component passes to them.
 
 ## Styling
 
