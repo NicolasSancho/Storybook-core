@@ -212,6 +212,15 @@ conformance. Do not claim WCAG conformance without appropriate testing.
   keyboard use. Skip presentational components and assertions that would pass for any
   implementation.
 - Check that a new test can fail: break the code under test and confirm the story fails.
+- Injection props (`LinkComponent`, `ImageComponent`): pass a spy component made with `fn()`,
+  defined in the story file, and assert on the props it received (`spy.mock.calls`), not on
+  classes. Also assert the rendered result by role, so the spy cannot be bypassed.
+- Storybook wraps function `args` and `expect.any(...)` does not match here: do not compare
+  function identity. Check `typeof` and call the handler (click) to prove the wiring.
+- A synthetic click reaches the element directly, so it cannot prove layout behavior such as
+  the stretched card link. Hit-test with `document.elementFromPoint` at the element's center.
+- Stories have no router: `.storybook/preview.ts` cancels link navigation (handlers still
+  run), so a clicked link never loads a missing page in the preview.
 
 ## Code style
 
