@@ -4,7 +4,7 @@ import { tv } from "tailwind-variants";
 
 /**
  * Documentation-only story that previews the palette. The hex values mirror
- * `tailwind.config.js` (primary, neutral, semantic); keep them in sync when the config changes.
+ * `src/styles/theme.css` (primary, neutral, semantic); keep them in sync when the theme changes.
  * Swatch colors are data, so they are applied with inline styles (Tailwind cannot generate
  * classes for runtime values).
  */
@@ -168,7 +168,7 @@ const colorsStyles = tv({
     demoText: "text-sm text-neutral-600",
     demoLabel: "mt-2 text-sm font-bold text-neutral-900",
     demoInput:
-      "rounded border border-neutral-400 px-3 py-2 text-base text-neutral-900 placeholder:text-neutral-500",
+      "rounded-sm border border-neutral-400 bg-white px-3 py-2 text-base text-neutral-900 placeholder:text-neutral-500",
   },
 });
 

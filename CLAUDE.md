@@ -22,11 +22,12 @@ on GitHub Packages (restricted). Storybook is the development and documentation 
 
 ## Commands
 
-- `npm run storybook`: dev server on :6006. Restart it after editing `tailwind.config.js` or
+- `npm run storybook`: dev server on :6006. Restart it after editing `src/styles/theme.css` or
   adding a file whose classes are used nowhere else; the compiled CSS can be stale until then.
 - `npm run build-storybook`: static Storybook build (CI runs this)
 - `npm run build`: cleans `dist/`, `tsc -p tsconfig.build.json` → `dist/` (stories and
-  mocks excluded), then Tailwind CLI → `dist/styles/tailwind.css`.
+  mocks excluded), then copies `src/styles/theme.css` → `dist/styles/theme.css` (tokens only; the library
+  ships no compiled CSS).
   `tsconfig.json` (used by typecheck, lint and Storybook) still covers stories and mocks.
 - `npx tsc --noEmit`: typecheck (no dedicated script)
 - `npm run lint` / `npm run format`
@@ -46,9 +47,9 @@ on GitHub Packages (restricted). Storybook is the development and documentation 
 - Layouts components are created by hand (Plop doesn't offer that type).
 - `src/components/Foundations/<Topic>/` holds documentation-only stories (e.g. `Colors`): a
   `<Topic>.stories.tsx` with no component, no mock, no `src/index.js` export. Keep the values
-  it shows in sync with `tailwind.config.js`.
+  it shows in sync with `src/styles/theme.css`.
 - Every new component must be exported manually from `src/index.js` (Plop doesn't do it).
-  `src/index.js` is plain JS (`allowJs`) and also imports `./styles/tailwind.css`.
+  `src/index.js` is plain JS (`allowJs`) and imports no CSS.
 - Components import each other via relative paths (`../../Atoms/Button/Button`).
 - Named exports only; no default exports from component files.
 
@@ -73,7 +74,8 @@ on GitHub Packages (restricted). Storybook is the development and documentation 
   - tailwind-merge only knows Tailwind's own scales, so custom radius, shadow or size
     names (`rounded-btn`, `shadow-card`, `w-icon-small`) would not be overridden by a
     consumer's `className` (both classes stay). Don't add them; colors are safe.
-- Use the tokens in `tailwind.config.js`:
+- Use the tokens in `src/styles/theme.css` (Tailwind v4 `@theme`; there is no
+  `tailwind.config.js`):
   - Colors: `primary` (also `-50..950`; `-600` is the lightest step usable as text on
     white) and `secondary` (also `-50..950`; `-700` is `DEFAULT` and the lightest step
     usable as text on white; `-800` is `darker`). `secondary-lighter` is the original brand
@@ -83,18 +85,27 @@ on GitHub Packages (restricted). Storybook is the development and documentation 
   - Neutrals: `neutral-{25..950}`; never Tailwind's default `gray-*`. Jobs: 900 body text,
     600 secondary text, 500 placeholder, 400 input borders (needs 3:1), 200 dividers and
     card borders, 50 page background. 100 to 300 are never text.
-  - Radius, shadow and icon sizes use Tailwind's scale: `rounded` (4px) for controls,
-    `rounded-lg` (8px) for cards, `rounded-full` for pills, `shadow-sm` for cards, icons
+  - Radius, shadow and icon sizes use Tailwind's scale: `rounded-sm` (4px) for controls,
+    `rounded-lg` (8px) for cards, `rounded-full` for pills, `shadow-xs` for cards, icons
     `w/h-4`, `w/h-6`, `w/h-8` (see Icon).
   - Font sizes are a closed scale (only these exist): `xs` 12px, `sm` 14px, `base` 16px,
     `lg` 20px, `xl` 24px, `2xl` 32px. Avoid `xs` on interactive text.
   - Breakpoints: `xs` 0, `sm` 640, **`md` 940** (not Tailwind's 768), `lg` 1024, `xl` 1280
-- Gray scale: the `--gray-*` variables in `src/styles/tailwind.css` (the only custom CSS
-  variables) feed `neutral-{25..950}`, which supports opacity (e.g. `bg-neutral-900/50`).
+- Tokens are `--color-*` / `--text-*` / `--breakpoint-*` variables in `@theme`, so opacity
+  works on every color (e.g. `bg-neutral-900/50`). Form controls are transparent by default
+  in v4: give inputs an explicit background (`bg-white`).
 - Every `Text` color option must reach 4.5:1 on white; don't add pale shades as text colors.
 - Icons: react-feather, registered in `Atoms/Icon/iconsMap.ts`.
-- `tailwindcss` and `tailwind-variants` are peerDependencies; keep them there.
-  Consumers must import `@NicolasSancho/storybook-core/dist/styles/tailwind.css`.
+- `tailwindcss` (v4), `tailwind-variants` (v3) and `tailwind-merge` (v3) are
+  peerDependencies; keep them there. `tv()` only resolves class conflicts when
+  `tailwind-merge` is installed.
+- Consumers (Tailwind v4) import the tokens and scan the library's compiled JS for classes
+  (auto-detection skips `node_modules`, so `@source` is required):
+  ```css
+  @import "tailwindcss";
+  @import "@NicolasSancho/storybook-core/dist/styles/theme.css";
+  @source "../node_modules/@NicolasSancho/storybook-core/dist";
+  ```
 
 ## Accessibility
 
@@ -106,7 +117,7 @@ conformance. Do not claim WCAG conformance without appropriate testing.
   `onClick` on a `<div>`. Buttons default to `type="button"`. For a fully clickable card,
   use the stretched button pattern (see ProductCard).
 - Visible keyboard focus: use
-  `focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2`
+  `focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2`
   (as in Button). Never remove the default outline without providing a visible alternative.
 - Hover styles use `enabled:hover:*` so disabled controls do not react to hover.
 - Icons are decorative (`aria-hidden`) by default. Pass `ariaLabel` when an icon conveys

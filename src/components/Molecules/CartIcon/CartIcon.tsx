@@ -20,7 +20,7 @@ const cartIconStyles = tv({
   base: "relative inline-flex items-center",
   variants: {
     interactive: {
-      true: "cursor-pointer rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
+      true: "cursor-pointer rounded-sm focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
     },
   },
   slots: {

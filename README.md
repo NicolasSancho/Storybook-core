@@ -52,9 +52,17 @@ const App = () => (
 );
 ```
 
-## Tailwind CSS Configuration
+## Tailwind CSS
 
-The Tailwind CSS configuration is located in the `tailwind.config.js` file. It extends the default Tailwind CSS configuration with custom colors, font sizes, border radii, and other styles.
+The library uses Tailwind CSS v4. The design tokens (colors, font sizes, breakpoints) live in an `@theme` block in `src/styles/theme.css`, which is published as `dist/styles/theme.css`. The library ships no compiled CSS: the consuming app's Tailwind generates the classes. In the app's global stylesheet:
+
+```css
+@import "tailwindcss";
+@import "@NicolasSancho/storybook-core/dist/styles/theme.css";
+@source "../node_modules/@NicolasSancho/storybook-core/dist";
+```
+
+`tailwindcss` (v4), `tailwind-variants` (v3) and `tailwind-merge` (v3) are peer dependencies.
 
 ## Contributing
 

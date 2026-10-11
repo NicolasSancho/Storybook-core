@@ -18,16 +18,16 @@ export interface ProductCardProps {
 }
 
 const productCardStyles = tv({
-  base: "relative rounded-lg border border-neutral-200 shadow-sm flex flex-col overflow-hidden",
+  base: "relative rounded-lg border border-neutral-200 shadow-xs flex flex-col overflow-hidden",
   slots: {
     imageWrapper: "relative",
-    image: "w-full aspect-[3/4] object-cover",
-    tag: "absolute top-2 left-2 bg-neutral-950 text-white text-xs px-2 py-1 rounded",
+    image: "w-full aspect-3/4 object-cover",
+    tag: "absolute top-2 left-2 bg-neutral-950 text-white text-xs px-2 py-1 rounded-sm",
     body: "p-2 flex flex-col",
     productInfo: "flex flex-col",
     title: "text-sm font-medium",
     titleButton:
-      "text-left after:absolute after:inset-0 after:content-[''] focus-visible:outline-none focus-visible:after:ring-2 focus-visible:after:ring-primary focus-visible:after:rounded-lg",
+      "text-left after:absolute after:inset-0 after:content-[''] focus-visible:outline-hidden focus-visible:after:ring-2 focus-visible:after:ring-primary focus-visible:after:rounded-lg",
     subTitle: "text-sm text-neutral-600",
     price: "text-sm text-neutral-600",
     action: "relative z-10 mt-2",
