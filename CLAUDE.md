@@ -145,9 +145,14 @@ The library is consumed from Next.js (App Router), so keep it usable from Server
   (auto-detection skips `node_modules`, so `@source` is required):
   ```css
   @import "tailwindcss";
-  @import "@NicolasSancho/storybook-core/dist/styles/theme.css";
+  @import "@NicolasSancho/storybook-core/styles/theme.css";
   @source "../node_modules/@NicolasSancho/storybook-core/dist";
   ```
+- `package.json` limits the public API with an `exports` map: `.` (components and types),
+  `./styles/theme.css` and `./package.json`. Deep imports into `dist/` are blocked on purpose.
+  `sideEffects` lists only CSS, so bundlers can drop unused components. Keep both in sync: a new
+  entry point goes in `exports`, and a module that does something at import time (not just
+  defines things) must be added to `sideEffects`.
 
 ## Accessibility
 
@@ -248,4 +253,6 @@ trailingComma es5, 2 spaces). Beyond that, in new or modified code:
 
 ## Known limitations (do not fix unless requested)
 
-None at the moment.
+- `dist/` is not valid Node ESM: relative imports have no `.js` extension, so plain Node
+  fails with `ERR_MODULE_NOT_FOUND`. The package targets bundlers (Next, Vite, webpack). A fix
+  means changing every relative import or the build tooling.
