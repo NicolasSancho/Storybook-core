@@ -6,6 +6,7 @@ import {
   mockedProductWithTag,
   mockedProductOnSale,
   mockedProductCardClickable,
+  mockedProductCardLink,
   mockedProductCardNoButton,
 } from "./productCardMock";
 
@@ -55,6 +56,11 @@ export const Clickable: Story = {
     await expect(args.onClick).toHaveBeenCalledTimes(1);
     await expect(args.onProductClick).toHaveBeenCalledTimes(1);
   },
+};
+
+// The title is a real link stretched over the card; Add to Cart stays a separate button.
+export const WithLink: Story = {
+  args: mockedProductCardLink,
 };
 
 export const NoButton: Story = {

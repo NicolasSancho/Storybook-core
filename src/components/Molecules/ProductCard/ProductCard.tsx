@@ -13,7 +13,28 @@ export interface ProductCardProps {
   tag?: string;
   buttonLabel?: string;
   onClick?: () => void;
+  /**
+   * Handler for opening the product. Without `href` the title renders as a stretched button.
+   * With `href` it is passed to the link as `onClick`.
+   */
   onProductClick?: () => void;
+  /**
+   * Product URL. The title renders as a real link stretched over the whole card, so
+   * middle-click, new tab and crawlable links work. Takes precedence over a button.
+   */
+  href?: string;
+  /**
+   * Component used to render the link when `href` is set. Receives `href`, `onClick`,
+   * `className` and `children`, so a framework link (e.g. `next/link`) can be passed
+   * directly. Defaults to a plain `<a>`. Define it outside the render function: an inline
+   * definition remounts the link.
+   */
+  LinkComponent?: React.ElementType<{
+    href: string;
+    onClick?: () => void;
+    children: React.ReactNode;
+    className?: string;
+  }>;
   className?: string;
 }
 
@@ -26,7 +47,7 @@ const productCardStyles = tv({
     body: "p-2 flex flex-col",
     productInfo: "flex flex-col",
     title: "text-sm font-medium",
-    titleButton:
+    titleAction:
       "text-left after:absolute after:inset-0 after:content-[''] focus-visible:outline-hidden focus-visible:after:ring-2 focus-visible:after:ring-primary focus-visible:after:rounded-lg",
     subTitle: "text-sm text-neutral-600",
     price: "text-sm text-neutral-600",
@@ -43,9 +64,26 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   buttonLabel = "Add to Cart",
   onClick = undefined,
   onProductClick,
+  href,
+  LinkComponent = "a",
   className,
 }) => {
   const styles = productCardStyles();
+
+  let titleContent: React.ReactNode = title;
+  if (href) {
+    titleContent = (
+      <LinkComponent href={href} onClick={onProductClick} className={styles.titleAction()}>
+        {title}
+      </LinkComponent>
+    );
+  } else if (onProductClick) {
+    titleContent = (
+      <button type="button" onClick={onProductClick} className={styles.titleAction()}>
+        {title}
+      </button>
+    );
+  }
 
   return (
     <div className={styles.base({ className })}>
@@ -56,13 +94,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         </div>
         <div className={styles.productInfo()}>
           <Text as="h3" size="small" weight="semibold" className={styles.title()}>
-            {onProductClick ? (
-              <button type="button" onClick={onProductClick} className={styles.titleButton()}>
-                {title}
-              </button>
-            ) : (
-              title
-            )}
+            {titleContent}
           </Text>
           <Text as="p" size="small" color="base" className={styles.subTitle()}>
             {brand}
