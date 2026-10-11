@@ -67,10 +67,22 @@ The library is consumed from Next.js (App Router), so keep it usable from Server
 - Never make a component with static sub-components (`Header.Left`, `Header.Center`,
   `Header.Right`) a client component: dotting into a client module from a Server Component
   returns `undefined`. Export the parts as separate named exports first.
-- Handlers and function props (`onClick`, `onChange`, `LinkComponent`) cannot be passed from a
-  Server Component. Consumers wrap them in their own `"use client"` file. Keep every handler
-  prop optional so the static usage still renders on the server.
+- Event handlers (`onClick`, `onChange`) cannot be passed from a Server Component. Consumers
+  wrap them in their own `"use client"` file. Keep every handler prop optional so the static
+  usage still renders on the server.
+- `LinkComponent` may be passed from a Server Component as long as the receiving component
+  stays server-safe (no `"use client"`). A client component such as `next/link` is always safe
+  to pass.
 - Prefer real links (`href`) over handlers for navigation: they need no JavaScript.
+
+## Links
+
+- Navigation uses `href`, never a router-specific prop such as `to`.
+- A component that renders links takes an optional `LinkComponent` prop, defaulting to `"a"`,
+  and passes it `href`, `className` and `children` (plus `onClick` when it has one). Consumers
+  pass a framework link (e.g. `next/link`) to get client-side navigation.
+- Define `LinkComponent` outside the render function: an inline definition remounts the links.
+- Document the prop in JSDoc, including the props the component passes to it.
 
 ## Styling
 
@@ -136,7 +148,8 @@ conformance. Do not claim WCAG conformance without appropriate testing.
 
 - Interactive elements must use semantic HTML elements such as `<button>` and `<a>`, never
   `onClick` on a `<div>`. Buttons default to `type="button"`. For a fully clickable card,
-  use the stretched button pattern (see ProductCard).
+  use the stretched pattern (see ProductCard): a real link when there is an `href`, a button
+  only when there is none.
 - Visible keyboard focus: use
   `focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2`
   (as in Button). Never remove the default outline without providing a visible alternative.
