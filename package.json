@@ -1,6 +1,6 @@
 {
-  "name": "@NicolasSancho/storybook-core",
-  "version": "3.0.0",
+  "name": "@nicolassancho/storybook-core",
+  "version": "3.0.1",
   "description": "Accessible React + Tailwind component library built with tailwind-variants and documented in Storybook.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -21,8 +21,8 @@
     "dist"
   ],
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/",
-    "access": "restricted"
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   },
   "scripts": {
     "prepare": "npm run build",

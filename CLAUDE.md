@@ -1,7 +1,7 @@
 # Storybook-core
 
-React + Tailwind component library published as `@NicolasSancho/storybook-core`
-on GitHub Packages (restricted). Storybook is the development and documentation environment.
+React + Tailwind component library published as `@nicolassancho/storybook-core`
+on npm (public). Storybook is the development and documentation environment.
 
 ## Working rules
 
@@ -148,8 +148,8 @@ The library is consumed from Next.js (App Router), so keep it usable from Server
   (auto-detection skips `node_modules`, so `@source` is required):
   ```css
   @import "tailwindcss";
-  @import "@NicolasSancho/storybook-core/styles/theme.css";
-  @source "../node_modules/@NicolasSancho/storybook-core/dist";
+  @import "@nicolassancho/storybook-core/styles/theme.css";
+  @source "../node_modules/@nicolassancho/storybook-core/dist";
   ```
 - `package.json` limits the public API with an `exports` map: `.` (components and types),
   `./styles/theme.css` and `./package.json`. Deep imports into `dist/` are blocked on purpose.
@@ -247,7 +247,7 @@ trailingComma es5, 2 spaces). Beyond that, in new or modified code:
 
 ## Publishing / CI
 
-- Every push to `main` publishes (`.github/workflows/main.yml`, Node 24, `NPM_TOKEN`),
+- Every push to `main` publishes (`.github/workflows/main.yml`, Node 24, `NPM_TOKEN`, an npm access token),
   but only after the `checks` job (the reusable `ci.yml`, described below) passes on
   that commit.
 - Bump the version as the last commit on the branch before merging, or the publish
