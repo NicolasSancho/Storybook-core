@@ -168,7 +168,7 @@ const colorsStyles = tv({
     demoText: "text-sm text-neutral-600",
     demoLabel: "mt-2 text-sm font-bold text-neutral-900",
     demoInput:
-      "rounded border border-neutral-400 px-3 py-2 text-base text-neutral-900 placeholder:text-neutral-500",
+      "rounded-sm border border-neutral-400 bg-white px-3 py-2 text-base text-neutral-900 placeholder:text-neutral-500",
   },
 });
 
