@@ -14,7 +14,7 @@ export interface SearchInputProps extends React.InputHTMLAttributes<HTMLInputEle
 }
 
 const searchInputStyles = tv({
-  base: "w-full rounded-md bg-white px-3 py-2 text-sm placeholder:text-neutral-500 focus:outline-hidden focus:ring-2 transition-colors",
+  base: "w-full rounded-sm bg-white px-3 py-2 text-sm placeholder:text-neutral-500 focus:outline-hidden focus:ring-2 transition-colors",
   variants: {
     variantSize: {
       small: "text-xs py-1 px-2",
