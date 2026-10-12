@@ -34,6 +34,8 @@ on npm (public). Storybook is the development and documentation environment.
 - `npm run generate`: Plop scaffold (Atoms / Molecules / Organisms only)
 - `npm test`: Vitest with `@storybook/addon-vitest`; runs every story in headless Chromium
   (Playwright) as a smoke test, plus any `play` functions. Config in `vitest.config.ts`.
+  `@storybook/addon-a11y` runs axe on every story (`a11y.test: "error"` in `.storybook/preview.ts`), so a
+  violation fails the story. Opt a story out with `parameters.a11y.test = "todo"` and a comment saying why.
 - Tests are `play` functions in the stories (see "Tests" under Stories). Don't add test
   tooling (other test libraries, addons, CI steps) unless explicitly asked.
 
