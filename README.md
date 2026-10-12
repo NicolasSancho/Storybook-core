@@ -3,6 +3,8 @@
 An accessible React component library styled with Tailwind CSS v4 and `tailwind-variants`, and
 documented in Storybook. It is published to npm as `@nicolassancho/storybook-core`.
 
+The live Storybook is at https://nicolassancho.github.io/Storybook-core/.
+
 ## Using the library
 
 Install `@nicolassancho/storybook-core` from npm, then add the design tokens and the
