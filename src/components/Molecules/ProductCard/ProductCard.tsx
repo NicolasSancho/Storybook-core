@@ -56,7 +56,7 @@ const productCardStyles = tv({
   slots: {
     imageWrapper: "relative aspect-3/4",
     image: "w-full h-full object-cover",
-    tag: "absolute top-2 left-2 bg-neutral-950 text-white text-xs px-2 py-1 rounded-sm",
+    tag: "absolute top-2 left-2 bg-neutral-950 text-neutral-25 text-xs px-2 py-1 rounded-sm",
     body: "p-2 flex flex-col",
     productInfo: "flex flex-col",
     title: "text-sm font-medium",

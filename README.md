@@ -24,6 +24,8 @@ documented in Storybook. It is published to npm as `@nicolassancho/storybook-cor
   plug in your framework.
 - **Design tokens, not compiled CSS.** Colors, font sizes and breakpoints ship as a Tailwind v4
   `@theme` file, and your app's Tailwind generates the classes.
+- **Light and dark themes.** The dark theme follows the operating system, a `data-theme` attribute
+  on `<html>` overrides it, and every story is checked with axe and its `play` test in both themes.
 - **Typed and documented.** TypeScript strict, every prop documented in JSDoc, and interaction
   tests written as Storybook `play` functions.
 
@@ -40,6 +42,8 @@ The palette and the contrast of each text color are documented under **Foundatio
 Storybook.
 
 ![The color palette, with the text contrast of each step](https://raw.githubusercontent.com/NicolasSancho/Storybook-core/main/docs/colors.png)
+
+![The same palette in the dark theme](https://raw.githubusercontent.com/NicolasSancho/Storybook-core/main/docs/colors-dark.png)
 
 ## Using the library
 
@@ -74,7 +78,7 @@ The full guide (install, links and images, the Next.js App Router) is the **Cons
 ```bash
 npm install          # also builds the library (the `prepare` script)
 npm run storybook    # dev server on http://localhost:6006
-npm test             # runs every story in headless Chromium, with axe and the play tests
+npm test             # runs every story in headless Chromium, in both themes, with axe and the play tests
 npm run build        # compiles the library to dist/
 ```
 

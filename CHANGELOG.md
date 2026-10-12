@@ -4,6 +4,27 @@ All notable changes to `@nicolassancho/storybook-core` are listed here. The form
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## 3.1.0 - 2026-10-12
+
+### Added
+
+- A dark theme. Every color token is one `light-dark(light, dark)` value, so the library follows the
+  operating system by default. Set `data-theme="light"` or `data-theme="dark"` on `<html>` to force
+  one. The dark values keep the contrast of their light twins, and every pairing is asserted in the
+  Colors story.
+- `surface` token for the page and control background, and `on-primary`, `on-secondary` and
+  `on-danger` tokens for text on filled backgrounds. Use them instead of `bg-white` and
+  `text-white`, which stay white in dark.
+- A theme switch (Light, Dark, System) in the Storybook toolbar. `npm test` runs every story in both
+  themes.
+
+### Changed
+
+- Because dark follows the OS by default, consumers on a dark OS get the dark theme without any
+  change. Set `data-theme="light"` on `<html>` to opt out.
+- SearchInput now sets its text color (`text-neutral-900`) and uses `bg-surface`.
+- The Colors story reads its values from the page, and lists the contrast pairings for both themes.
+
 ## 3.0.13 - 2026-10-12
 
 ### Added
