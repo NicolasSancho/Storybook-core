@@ -62,3 +62,11 @@ jobs:
 
       - name: Run tests
         run: npm test
+
+      # Only on main: the deploy job in main.yml publishes exactly this tested build.
+      # Last step, so the artifact exists only if every check above passed.
+      - name: Upload Storybook for Pages
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: storybook-static
