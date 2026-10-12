@@ -4,6 +4,13 @@ All notable changes to `@nicolassancho/storybook-core` are listed here. The form
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## 3.0.12 - 2026-10-12
+
+### Fixed
+
+- ProductGrid no longer overwrites a product's own `onProductClick` with the result of
+  `getOnProductClick`. The product's handler wins, and `getOnProductClick` is the fallback.
+
 ## 3.0.11 - 2026-10-12
 
 ### Changed
