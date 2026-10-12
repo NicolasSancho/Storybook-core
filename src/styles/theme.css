@@ -3,14 +3,31 @@
   `@import "tailwindcss"`. The Colors story reads these values, so it needs no edit when they change.
 */
 @theme {
-  /* Closed type scale: these are the only text sizes that exist. */
+  /*
+    Closed type scale: these are the only text sizes that exist. Sizes are in rem, so they follow
+    the browser's font-size setting, and each size carries its line-height (`text-sm` sets both).
+    4xl is the fluid display size (40px on phones, 64px from about 1000px wide). The names are
+    Tailwind's t-shirt sizes on purpose: tailwind-merge reads `text-display` as a color and
+    would drop one of `text-display` and `text-neutral-900` when they meet in a tv() call.
+  */
   --text-*: initial;
-  --text-xs: 12px;
-  --text-sm: 14px;
-  --text-base: 16px;
-  --text-lg: 20px;
-  --text-xl: 24px;
-  --text-2xl: 32px;
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1rem;
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.25rem;
+  --text-base: 1rem;
+  --text-base--line-height: 1.5rem;
+  --text-lg: 1.25rem;
+  --text-lg--line-height: 1.75rem;
+  --text-xl: 1.5rem;
+  --text-xl--line-height: 2rem;
+  --text-2xl: 2rem;
+  --text-2xl--line-height: 2.5rem;
+  --text-3xl: 2.5rem;
+  --text-3xl--line-height: 3rem;
+  --text-4xl: clamp(2.5rem, 1.5rem + 4vw, 4rem);
+  --text-4xl--line-height: 1.1;
+  --text-4xl--letter-spacing: -0.02em;
 
   --color-primary-50: light-dark(#f9fbfc, #12191d);
   --color-primary-100: light-dark(#f1f7fa, #121e23);
