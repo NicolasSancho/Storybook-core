@@ -54,7 +54,9 @@ on npm (public). Storybook is the development and documentation environment.
   its values from the `--color-*` variables on the page, so it needs no edit when a token changes.
   Its list of pairings is asserted by its `play` function. A token the story shows must also be
   listed in the `@source inline` safelist in `src/styles/tailwind.css` (Tailwind emits only the
-  variables a utility uses), or the story throws.
+  variables a utility uses), or the story throws. `Typography` works the same way for the type
+  scale: it reads `--text-*` and `--text-*--line-height` from the page, and its `play` function
+  fails on a size that is missing, is not in rem or has no line-height.
 - `docs/` holds the README screenshots (not published: `files` is only `dist`). The README links them
   by absolute `raw.githubusercontent.com` URLs, because npm cannot see repo files. Retake them when the
   look of the library changes.
@@ -157,7 +159,12 @@ The library is consumed from Next.js (App Router), so keep it usable from Server
     `rounded-lg` (8px) for cards, `rounded-full` for pills, `shadow-xs` for cards, icons
     `w/h-4`, `w/h-6`, `w/h-8` (see Icon).
   - Font sizes are a closed scale (only these exist): `xs` 12px, `sm` 14px, `base` 16px,
-    `lg` 20px, `xl` 24px, `2xl` 32px. Avoid `xs` on interactive text.
+    `lg` 20px, `xl` 24px, `2xl` 32px, `3xl` 40px and `4xl`, the fluid display size (40px up to 64px).
+    Avoid `xs` on interactive text. Sizes are written in rem, and every size has its own
+    `--text-*--line-height` (`4xl` also has a letter-spacing), so `text-sm` sets both. Keep the
+    t-shirt names: tailwind-merge reads a name like `text-display` as a color and would drop it
+    next to a text color. The font family is not a library token: components use `font-sans` and the
+    consumer sets `--font-sans` (with `next/font` in Next.js).
   - Breakpoints: `xs` 0, `sm` 640, **`md` 940** (not Tailwind's 768), `lg` 1024, `xl` 1280
 - Tokens are `--color-*` / `--text-*` / `--breakpoint-*` variables in `@theme`, so opacity
   works on every color (e.g. `bg-neutral-900/50`). Form controls are transparent by default
