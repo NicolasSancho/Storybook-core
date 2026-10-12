@@ -4,6 +4,18 @@ All notable changes to `@nicolassancho/storybook-core` are listed here. The form
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## 3.0.11 - 2026-10-12
+
+### Changed
+
+- SearchInput uses the `rounded-sm` control radius instead of `rounded-md`.
+- SearchInput no longer sets a default `name="search"`. Pass `name` to include it in a form.
+
+### Fixed
+
+- SearchInput's "Search" fallback label no longer treats `id` alone as a label. Name it with
+  `aria-label`, or point `aria-labelledby` at a visible `Label`.
+
 ## 3.0.10 - 2026-10-12
 
 ### Changed
