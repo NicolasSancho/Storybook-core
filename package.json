@@ -31,8 +31,7 @@
     "build-storybook": "storybook build",
     "test": "vitest run",
     "lint": "eslint ./src",
-    "format": "prettier --write ./src ./.storybook",
-    "generate": "npx plop component"
+    "format": "prettier --write ./src ./.storybook"
   },
   "keywords": [
     "react",
@@ -70,7 +69,6 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-storybook": "^10.6.1",
     "playwright": "^1.64.0",
-    "plop": "^4.0.1",
     "postcss": "^8.4.41",
     "prettier": "^3.6.2",
     "storybook": "^10.6.1",

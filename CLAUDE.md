@@ -31,7 +31,6 @@ on npm (public). Storybook is the development and documentation environment.
   `tsconfig.json` (used by typecheck, lint and Storybook) still covers stories and mocks.
 - `npx tsc --noEmit`: typecheck (no dedicated script)
 - `npm run lint` / `npm run format`
-- `npm run generate`: Plop scaffold (Atoms / Molecules / Organisms only)
 - `npm test`: Vitest with `@storybook/addon-vitest`; runs every story in headless Chromium
   (Playwright) as a smoke test, plus any `play` functions. Config in `vitest.config.ts`.
   `@storybook/addon-a11y` runs axe on every story (`a11y.test: "error"` in `.storybook/preview.ts`), so a
@@ -46,7 +45,7 @@ on npm (public). Storybook is the development and documentation environment.
   - `<Name>.tsx`: `export interface <Name>Props` + `export const <Name>: React.FC<<Name>Props>`
   - `<Name>.stories.tsx`: `title: "<Type>/<Name>"`, `tags: ["autodocs"]`, args from the mock
   - `<camelName>Mock.ts`: `mocked<Name>...` objects typed as `<Name>Props`
-- Layout components are created by hand (Plop doesn't offer that type).
+- Components are created by hand: copy an existing component folder as the starting point.
 - `src/components/Foundations/<Topic>/` holds documentation-only stories (e.g. `Colors`): a
   `<Topic>.stories.tsx` with no component, no mock, no `src/index.js` export. Keep the values
   it shows in sync with `src/styles/theme.css`.
@@ -56,7 +55,7 @@ on npm (public). Storybook is the development and documentation environment.
 - `src/components/Consumers/Consumers.mdx` is the consumer guide: a docs-only MDX page with no
   component. Update it in the same pass whenever a consumer-facing convention changes (CSS setup,
   injection props, server/client rules, package exports).
-- Every new component must be exported manually from `src/index.js` (Plop doesn't do it).
+- Every new component must be exported manually from `src/index.js`.
   `src/index.js` is plain JS (`allowJs`) and imports no CSS.
 - Components import each other via relative paths (`../../Atoms/Button/Button`).
 - Named exports only; no default exports from component files.
