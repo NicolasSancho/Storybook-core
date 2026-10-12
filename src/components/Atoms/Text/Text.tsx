@@ -8,10 +8,15 @@ export interface TextProps {
    */
   color?: "base" | "dark" | "darker" | "primary" | "secondary";
   /**
-   * Text size: 14px, 16px and 20px for body copy, 32px for headings and a fluid 40 to 64px for
+   * Text size: 14px, 16px and 20px for body copy, 32px for headings and a fluid 36 to 64px for
    * hero text. Each size sets its own line-height, and `display` also tightens the tracking.
    */
   size?: "small" | "medium" | "large" | "heading" | "display";
+  /**
+   * Font family: `body` is `font-sans`, `display` is `font-display` (the heading font the
+   * consumer sets with `--font-display`, the body font when none is set).
+   */
+  font?: "body" | "display";
   weight?: "normal" | "medium" | "semibold" | "bold";
   underline?: boolean;
   children: React.ReactNode;
@@ -19,8 +24,11 @@ export interface TextProps {
 }
 
 const textStyles = tv({
-  base: "font-sans",
   variants: {
+    font: {
+      body: "font-sans",
+      display: "font-display",
+    },
     color: {
       base: "text-neutral-500",
       dark: "text-neutral-700",
@@ -47,6 +55,7 @@ const textStyles = tv({
     },
   },
   defaultVariants: {
+    font: "body",
     color: "dark",
     size: "medium",
     weight: "normal",
@@ -56,6 +65,7 @@ const textStyles = tv({
 
 export const Text: React.FC<TextProps> = ({
   as: Component = "div",
+  font = "body",
   color = "dark",
   size = "medium",
   weight = "normal",
@@ -64,7 +74,7 @@ export const Text: React.FC<TextProps> = ({
   className = "",
 }) => {
   return (
-    <Component className={textStyles({ color, size, weight, underline, className })}>
+    <Component className={textStyles({ font, color, size, weight, underline, className })}>
       {children}
     </Component>
   );
