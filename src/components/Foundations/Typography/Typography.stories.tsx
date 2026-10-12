@@ -30,7 +30,7 @@ const steps: Step[] = [
   { token: "3xl", use: "Large headings.", sample: "Built to last" },
   {
     token: "4xl",
-    use: "Hero and display text. Fluid: 40px on phones, 64px from about 1000px wide.",
+    use: "Hero and display text. Fluid: 36px on phones, 64px from about 1200px wide.",
     sample: "Dress for the weather",
   },
 ];
@@ -79,10 +79,10 @@ const sampleClass: Record<string, string> = {
   sm: "text-sm",
   base: "text-base",
   lg: "text-lg",
-  xl: "text-xl",
-  "2xl": "text-2xl",
-  "3xl": "text-3xl",
-  "4xl": "text-4xl",
+  xl: "font-display text-xl font-bold",
+  "2xl": "font-display text-2xl font-bold",
+  "3xl": "font-display text-3xl font-bold",
+  "4xl": "font-display text-4xl font-bold",
 };
 
 const TypographyPage: React.FC = () => {
@@ -95,9 +95,10 @@ const TypographyPage: React.FC = () => {
         <h1 className={styles.title()}>Typography</h1>
         <p className={styles.lead()}>
           A closed scale of eight sizes. Sizes are in rem, so they follow the browser's font-size
-          setting, and each size sets its own line-height. The font family is the consumer's: the
-          components use <code>font-sans</code>, so an app sets <code>--font-sans</code> once (with{" "}
-          <code>next/font</code> in Next.js).
+          setting, and each size sets its own line-height. The fonts are the consumer's: components
+          use <code>font-sans</code> for body text and <code>font-display</code> for headings, so an
+          app sets <code>--font-sans</code> and <code>--font-display</code> once (with{" "}
+          <code>next/font</code> in Next.js). The headings below use the display font.
         </p>
       </div>
       <ul className={styles.list()} aria-label="Type scale">

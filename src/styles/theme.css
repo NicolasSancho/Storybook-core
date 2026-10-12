@@ -6,7 +6,7 @@
   /*
     Closed type scale: these are the only text sizes that exist. Sizes are in rem, so they follow
     the browser's font-size setting, and each size carries its line-height (`text-sm` sets both).
-    4xl is the fluid display size (40px on phones, 64px from about 1000px wide). The names are
+    4xl is the fluid display size (36px on phones, 64px from about 1200px wide). The names are
     Tailwind's t-shirt sizes on purpose: tailwind-merge reads `text-display` as a color and
     would drop one of `text-display` and `text-neutral-900` when they meet in a tv() call.
   */
@@ -25,9 +25,15 @@
   --text-2xl--line-height: 2.5rem;
   --text-3xl: 2.5rem;
   --text-3xl--line-height: 3rem;
-  --text-4xl: clamp(2.5rem, 1.5rem + 4vw, 4rem);
-  --text-4xl--line-height: 1.1;
-  --text-4xl--letter-spacing: -0.02em;
+  --text-4xl: clamp(2.25rem, 5.4vw, 4rem);
+  --text-4xl--line-height: 1.04;
+  --text-4xl--letter-spacing: -0.03em;
+
+  /*
+    Font families. The library loads no fonts: a consumer sets --font-sans (body) and optionally
+    --font-display (headings). Without one, headings use the body font.
+  */
+  --font-display: var(--font-sans);
 
   --color-primary-50: light-dark(#f9fbfc, #12191d);
   --color-primary-100: light-dark(#f1f7fa, #121e23);
