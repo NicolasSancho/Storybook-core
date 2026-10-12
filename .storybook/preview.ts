@@ -1,5 +1,5 @@
 import type { Preview } from "@storybook/react-vite";
-import '../src/styles/tailwind.css';
+import "../src/styles/tailwind.css";
 const preview: Preview = {
   // Stories have no router: a real link would load a missing page inside the preview iframe.
   // Cancel the navigation (the click handlers still run), and clean up after each story.
