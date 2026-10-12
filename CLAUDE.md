@@ -33,6 +33,9 @@ on npm (public). Storybook is the development and documentation environment.
 - `npm run lint` / `npm run format`
 - `npm test`: Vitest with `@storybook/addon-vitest`; runs every story in headless Chromium
   (Playwright) as a smoke test, plus any `play` functions. Config in `vitest.config.ts`.
+  Every story runs twice, once per theme: a second Vitest project sets `STORYBOOK_THEME=dark`,
+  which `.storybook/theme.ts` turns into the initial `theme` global. A dark-only failure is a
+  real contrast bug, not test noise.
   `@storybook/addon-a11y` runs axe on every story (`a11y.test: "error"` in `.storybook/preview.ts`), so a
   violation fails the story. Opt a story out with `parameters.a11y.test = "todo"` and a comment saying why.
 - Tests are `play` functions in the stories (see "Tests" under Stories). Don't add test
@@ -47,8 +50,11 @@ on npm (public). Storybook is the development and documentation environment.
   - `<camelName>Mock.ts`: `mocked<Name>...` objects typed as `<Name>Props`
 - Components are created by hand: copy an existing component folder as the starting point.
 - `src/components/Foundations/<Topic>/` holds documentation-only stories (e.g. `Colors`): a
-  `<Topic>.stories.tsx` with no component, no mock, no `src/index.js` export. Keep the values
-  it shows in sync with `src/styles/theme.css`.
+  `<Topic>.stories.tsx` with no component, no mock, no `src/index.js` export. Colors reads
+  its values from the `--color-*` variables on the page, so it needs no edit when a token changes.
+  Its list of pairings is asserted by its `play` function. A token the story shows must also be
+  listed in the `@source inline` safelist in `src/styles/tailwind.css` (Tailwind emits only the
+  variables a utility uses), or the story throws.
 - `docs/` holds the README screenshots (not published: `files` is only `dist`). The README links them
   by absolute `raw.githubusercontent.com` URLs, because npm cannot see repo files. Retake them when the
   look of the library changes.
@@ -58,7 +64,11 @@ on npm (public). Storybook is the development and documentation environment.
   Molecules, Organisms, Layouts): add a new top-level group there.
 - `src/components/Consumers/Consumers.mdx` is the consumer guide: a docs-only MDX page with no
   component. Update it in the same pass whenever a consumer-facing convention changes (CSS setup,
-  injection props, server/client rules, package exports).
+  injection props, server/client rules, package exports, theming).
+- The Storybook toolbar has a `theme` switch (Light, Dark, System). `.storybook/theme.ts` holds the
+  helpers, a decorator in `preview.ts` applies the choice to `<html>` for stories, and
+  `.storybook/ThemedDocsContainer.tsx` does the same for docs pages (which skip decorators) and
+  gives them the matching Storybook theme. Light stays the default.
 - Every new component must be exported manually from `src/index.js`.
   `src/index.js` is plain JS (`allowJs`) and imports no CSS.
 - Components import each other via relative paths (`../../Atoms/Button/Button`).
@@ -138,6 +148,11 @@ The library is consumed from Next.js (App Router), so keep it usable from Server
   - Neutrals: `neutral-{25..950}`; never Tailwind's default `gray-*`. Jobs: 900 body text,
     600 secondary text, 500 placeholder, 400 input borders (needs 3:1), 200 dividers and
     card borders, 50 page background. 100 to 300 are never text.
+  - Surface and `on-*`: `surface` is the default background (inputs, header, the page). A filled
+    brand or danger background pairs with its text color: `bg-primary text-on-primary`, also
+    `on-secondary` and `on-danger`. Never `bg-white` or `text-white`: they stay white in dark mode.
+    A dark chip that must stay a chip in both themes uses the ramp so it flips with the theme
+    (`bg-neutral-950 text-neutral-25`, the ProductCard tag).
   - Radius, shadow and icon sizes use Tailwind's scale: `rounded-sm` (4px) for controls,
     `rounded-lg` (8px) for cards, `rounded-full` for pills, `shadow-xs` for cards, icons
     `w/h-4`, `w/h-6`, `w/h-8` (see Icon).
@@ -146,8 +161,26 @@ The library is consumed from Next.js (App Router), so keep it usable from Server
   - Breakpoints: `xs` 0, `sm` 640, **`md` 940** (not Tailwind's 768), `lg` 1024, `xl` 1280
 - Tokens are `--color-*` / `--text-*` / `--breakpoint-*` variables in `@theme`, so opacity
   works on every color (e.g. `bg-neutral-900/50`). Form controls are transparent by default
-  in v4: give inputs an explicit background (`bg-white`).
-- Every `Text` color option must reach 4.5:1 on white; don't add pale shades as text colors.
+  in v4: give inputs an explicit background (`bg-surface`) and text color (`text-neutral-900`).
+- Dark theme: every color in `theme.css` is one `light-dark(light, dark)` declaration, and the
+  root's `color-scheme` picks the side. It follows the operating system, and `data-theme` `"dark"`
+  or `"light"` on `<html>` overrides it (on `<html>` only: Tailwind compiles `light-dark()` to
+  toggles resolved at the root, so a nested `data-theme` does nothing). Components never use `dark:`
+  classes. The color names keep their jobs and only their values change: the `neutral`, `primary`
+  and `secondary` ramps are inverted (900 is still body text), and `DEFAULT`, `-darker` (the hover
+  step, lighter in dark), semantic and `on-*` colors have a dark side. Rules for editing it:
+  - A new color token is written once, as `light-dark(...)`. Never add a second dark-only block.
+  - Each dark step keeps the contrast its light twin has against white, measured against the dark
+    surface (`#141414`) with the same hue; tints use less chroma. Do not pick dark values by eye.
+  - Every pairing must pass in both themes: 4.5:1 for text (neutral 900, 700, 600 and the 500
+    placeholder, brand and semantic colors, all on `surface`), 3:1 for the 400 input border and
+    the focus ring, and 4.5:1 for each `on-*` color on its fill and on the hover step. The list is
+    `pairings` in the Colors story, and its `play` function fails `npm test` on a miss. Add a
+    pairing there when a component starts using a new color on a new background.
+  - Focus rings that use an offset also set `focus-visible:ring-offset-surface`, or the gap is
+    white in dark mode.
+- Every `Text` color option must reach 4.5:1 on the surface of both themes; don't add pale shades
+  as text colors.
 - Icons: react-feather, registered in `Atoms/Icon/iconsMap.ts`.
 - `tailwindcss` (v4), `tailwind-variants` (v3) and `tailwind-merge` (v3) are
   peerDependencies; keep them there. `tv()` only resolves class conflicts when
@@ -176,7 +209,7 @@ conformance. Do not claim WCAG conformance without appropriate testing.
   use the stretched pattern (see ProductCard): a real link when there is an `href`, a button
   only when there is none.
 - Visible keyboard focus: use
-  `focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2`
+  `focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface`
   (as in Button). Never remove the default outline without providing a visible alternative.
 - Hover styles use `enabled:hover:*` so disabled controls do not react to hover.
 - Icons are decorative (`aria-hidden`) by default. Pass `ariaLabel` when an icon conveys

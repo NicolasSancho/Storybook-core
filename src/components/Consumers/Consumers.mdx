@@ -37,6 +37,52 @@ library's compiled files for classes:
 The `@source` line is required. Tailwind skips `node_modules` when it looks for classes, so without it
 the components render unstyled. Adjust the relative path to where your CSS file lives.
 
+## Dark mode
+
+`theme.css` also holds the dark theme. With no setup it follows the operating system
+(`prefers-color-scheme`). To let the user choose, set `data-theme="light"` or `data-theme="dark"` on
+`<html>`; the attribute wins over the OS setting. The color names do not change (`neutral-900` is still
+body text, `primary` is still the brand blue), only their values, so the components need no props and
+your own classes switch with them.
+
+Two things are on your side:
+
+- Give the page its colors, since the components inherit the text color and sit on your background:
+
+```tsx
+// app/layout.tsx
+<body className="bg-surface text-neutral-900">{children}</body>
+```
+
+- Use the token pairs in your own markup. `bg-surface` is the default background, and a filled brand
+  background pairs with its `on-` color (`bg-primary text-on-primary`, also `on-secondary` and
+  `on-danger`). Do not use `bg-white` or `text-white` for these: they stay white in dark mode.
+
+For a toggle that remembers the choice and does not flash on load, `next-themes` works with the
+attribute (a client component, as the library holds no state):
+
+```tsx
+// app/providers.tsx
+"use client";
+
+import { ThemeProvider } from "next-themes";
+
+export function Providers({ children }: { children: React.ReactNode }) {
+  return (
+    <ThemeProvider attribute="data-theme" defaultTheme="system" enableSystem>
+      {children}
+    </ThemeProvider>
+  );
+}
+```
+
+Add `suppressHydrationWarning` to `<html>`, because the attribute is set before React hydrates. To
+write `dark:` variants in your own classes, tell Tailwind to use the same attribute:
+`@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));`.
+
+The Storybook toolbar has a theme switch (Light, Dark, System) so you can see every component in
+both themes. `npm test` runs every story in both, with the axe checks.
+
 ## Quick start
 
 Import components from the package root. Unused components are dropped from your bundle.
