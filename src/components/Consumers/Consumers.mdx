@@ -159,6 +159,6 @@ bundlers (Next.js, Vite, webpack).
 ## Accessibility
 
 - Give inputs an accessible name: `SearchInput` falls back to "Search", and you can pass your own
-  `aria-label` or a visible `Label`.
+  `aria-label`, or point `aria-labelledby` at a visible `Label`. An `id` alone does not name it.
 - Icons are decorative by default. Pass `ariaLabel` when an icon carries meaning on its own.
 - Use `alt=""` for purely decorative images, and a real description otherwise.

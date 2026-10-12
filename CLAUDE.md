@@ -258,6 +258,7 @@ trailingComma es5, 2 spaces). Beyond that, in new or modified code:
   fails on a duplicate version:
   `npm version <patch|minor> --no-git-tag-version` (updates package.json and the lockfile).
   Use at least `minor` when a change is visible to consumers (colors, behavior, new props).
+  Add the matching `CHANGELOG.md` entry (same version, today's date) in that same commit.
 - `.github/workflows/ci.yml` runs on every PR and is called by `main.yml` on every push to
   `main` (it has no push trigger of its own, so the checks do not run twice). Keep it green
   before merging. It runs, in order:
