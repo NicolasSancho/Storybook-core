@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Text } from "./Text";
-import { mockedText, boldText, underlinedText } from "./textMock";
+import { mockedText, boldText, underlinedText, headingText, displayText } from "./textMock";
 
 const meta: Meta<typeof Text> = {
   title: "Atoms/Text",
@@ -24,4 +24,12 @@ export const Bold: Story = {
 
 export const Underlined: Story = {
   args: underlinedText,
+};
+
+export const Heading: Story = {
+  args: headingText,
+};
+
+export const Display: Story = {
+  args: displayText,
 };
