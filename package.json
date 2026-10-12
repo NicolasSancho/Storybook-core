@@ -75,7 +75,7 @@
     "tailwind-merge": "^3.7.0",
     "tailwind-variants": "^3.3.1",
     "tailwindcss": "^4.3.3",
-    "typescript": "^5.5.4",
+    "typescript": "^5.9.3",
     "vitest": "^5.0.3"
   },
   "dependencies": {
