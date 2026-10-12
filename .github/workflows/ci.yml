@@ -52,7 +52,7 @@ jobs:
         run: npm run lint
 
       - name: Check formatting
-        run: npx prettier --check ./src
+        run: npx prettier --check ./src ./.storybook
 
       - name: Build Storybook
         run: npm run build-storybook

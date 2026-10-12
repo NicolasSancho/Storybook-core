@@ -259,7 +259,7 @@ trailingComma es5, 2 spaces). Beyond that, in new or modified code:
   before merging. It runs, in order:
   - On PRs only: fails if the `package.json` version equals the one on the base branch.
   - `npm ci` (which triggers `prepare` → `npm run build`), `npx tsc --noEmit`, `npm run lint`,
-    `npx prettier --check ./src`, `npm run build-storybook` and `npm test`.
+    `npx prettier --check ./src ./.storybook`, `npm run build-storybook` and `npm test`.
 - After the checks pass, the publish job runs `npm ci`, `npm run build-storybook` and
   `npm publish`.
 - On `main` only, the last step of `ci.yml` uploads `storybook-static` as the Pages artifact.
