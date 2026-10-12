@@ -48,6 +48,32 @@ export const CustomLabel: Story = {
   },
 };
 
+export const LabelledBy: Story = {
+  args: { ...mockedSearchInputDefault, id: "search-field", "aria-labelledby": "search-label" },
+  render: (args) => (
+    <>
+      <span id="search-label">Find a product</span>
+      <SearchInput {...args} />
+    </>
+  ),
+  play: async ({ canvasElement }) => {
+    // aria-labelledby replaces the fallback.
+    await expect(
+      within(canvasElement).getByRole("searchbox", { name: "Find a product" })
+    ).toBeInTheDocument();
+  },
+};
+
+export const IdOnly: Story = {
+  args: { ...mockedSearchInputDefault, id: "search-field" },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // An id alone does not name the input, so the "Search" fallback still applies.
+    await expect(canvas.getByRole("searchbox", { name: "Search" })).toBeInTheDocument();
+  },
+};
+
 export const Small: Story = {
   args: mockedSearchInputSmall,
 };

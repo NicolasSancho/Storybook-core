@@ -42,8 +42,9 @@ export const SearchInput: React.FC<SearchInputProps> = ({
   ...props
 }) => {
   // Fall back to a generic accessible name only when the consumer hasn't labelled the input
-  // (a visible <Label htmlFor>, aria-labelledby or their own aria-label).
-  const hasLabel = Boolean(props.id || props["aria-labelledby"] || props["aria-label"]);
+  // (aria-labelledby or their own aria-label). An `id` alone does not name the input, so it does
+  // not count; with a visible <Label htmlFor>, also pass `aria-labelledby` pointing at the label.
+  const hasLabel = Boolean(props["aria-labelledby"] || props["aria-label"]);
 
   return (
     <input
