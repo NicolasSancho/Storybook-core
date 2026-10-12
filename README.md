@@ -1,14 +1,53 @@
 # Storybook-core
 
+[![npm version](https://img.shields.io/npm/v/@nicolassancho/storybook-core)](https://www.npmjs.com/package/@nicolassancho/storybook-core)
+[![CI](https://github.com/NicolasSancho/Storybook-core/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/NicolasSancho/Storybook-core/actions/workflows/main.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 An accessible React component library styled with Tailwind CSS v4 and `tailwind-variants`, and
 documented in Storybook. It is published to npm as `@nicolassancho/storybook-core`.
 
-The live Storybook is at https://nicolassancho.github.io/Storybook-core/.
+**[Browse the live Storybook](https://nicolassancho.github.io/Storybook-core/)**
+
+![A responsive product grid built with the library](https://raw.githubusercontent.com/NicolasSancho/Storybook-core/main/docs/product-grid.png)
+
+## Highlights
+
+- **Built with accessibility in mind.** Semantic HTML, visible keyboard focus, accessible names, and
+  `prefers-reduced-motion` support. [axe](https://github.com/dequelabs/axe-core) runs on every story
+  in CI, and a violation fails the build. Automated checks catch only part of what matters, so this
+  is a safety net, not a claim of WCAG conformance.
+- **Works from Next.js Server Components.** The components are stateless, so they carry no
+  `"use client"` directive and render on the server with no client JavaScript.
+- **Bring your own router and image component.** Navigation uses `href` and renders a plain `<a>`
+  by default. Pass `LinkComponent` (e.g. `next/link`) or `ImageComponent` (e.g. `next/image`) to
+  plug in your framework.
+- **Design tokens, not compiled CSS.** Colors, font sizes and breakpoints ship as a Tailwind v4
+  `@theme` file, and your app's Tailwind generates the classes.
+- **Typed and documented.** TypeScript strict, every prop documented in JSDoc, and interaction
+  tests written as Storybook `play` functions.
+
+## Components
+
+| Layer     | Components                                                          |
+| --------- | ------------------------------------------------------------------- |
+| Atoms     | Button, Icon, Image, Label, RadioButton, SearchInput, Spinner, Text |
+| Molecules | Breadcrumbs, CartIcon, ProductCard, ProductDetails, RadioGroup      |
+| Organisms | Header, ProductGrid                                                 |
+| Layouts   | Grid                                                                |
+
+The palette and the contrast of each text color are documented under **Foundations / Colors** in
+Storybook.
+
+![The color palette, with the text contrast of each step](https://raw.githubusercontent.com/NicolasSancho/Storybook-core/main/docs/colors.png)
 
 ## Using the library
 
-Install `@nicolassancho/storybook-core` from npm, then add the design tokens and the
-source scan to your Tailwind v4 stylesheet:
+Install the package, then add the design tokens and the source scan to your Tailwind v4 stylesheet:
+
+```bash
+npm install @nicolassancho/storybook-core
+```
 
 ```css
 @import "tailwindcss";
@@ -17,8 +56,9 @@ source scan to your Tailwind v4 stylesheet:
 ```
 
 The library ships its design tokens (colors, font sizes, breakpoints), not compiled CSS: your app's
-Tailwind generates the classes, and `@source` is what makes it scan the library. `react`, `react-dom`,
-`tailwindcss` (v4), `tailwind-variants` (v3) and `tailwind-merge` (v3) are peer dependencies.
+Tailwind generates the classes, and `@source` is what makes it scan the library. `react`, `react-dom`
+(18.3.1 or newer, below 20), `tailwindcss` (v4), `tailwind-variants` (v3) and `tailwind-merge` (v3) are
+peer dependencies.
 
 ```tsx
 import { Button } from "@nicolassancho/storybook-core";
@@ -27,44 +67,35 @@ const App = () => <Button variant="primary">Click Me</Button>;
 ```
 
 The full guide (install, links and images, the Next.js App Router) is the **Consumers** page in
-Storybook.
+[Storybook](https://nicolassancho.github.io/Storybook-core/).
 
 ## Development
 
-### Installation
-
-To install the dependencies, run:
-
 ```bash
-npm install
+npm install          # also builds the library (the `prepare` script)
+npm run storybook    # dev server on http://localhost:6006
+npm test             # runs every story in headless Chromium, with axe and the play tests
+npm run build        # compiles the library to dist/
 ```
 
-### Running Storybook
+The first `npm test` run needs the browser: `npx playwright install chromium`.
 
-To start the Storybook server, run:
+### Creating components
 
-```bash
-npm run storybook
-```
+`npm run generate` scaffolds a component with Plop. Choose Atoms, Molecules or Organisms: it creates
+the component, its story and a mock file. Layouts are created by hand, and every new component must
+be exported from `src/index.js`.
 
-This will start the Storybook server and open it in your default browser.
+Tests are `play` functions in the component's story file, not separate test files.
 
-### Building the Library
+## Contributing
 
-To build the component library, run:
+1. Branch from `main` (`feat/<description>` or `fix/<description>`) and open a pull request.
+2. Run `npx tsc --noEmit`, `npm run lint`, `npx prettier --check ./src ./.storybook` and `npm test`
+   before pushing. CI runs the same checks plus a Storybook build.
+3. Bump the version as the last commit (`npm version <patch|minor> --no-git-tag-version`). CI fails
+   a pull request that keeps the version of `main`, and every push to `main` publishes to npm.
 
-```bash
-npm run build
-```
+## License
 
-This will create a production build of the library in the `dist` folder.
-
-### Creating Components
-
-You can create new components using Plop. To generate a new component, run:
-
-```bash
-npm run generate
-```
-
-Follow the prompts to specify the component name and type (Atoms, Molecules, Organisms). This will create the component files, including the component itself, a Storybook story, and a mock file.
+[MIT](LICENSE)

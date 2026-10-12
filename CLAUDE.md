@@ -50,6 +50,9 @@ on npm (public). Storybook is the development and documentation environment.
 - `src/components/Foundations/<Topic>/` holds documentation-only stories (e.g. `Colors`): a
   `<Topic>.stories.tsx` with no component, no mock, no `src/index.js` export. Keep the values
   it shows in sync with `src/styles/theme.css`.
+- `docs/` holds the README screenshots (not published: `files` is only `dist`). The README links them
+  by absolute `raw.githubusercontent.com` URLs, because npm cannot see repo files. Retake them when the
+  look of the library changes.
 - `src/components/Consumers/Consumers.mdx` is the consumer guide: a docs-only MDX page with no
   component. Update it in the same pass whenever a consumer-facing convention changes (CSS setup,
   injection props, server/client rules, package exports).
