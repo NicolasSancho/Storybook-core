@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { action } from "storybook/actions";
+import { expect, fn, userEvent, within } from "storybook/test";
 import { Button } from "./Button";
 import {
   mockedButtonPrimary,
@@ -24,7 +25,16 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
-  args: mockedButtonPrimary,
+  args: { ...mockedButtonPrimary, onClick: fn() },
+  play: async ({ args, canvasElement }) => {
+    const button = within(canvasElement).getByRole("button", { name: "Primary Button" });
+
+    // Buttons default to type="button", so one inside a form never submits it by accident.
+    await expect(button).toHaveAttribute("type", "button");
+
+    await userEvent.click(button);
+    await expect(args.onClick).toHaveBeenCalledTimes(1);
+  },
 };
 
 export const Secondary: Story = {
@@ -36,7 +46,15 @@ export const Text: Story = {
 };
 
 export const Disabled: Story = {
-  args: mockedButtonDisabled,
+  args: { ...mockedButtonDisabled, onClick: fn() },
+  play: async ({ args, canvasElement }) => {
+    const button = within(canvasElement).getByRole("button", { name: "Disabled Button" });
+
+    await expect(button).toBeDisabled();
+
+    await userEvent.click(button);
+    await expect(args.onClick).not.toHaveBeenCalled();
+  },
 };
 
 export const Large: Story = {
