@@ -9,15 +9,12 @@ import {
   mockedBreadcrumbsSingle,
 } from "./breadcrumbsMock";
 
-// More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
   title: "Molecules/Breadcrumbs",
   component: Breadcrumbs,
   parameters: {
-    // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
     layout: "centered",
   },
-  // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ["autodocs"],
 } satisfies Meta<typeof Breadcrumbs>;
 
@@ -33,7 +30,6 @@ const linkSpy = fn(
   )
 );
 
-// More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 // No LinkComponent here: the items render as plain anchors, so no setup is needed.
 export const Default: Story = {
   args: mockedBreadcrumbsDefault,

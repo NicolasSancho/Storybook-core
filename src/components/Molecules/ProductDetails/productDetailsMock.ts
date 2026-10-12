@@ -6,14 +6,14 @@ export const mockedProductDetailsDefault: ProductDetailsProps = {
     { label: "Material", value: "100% Cotton" },
     { label: "Color", value: "Navy Blue" },
     { label: "Size", value: "Medium" },
-    { label: "Brand", value: "ZARA" },
+    { label: "Brand", value: "Acme" },
   ],
 };
 
 // Detailed product information - extensive details
 export const mockedProductDetailsDetailed: ProductDetailsProps = {
   details: [
-    { label: "SKU", value: "ZRA-TSH-001" },
+    { label: "SKU", value: "ACM-TSH-001" },
     { label: "Material", value: "95% Cotton, 5% Elastane" },
     { label: "Color", value: "Charcoal Gray" },
     { label: "Size", value: "Large" },

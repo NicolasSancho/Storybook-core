@@ -1,6 +1,6 @@
 {
   "name": "@nicolassancho/storybook-core",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "Accessible React + Tailwind component library built with tailwind-variants and documented in Storybook.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -53,11 +53,9 @@
     "url": "https://github.com/NicolasSancho/Storybook-core/issues"
   },
   "devDependencies": {
-    "@chromatic-com/storybook": "^5.4.0",
     "@eslint/js": "^9.31.0",
     "@storybook/addon-docs": "^10.6.1",
     "@storybook/addon-links": "^10.6.1",
-    "@storybook/addon-onboarding": "^10.6.1",
     "@storybook/addon-vitest": "^10.6.1",
     "@storybook/react": "^10.6.1",
     "@storybook/react-vite": "^10.6.1",

@@ -2,15 +2,12 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, fn, within } from "storybook/test";
 import { Image } from "./Image";
 import { mockedImage, smallCircleImage, largeSquareImage } from "./imageMock";
-// More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
   title: "Atoms/Image",
   component: Image,
   parameters: {
-    // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
     layout: "centered",
   },
-  // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ["autodocs"],
 } satisfies Meta<typeof Image>;
 
@@ -19,8 +16,6 @@ type Story = StoryObj<typeof meta>;
 
 // Spy standing in for a framework image (e.g. next/image): records the props it receives.
 const imageSpy = fn((props: React.ImgHTMLAttributes<HTMLImageElement>) => <img {...props} />);
-
-// More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 
 export const Default: Story = {
   args: mockedImage,
