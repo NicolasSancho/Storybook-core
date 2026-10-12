@@ -37,6 +37,35 @@ library's compiled files for classes:
 The `@source` line is required. Tailwind skips `node_modules` when it looks for classes, so without it
 the components render unstyled. Adjust the relative path to where your CSS file lives.
 
+## Fonts
+
+The library loads no fonts. Components use `font-sans` for body text, and `Text` takes
+`font="display"` for headings, which uses `font-display`. Set both once in your app: with
+`next/font` the fonts are self-hosted and cause no layout shift.
+
+```tsx
+// app/layout.tsx
+import { Bricolage_Grotesque, Hanken_Grotesk } from "next/font/google";
+
+const body = Hanken_Grotesk({ subsets: ["latin"], variable: "--font-body" });
+const heading = Bricolage_Grotesque({ subsets: ["latin"], variable: "--font-heading" });
+
+<html className={`${body.variable} ${heading.variable}`}>
+  <body className="font-sans">{children}</body>
+</html>;
+```
+
+```css
+/* app/globals.css, after the library import */
+@theme inline {
+  --font-sans: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-heading), ui-sans-serif, system-ui, sans-serif;
+}
+```
+
+`--font-display` is optional: when you do not set it, headings use the body font. The type scale
+sets a line-height for each size, and its sizes are in rem.
+
 ## Dark mode
 
 `theme.css` also holds the dark theme. With no setup it follows the operating system
