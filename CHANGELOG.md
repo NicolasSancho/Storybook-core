@@ -4,6 +4,23 @@ All notable changes to `@nicolassancho/storybook-core` are listed here. The form
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## 3.0.10 - 2026-10-12
+
+### Changed
+
+- Updated ESLint to 9.39, Prettier to 3.9 and TypeScript to 5.9 (development tooling only).
+
+## 3.0.9 - 2026-10-12
+
+### Changed
+
+- Updated the lockfile and typescript-eslint to fix audited vulnerabilities (development
+  dependencies only).
+
+### Removed
+
+- Plop, the component generator. Components are created by copying an existing folder.
+
 ## 3.0.8 - 2026-10-12
 
 ### Added
