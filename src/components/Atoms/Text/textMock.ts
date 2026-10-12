@@ -23,3 +23,23 @@ export const underlinedText: TextProps = {
   weight: "normal",
   underline: true,
 };
+
+export const headingText: TextProps = {
+  children: "Heading Text",
+  as: "h2",
+  font: "display",
+  color: "darker",
+  size: "heading",
+  weight: "bold",
+  underline: false,
+};
+
+export const displayText: TextProps = {
+  children: "Display Text",
+  as: "h1",
+  font: "display",
+  color: "darker",
+  size: "display",
+  weight: "bold",
+  underline: false,
+};

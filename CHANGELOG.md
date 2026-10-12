@@ -4,6 +4,26 @@ All notable changes to `@nicolassancho/storybook-core` are listed here. The form
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## 3.2.0 - 2026-10-12
+
+### Added
+
+- Two larger sizes, `text-3xl` (40px) and `text-4xl`, a fluid display size that goes from 36px on
+  phones to 64px on wide screens, with a tighter line-height and letter-spacing.
+- A `--font-display` token for headings. It defaults to the body font, and an app sets it to use a
+  second font. The Consumers guide has a Fonts section with the `next/font` setup.
+- `Text` has two new sizes, `heading` and `display`, a `font` prop (`body` or `display`) and a
+  `medium` weight.
+- A Typography page under Foundations that shows the scale, read from the tokens. Its test fails on
+  a size that is missing, is not in rem or has no line-height.
+
+### Changed
+
+- Font sizes are now in rem, so they follow the browser's font-size setting. The sizes at the
+  default setting are the same as before.
+- Every size now sets its own line-height (for example `text-sm` is 14px on 20px). Text that was
+  using the page's line-height changes height slightly.
+
 ## 3.1.0 - 2026-10-12
 
 ### Added

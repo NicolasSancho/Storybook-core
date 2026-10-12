@@ -2,7 +2,7 @@
 @import "./theme.css";
 
 /*
-  Storybook only (this file is not shipped). The Colors story reads every color token from the
+  Storybook only (this file is not shipped). The Colors and Typography stories read every token from the
   page, and Tailwind only emits the variables that a utility uses, so list them here.
 */
 @source inline("bg-{primary,secondary}-{50,100,200,300,400,500,600,700,800,900,950}");
@@ -11,6 +11,7 @@
 @source inline("bg-{primary,secondary,danger,success,warning}");
 @source inline("bg-{danger,success,warning}-subtle");
 @source inline("bg-{surface,on-primary,on-secondary,on-danger}");
+@source inline("text-{xs,sm,base,lg,xl,2xl,3xl,4xl}");
 
 /* The page color the docs ask consumers to set. */
 body {
