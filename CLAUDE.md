@@ -52,6 +52,10 @@ on npm (public). Storybook is the development and documentation environment.
 - `docs/` holds the README screenshots (not published: `files` is only `dist`). The README links them
   by absolute `raw.githubusercontent.com` URLs, because npm cannot see repo files. Retake them when the
   look of the library changes.
+- `src/components/Welcome/Welcome.mdx` is the Storybook landing page: a docs-only MDX page with no
+  component. Its swatches use the token classes, so they follow `theme.css`. The sidebar order is
+  set by `storySort` in `.storybook/preview.ts` (Welcome, Consumers, Foundations, Atoms,
+  Molecules, Organisms, Layouts): add a new top-level group there.
 - `src/components/Consumers/Consumers.mdx` is the consumer guide: a docs-only MDX page with no
   component. Update it in the same pass whenever a consumer-facing convention changes (CSS setup,
   injection props, server/client rules, package exports).

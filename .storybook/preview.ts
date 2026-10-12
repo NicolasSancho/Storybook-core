@@ -13,6 +13,20 @@ const preview: Preview = {
     return () => document.removeEventListener("click", cancelNavigation);
   },
   parameters: {
+    // Welcome first, then setup and the tokens, then the components
+    options: {
+      storySort: {
+        order: [
+          "Welcome",
+          "Consumers",
+          "Foundations",
+          "Atoms",
+          "Molecules",
+          "Organisms",
+          "Layouts",
+        ],
+      },
+    },
     // Run axe on every story in `npm test`; a violation fails the story
     a11y: { test: "error" },
     controls: {

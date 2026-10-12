@@ -4,6 +4,17 @@ All notable changes to `@nicolassancho/storybook-core` are listed here. The form
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## 3.0.13 - 2026-10-12
+
+### Added
+
+- A Welcome landing page in Storybook, with a short intro, the install command, a color strip
+  and links to Consumers and Colors.
+
+### Changed
+
+- The Storybook sidebar now lists Welcome, Consumers and Foundations before the components.
+
 ## 3.0.12 - 2026-10-12
 
 ### Fixed
