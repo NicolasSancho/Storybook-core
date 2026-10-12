@@ -1,6 +1,6 @@
 /*
   Design tokens. Shipped as dist/styles/theme.css: consumers import it after
-  `@import "tailwindcss"`. Keep the Colors story in sync with the values here.
+  `@import "tailwindcss"`. The Colors story reads these values, so it needs no edit when they change.
 */
 @theme {
   /* Closed type scale: these are the only text sizes that exist. */
@@ -12,68 +12,118 @@
   --text-xl: 24px;
   --text-2xl: 32px;
 
-  --color-primary-50: #f9fbfc;
-  --color-primary-100: #f1f7fa;
-  --color-primary-200: #d9e7ef;
-  --color-primary-300: #b8d3e4;
-  --color-primary-400: #90b5d2;
-  --color-primary-500: #6b98c1;
-  --color-primary-600: #457ab0; /* 4.5:1 with white: lightest step usable for text */
-  --color-primary-700: #0060ab;
-  --color-primary-800: #00548a; /* same as DEFAULT */
-  --color-primary-900: #00426c;
-  --color-primary-950: #003054;
-  --color-primary: #00548a;
-  --color-primary-lighter: #0077cc;
-  --color-primary-darker: #003366;
+  --color-primary-50: light-dark(#f9fbfc, #12191d);
+  --color-primary-100: light-dark(#f1f7fa, #121e23);
+  --color-primary-200: light-dark(#d9e7ef, #192b35);
+  --color-primary-300: light-dark(#b8d3e4, #223a49);
+  --color-primary-400: light-dark(#90b5d2, #404e5a);
+  --color-primary-500: light-dark(#6b98c1, #4d657c);
+  --color-primary-600: light-dark(
+    #457ab0,
+    #5281b1
+  ); /* 4.5:1 with white: lightest step usable for text */
+  --color-primary-700: light-dark(#0060ab, #589de4);
+  --color-primary-800: light-dark(#00548a, #73b0e6); /* same as DEFAULT */
+  --color-primary-900: light-dark(#00426c, #96c9f6);
+  --color-primary-950: light-dark(#003054, #c2e0fe);
+  --color-primary: light-dark(#00548a, #73b0e6);
+  --color-primary-lighter: light-dark(#0077cc, #4d94dc);
+  --color-primary-darker: light-dark(#003366, #96c9f6);
 
-  --color-secondary-50: #fff7ed;
-  --color-secondary-100: #ffedd5;
-  --color-secondary-200: #fed7aa;
-  --color-secondary-300: #fdba74;
-  --color-secondary-400: #fb923c;
-  --color-secondary-500: #f97316;
-  --color-secondary-600: #ea580c;
-  --color-secondary-700: #c2410c; /* same as DEFAULT; 5.2:1 with white, lightest step usable for text */
-  --color-secondary-800: #9a3412; /* same as darker */
-  --color-secondary-900: #7c2d12;
-  --color-secondary-950: #431407;
-  --color-secondary: #c2410c; /* 5.2:1 with white (WCAG AA) */
+  --color-secondary-50: light-dark(#fff7ed, #1e1a14);
+  --color-secondary-100: light-dark(#ffedd5, #272117);
+  --color-secondary-200: light-dark(#fed7aa, #382b1d);
+  --color-secondary-300: light-dark(#fdba74, #4e3922);
+  --color-secondary-400: light-dark(#fb923c, #6f4627);
+  --color-secondary-500: light-dark(#f97316, #924920);
+  --color-secondary-600: light-dark(#ea580c, #bf4401);
+  --color-secondary-700: light-dark(
+    #c2410c,
+    #d9653e
+  ); /* same as DEFAULT; 5.2:1 with white, lightest step usable for text */
+  --color-secondary-800: light-dark(#9a3412, #ec886b); /* same as darker */
+  --color-secondary-900: light-dark(#7c2d12, #f7a58b);
+  --color-secondary-950: light-dark(#431407, #fee7e1);
+  --color-secondary: light-dark(#c2410c, #d9653e); /* 5.2:1 with white (WCAG AA) */
   --color-secondary-lighter: #f28b2d; /* original brand orange: decorative use only, fails AA with white */
-  --color-secondary-darker: #9a3412; /* 7.3:1 with white */
+  --color-secondary-darker: light-dark(#9a3412, #ec886b); /* 7.3:1 with white */
 
   /*
     Semantic colors: the plain name is for text and icons on white or on `subtle` (all 4.5:1 or
     better), `subtle` is for backgrounds. Always pair with text or an icon, never color alone.
   */
-  --color-danger: #b91c1c; /* 6.5:1 with white */
-  --color-danger-subtle: #fef2f2;
-  --color-success: #15803d; /* 5.0:1 with white */
-  --color-success-subtle: #f0fdf4;
-  --color-warning: #92400e; /* 7.1:1 with white */
-  --color-warning-subtle: #fef3c7;
+  --color-danger: light-dark(#b91c1c, #f47a70); /* 6.5:1 with white */
+  --color-danger-subtle: light-dark(#fef2f2, #2a1a1a);
+  --color-success: light-dark(#15803d, #4cb06b); /* 5.0:1 with white */
+  --color-success-subtle: light-dark(#f0fdf4, #16221a);
+  --color-warning: light-dark(#92400e, #e0a23a); /* 7.1:1 with white */
+  --color-warning-subtle: light-dark(#fef3c7, #2a2210);
+
+  /*
+    Surface: the default background of the page and of controls (inputs, header). It is white in
+    light mode and the darkest tone in dark mode, so use it instead of `bg-white`.
+    `on-*`: the text and icon color for a filled brand or danger background (`bg-primary`,
+    `bg-secondary`, `bg-danger`). It is white in light mode and dark in dark mode, so use it
+    instead of `text-white`. Both are 4.5:1 or better on the fill, in both themes.
+  */
+  --color-surface: light-dark(#ffffff, #141414);
+  --color-on-primary: light-dark(#ffffff, #141414);
+  --color-on-secondary: light-dark(#ffffff, #141414);
+  --color-on-danger: light-dark(#ffffff, #141414);
 
   /*
     Gray scale. Jobs: 900 body text, 600 secondary text, 500 placeholder, 400 input borders
     (3:1), 200 dividers, 50 page background. 100 to 300 are never for text.
   */
   --color-neutral-*: initial;
-  --color-neutral-25: rgb(250 250 250);
-  --color-neutral-50: rgb(246 246 246);
-  --color-neutral-100: rgb(231 231 231);
-  --color-neutral-200: rgb(209 209 209);
-  --color-neutral-300: rgb(176 176 176);
-  --color-neutral-400: rgb(136 136 136);
-  --color-neutral-500: rgb(109 109 109);
-  --color-neutral-600: rgb(93 93 93);
-  --color-neutral-700: rgb(79 79 79);
-  --color-neutral-800: rgb(69 69 69);
-  --color-neutral-900: rgb(61 61 61);
-  --color-neutral-950: rgb(48 48 48);
+  --color-neutral-25: light-dark(rgb(250 250 250), rgb(24 24 24));
+  --color-neutral-50: light-dark(rgb(246 246 246), rgb(27 27 27));
+  --color-neutral-100: light-dark(rgb(231 231 231), rgb(39 39 39));
+  --color-neutral-200: light-dark(rgb(209 209 209), rgb(54 54 54));
+  --color-neutral-300: light-dark(rgb(176 176 176), rgb(76 76 76));
+  --color-neutral-400: light-dark(rgb(136 136 136), rgb(108 108 108));
+  --color-neutral-500: light-dark(rgb(109 109 109), rgb(135 135 135));
+  --color-neutral-600: light-dark(rgb(93 93 93), rgb(155 155 155));
+  --color-neutral-700: light-dark(rgb(79 79 79), rgb(176 176 176));
+  --color-neutral-800: light-dark(rgb(69 69 69), rgb(194 194 194));
+  --color-neutral-900: light-dark(rgb(61 61 61), rgb(212 212 212));
+  --color-neutral-950: light-dark(rgb(48 48 48), rgb(232 232 232));
 
   --breakpoint-xs: 0px;
   --breakpoint-sm: 640px;
   --breakpoint-md: 940px;
   --breakpoint-lg: 1024px;
   --breakpoint-xl: 1280px;
+}
+
+/*
+  Light and dark. Every color above is `light-dark(light, dark)`, so one declaration holds both
+  themes. Which one applies is the root's `color-scheme`: it follows the operating system by
+  default, and `data-theme="light"` or `data-theme="dark"` on <html> overrides it. `color-scheme`
+  also themes native controls and scrollbars. Set the attribute on <html> only: Tailwind compiles
+  `light-dark()` to custom-property toggles that are resolved at the root, so a nested element
+  with its own `data-theme` would not change.
+
+  The color names keep their jobs in both themes: the `neutral`, `primary` and `secondary` ramps
+  are inverted, so 900 is still body text, 200 still a divider and 50 the page background.
+  `-darker` is the hover step, so it is lighter in dark. `secondary-lighter` is decorative and the
+  same in both themes.
+
+  How the dark values were chosen: each step keeps the contrast ratio its light value has against
+  white, measured against the dark surface (#141414), with the same hue. Tints (50 to 400) have
+  less chroma so large areas stay calm, and the neutral text steps (700 to 950) are a little
+  brighter than a strict match because light text on a dark ground reads thinner. Text colors are
+  4.5:1 or better on `surface`, and semantic colors are too on their `subtle` background. The
+  Colors story lists every pairing for both themes and `npm test` asserts them.
+*/
+:root {
+  color-scheme: light dark;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
 }

@@ -20,11 +20,11 @@ const cartIconStyles = tv({
   base: "relative inline-flex items-center",
   variants: {
     interactive: {
-      true: "cursor-pointer rounded-sm focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
+      true: "cursor-pointer rounded-sm focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface",
     },
   },
   slots: {
-    badge: "absolute -top-1 -right-1 bg-danger text-white text-xs rounded-full px-1",
+    badge: "absolute -top-1 -right-1 bg-danger text-on-danger text-xs rounded-full px-1",
   },
 });
 

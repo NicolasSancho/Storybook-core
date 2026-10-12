@@ -23,12 +23,12 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 }
 
 const buttonStyles = tv({
-  base: "font-bold text-white inline-flex items-center focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
+  base: "font-bold inline-flex items-center focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface",
   variants: {
     variant: {
-      primary: "rounded-sm bg-primary text-white enabled:hover:bg-primary-darker",
+      primary: "rounded-sm bg-primary text-on-primary enabled:hover:bg-primary-darker",
       secondary:
-        "rounded-sm bg-secondary text-white enabled:hover:bg-secondary-darker focus-visible:ring-secondary",
+        "rounded-sm bg-secondary text-on-secondary enabled:hover:bg-secondary-darker focus-visible:ring-secondary",
       text: "rounded-sm text-primary enabled:hover:underline",
     },
     size: {

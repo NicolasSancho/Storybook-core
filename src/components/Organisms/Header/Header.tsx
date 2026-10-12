@@ -13,7 +13,7 @@ export interface HeaderSlotProps {
 }
 
 const headerStyles = tv({
-  base: "w-full flex items-center justify-between px-4 h-16 bg-white shadow-sm",
+  base: "w-full flex items-center justify-between px-4 h-16 bg-surface shadow-sm",
 });
 
 const slotStyles = tv({
