@@ -49,7 +49,6 @@ export const SearchInput: React.FC<SearchInputProps> = ({
   return (
     <input
       type="search"
-      name="search"
       aria-label={hasLabel ? undefined : "Search"}
       aria-invalid={isInvalid || undefined}
       placeholder={placeholder}

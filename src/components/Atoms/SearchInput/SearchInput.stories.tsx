@@ -71,6 +71,15 @@ export const IdOnly: Story = {
 
     // An id alone does not name the input, so the "Search" fallback still applies.
     await expect(canvas.getByRole("searchbox", { name: "Search" })).toBeInTheDocument();
+    // No default `name`: it is only set when the consumer passes one.
+    await expect(canvas.getByRole("searchbox")).not.toHaveAttribute("name");
+  },
+};
+
+export const WithName: Story = {
+  args: { ...mockedSearchInputDefault, name: "q" },
+  play: async ({ canvasElement }) => {
+    await expect(within(canvasElement).getByRole("searchbox")).toHaveAttribute("name", "q");
   },
 };
 
