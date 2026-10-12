@@ -82,9 +82,9 @@ The first `npm test` run needs the browser: `npx playwright install chromium`.
 
 ### Creating components
 
-`npm run generate` scaffolds a component with Plop. Choose Atoms, Molecules or Organisms: it creates
-the component, its story and a mock file. Layouts are created by hand, and every new component must
-be exported from `src/index.js`.
+Components are created by hand. Copy an existing component folder in `src/components/<Layer>/` as the
+starting point: it holds the component, its story and a mock file. Then export the component from
+`src/index.js`.
 
 Tests are `play` functions in the component's story file, not separate test files.
 
