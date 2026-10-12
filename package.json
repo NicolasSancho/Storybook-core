@@ -1,6 +1,6 @@
 {
   "name": "@nicolassancho/storybook-core",
-  "version": "3.0.4",
+  "version": "3.0.5",
   "description": "Accessible React + Tailwind component library built with tailwind-variants and documented in Storybook.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -54,6 +54,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.31.0",
+    "@storybook/addon-a11y": "^10.6.1",
     "@storybook/addon-docs": "^10.6.1",
     "@storybook/addon-links": "^10.6.1",
     "@storybook/addon-vitest": "^10.6.1",

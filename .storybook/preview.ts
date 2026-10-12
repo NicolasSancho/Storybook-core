@@ -13,6 +13,8 @@ const preview: Preview = {
     return () => document.removeEventListener("click", cancelNavigation);
   },
   parameters: {
+    // Run axe on every story in `npm test`; a violation fails the story
+    a11y: { test: "error" },
     controls: {
       matchers: {
         color: /(background|color)$/i,
