@@ -75,7 +75,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   price,
   tag,
   buttonLabel = "Add to Cart",
-  onClick = undefined,
+  onClick,
   onProductClick,
   href,
   LinkComponent = "a",
