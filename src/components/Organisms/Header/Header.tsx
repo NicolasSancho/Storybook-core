@@ -1,6 +1,6 @@
 import React from "react";
 import { tv } from "tailwind-variants";
-import { Container } from "../../Layouts/Container/Container";
+import { Container } from "../../Layouts/Container/Container.js";
 
 export interface HeaderNavItem {
   label: string;

@@ -1,5 +1,5 @@
 import React from "react";
-import { chipStyles } from "./chipStyles";
+import { chipStyles } from "./chipStyles.js";
 
 export interface ChipProps extends Omit<
   React.ButtonHTMLAttributes<HTMLButtonElement>,

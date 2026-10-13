@@ -1,6 +1,6 @@
 import React from "react";
 import { tv } from "tailwind-variants";
-import { IconsMap } from "./iconsMap";
+import { IconsMap } from "./iconsMap.js";
 
 export interface IconProps {
   name: keyof typeof IconsMap;

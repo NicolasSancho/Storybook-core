@@ -1,7 +1,7 @@
 import React, { useId } from "react";
-import { RadioButton } from "../../Atoms/RadioButton/RadioButton";
-import { Text } from "../../Atoms/Text/Text";
-import { Grid } from "../../Layouts/Grid/Grid";
+import { RadioButton } from "../../Atoms/RadioButton/RadioButton.js";
+import { Text } from "../../Atoms/Text/Text.js";
+import { Grid } from "../../Layouts/Grid/Grid.js";
 
 export interface RadioGroupOption {
   label: string;

@@ -1,6 +1,6 @@
 import React from "react";
 import { tv } from "tailwind-variants";
-import { Text } from "../../Atoms/Text/Text";
+import { Text } from "../../Atoms/Text/Text.js";
 
 export interface RadioButtonProps {
   label: string;

@@ -4,6 +4,14 @@ All notable changes to `@nicolassancho/storybook-core` are listed here. The form
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## 4.1.1 - 2026-10-13
+
+### Fixed
+
+- The package now loads in Node's native ESM. Its files imported each other without the `.js`
+  extension, which bundlers resolve but Node does not, so `import "@nicolassancho/storybook-core"`
+  failed with `ERR_MODULE_NOT_FOUND` outside a bundler. The components and their API are unchanged.
+
 ## 4.1.0 - 2026-10-13
 
 ### Added

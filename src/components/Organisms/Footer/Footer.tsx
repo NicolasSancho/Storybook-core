@@ -1,7 +1,7 @@
 import React from "react";
 import { tv } from "tailwind-variants";
-import { Text } from "../../Atoms/Text/Text";
-import { Container } from "../../Layouts/Container/Container";
+import { Text } from "../../Atoms/Text/Text.js";
+import { Container } from "../../Layouts/Container/Container.js";
 
 export interface FooterColumn {
   /** Column heading, rendered as an `<h2>`. */
