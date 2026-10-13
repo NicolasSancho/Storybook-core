@@ -35,6 +35,17 @@ jobs:
           fi
           echo "Version $base -> $head"
 
+      # The release job takes the GitHub Release notes from this section, so a missing one is
+      # caught here instead of after the package is published.
+      - name: Check changelog entry
+        if: github.event_name == 'pull_request'
+        run: |
+          version=$(node -p "require('./package.json').version")
+          if ! awk -v v="$version" 'index($0, "## " v " ") == 1 { found = 1 } END { exit !found }' CHANGELOG.md; then
+            echo "::error::CHANGELOG.md has no '## $version' section. Add it in the version bump commit."
+            exit 1
+          fi
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
