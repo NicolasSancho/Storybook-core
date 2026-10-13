@@ -1,5 +1,6 @@
 // Atoms
 export * from "./components/Atoms/Button/Button";
+export * from "./components/Atoms/Chip/Chip";
 export * from "./components/Atoms/Spinner/Spinner";
 export * from "./components/Atoms/Text/Text";
 export * from "./components/Atoms/Icon/Icon";
