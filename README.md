@@ -31,12 +31,12 @@ documented in Storybook. It is published to npm as `@nicolassancho/storybook-cor
 
 ## Components
 
-| Layer     | Components                                                          |
-| --------- | ------------------------------------------------------------------- |
-| Atoms     | Button, Icon, Image, Label, RadioButton, SearchInput, Spinner, Text |
-| Molecules | Breadcrumbs, CartIcon, ProductCard, ProductDetails, RadioGroup      |
-| Organisms | Header, ProductGrid                                                 |
-| Layouts   | Grid                                                                |
+| Layer     | Components                                                                |
+| --------- | ------------------------------------------------------------------------- |
+| Atoms     | Button, Chip, Icon, Image, Label, RadioButton, SearchInput, Spinner, Text |
+| Molecules | Breadcrumbs, CartIcon, ProductCard, ProductDetails, RadioGroup            |
+| Organisms | Footer, Header, ProductGrid                                               |
+| Layouts   | Grid                                                                      |
 
 The palette and the contrast of each text color are documented under **Foundations / Colors** in
 Storybook.

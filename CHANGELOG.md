@@ -4,6 +4,16 @@ All notable changes to `@nicolassancho/storybook-core` are listed here. The form
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## 3.4.0 - 2026-10-13
+
+### Added
+
+- A `Footer` organism: a `contentinfo` landmark with an optional brand block, link columns and a legal
+  line. The columns share one labelled `<nav>` (`navLabel`, "Footer" by default), each under an `<h2>`,
+  and the links go through `LinkComponent` like `Breadcrumbs`. With no columns no navigation is
+  rendered.
+- `Sun` and `Moon` icons, for a theme toggle.
+
 ## 3.3.0 - 2026-10-13
 
 ### Added

@@ -20,5 +20,6 @@ export * from "./components/Molecules/ProductDetails/ProductDetails";
 export * from "./components/Molecules/RadioGroup/RadioGroup";
 
 // Organisms
+export * from "./components/Organisms/Footer/Footer";
 export * from "./components/Organisms/Header/Header";
 export * from "./components/Organisms/ProductGrid/ProductGrid";
