@@ -107,3 +107,25 @@ export const CustomLink: Story = {
     );
   },
 };
+
+// On a wide screen the bar stays full-width while its content sits in the container, so it lines
+// up with page content. The layout is measured: a class check cannot prove it.
+export const WideScreen: Story = {
+  args: mockedHeaderDefault,
+  render: (args) => (
+    <div style={{ width: 2000 }}>
+      <Header {...args} />
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const bar = canvas.getByRole("banner").getBoundingClientRect();
+    const brand = canvas.getByRole("link", { name: "ACME" }).getBoundingClientRect();
+    const cart = canvas.getByRole("link", { name: /Shopping cart/ }).getBoundingClientRect();
+
+    // Full-bleed bar, inset content: at least the space left by a 1152px container.
+    await expect(bar.width).toBe(2000);
+    await expect(brand.left - bar.left).toBeGreaterThanOrEqual((2000 - 1152) / 2);
+    await expect(bar.right - cart.right).toBeGreaterThanOrEqual((2000 - 1152) / 2);
+  },
+};

@@ -1,6 +1,7 @@
 import React from "react";
 import { tv } from "tailwind-variants";
 import { Text } from "../../Atoms/Text/Text";
+import { Container } from "../../Layouts/Container/Container";
 
 export interface FooterColumn {
   /** Column heading, rendered as an `<h2>`. */
@@ -42,7 +43,7 @@ export interface FooterProps {
 const footerStyles = tv({
   base: "w-full border-t border-neutral-200 bg-surface",
   slots: {
-    inner: "flex flex-col gap-8 px-4 py-10",
+    inner: "flex flex-col gap-8 py-10",
     top: "flex flex-col gap-8 md:flex-row md:justify-between",
     brand: "md:max-w-xs",
     columns: "flex flex-wrap gap-x-12 gap-y-8",
@@ -54,7 +55,8 @@ const footerStyles = tv({
 
 /**
  * Page footer: a `contentinfo` landmark with an optional brand block, link columns and a legal
- * line. It holds no state, so it renders from a Server Component.
+ * line. The bar is full-width and its content sits in a `Container`, so it lines up with page
+ * content wrapped in one. It holds no state, so it renders from a Server Component.
  */
 export const Footer: React.FC<FooterProps> = ({
   columns = [],
@@ -69,7 +71,7 @@ export const Footer: React.FC<FooterProps> = ({
 
   return (
     <footer className={styles.base({ className })}>
-      <div className={styles.inner()}>
+      <Container className={styles.inner()}>
         {(brand || hasColumns) && (
           <div className={styles.top()}>
             {brand && <div className={styles.brand()}>{brand}</div>}
@@ -96,7 +98,7 @@ export const Footer: React.FC<FooterProps> = ({
           </div>
         )}
         {legal && <div className={styles.legal()}>{legal}</div>}
-      </div>
+      </Container>
     </footer>
   );
 };
