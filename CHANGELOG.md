@@ -4,6 +4,17 @@ All notable changes to `@nicolassancho/storybook-core` are listed here. The form
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## 4.0.1 - 2026-10-13
+
+### Changed
+
+- Each release is now tagged and published as a GitHub Release by CI. The tag is `v<version>` and the
+  notes are that version's section of this changelog.
+- The package is published with npm provenance, so npm shows which workflow run and commit built it.
+- A pull request now fails when this changelog has no section for the version in `package.json`.
+
+No code changed: the package contents are identical to 4.0.0.
+
 ## 4.0.0 - 2026-10-13
 
 This release is breaking, so it batches the API cleanups that the first real app needed. The
