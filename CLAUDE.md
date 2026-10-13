@@ -73,7 +73,11 @@ on npm (public). Storybook is the development and documentation environment.
   gives them the matching Storybook theme. Light stays the default.
 - Every new component must be exported manually from `src/index.js`.
   `src/index.js` is plain JS (`allowJs`) and imports no CSS.
-- Components import each other via relative paths (`../../Atoms/Button/Button`).
+- Components import each other via relative paths that end in `.js`
+  (`../../Atoms/Button/Button.js`), also in `src/index.js`. `tsc` keeps the path as written and
+  Node's native ESM needs the extension, so `dist/` loads in plain Node and not only in bundlers.
+  TypeScript, Vite and Storybook resolve the `.js` to the `.tsx` source. Stories and mocks are not
+  shipped and keep extensionless imports.
 - Named exports only; no default exports from component files.
 - Page width lives in `Layouts/Container` only (`max-w-6xl`, `px-4 sm:px-6`). A full-width organism
   (Header, Footer) keeps its bar full-bleed and puts its content in a `Container`, with no
@@ -338,9 +342,3 @@ trailingComma es5, 2 spaces). Beyond that, in new or modified code:
   (https://nicolassancho.github.io/Storybook-core/). It builds nothing, so the site is exactly the
   build that passed the checks, and it does not wait for `publish`. The repo's Pages source must
   be set to "GitHub Actions".
-
-## Known limitations (do not fix unless requested)
-
-- `dist/` is not valid Node ESM: relative imports have no `.js` extension, so plain Node
-  fails with `ERR_MODULE_NOT_FOUND`. The package targets bundlers (Next, Vite, webpack). A fix
-  means changing every relative import or the build tooling.
