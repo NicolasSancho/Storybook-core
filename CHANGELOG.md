@@ -4,6 +4,13 @@ All notable changes to `@nicolassancho/storybook-core` are listed here. The form
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## 4.1.2 - 2026-10-13
+
+### Changed
+
+- CI now installs the packed package in a clean project and checks it with `publint`, `attw` and a
+  Node render test before every publish. The package itself did not change.
+
 ## 4.1.1 - 2026-10-13
 
 ### Fixed

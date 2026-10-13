@@ -17,8 +17,8 @@ on npm (public). Storybook is the development and documentation environment.
   clean case: if you find any issue, report it and wait for a decision instead of
   committing and mentioning it afterwards. Never push unless asked.
 - Before considering a task done, run `npx tsc --noEmit`, `npm run lint` and
-  `npx prettier --check` on the changed files (plus `npm run build` when touching exports,
-  styles or config).
+  `npx prettier --check` on the changed files (plus `npm run build` and `npm run test:package`
+  when touching exports, styles, config or imports in shipped code).
 
 ## Commands
 
@@ -38,7 +38,16 @@ on npm (public). Storybook is the development and documentation environment.
   real contrast bug, not test noise.
   `@storybook/addon-a11y` runs axe on every story (`a11y.test: "error"` in `.storybook/preview.ts`), so a
   violation fails the story. Opt a story out with `parameters.a11y.test = "todo"` and a comment saying why.
-- Tests are `play` functions in the stories (see "Tests" under Stories). Don't add test
+- `npm run test:package`: builds, then checks the package as a consumer installs it: `publint`,
+  `attw` (types and module resolution; the CSS entry point is excluded because attw reads only JS
+  and types) and `scripts/test-package.mjs`. The script packs the tarball, installs it with the
+  peer dependencies in a temp project and, in plain Node, renders Button, Header (`LinkComponent`),
+  ProductGrid (`ImageComponent`) and an uncontrolled RadioGroup, asserts `dist/` has no
+  `"use client"`, and compiles the Consumers-guide Tailwind setup. It cannot test Next.js
+  Server/Client behavior: that needs a real Next app. Add a check there only for a packaging risk
+  that a story cannot see; the checks live in `scripts/package-fixture/`, outside the ESLint and
+  Prettier globs, so run `npx prettier --write scripts` after editing them.
+- Component tests are `play` functions in the stories (see "Tests" under Stories). Don't add test
   tooling (other test libraries, addons, CI steps) unless explicitly asked.
 
 ## Architecture
@@ -330,6 +339,8 @@ trailingComma es5, 2 spaces). Beyond that, in new or modified code:
     fails if `CHANGELOG.md` has no `## <version>` section.
   - `npm ci` (which triggers `prepare` → `npm run build`), `npx tsc --noEmit`, `npm run lint`,
     `npx prettier --check ./src ./.storybook`, `npm run build-storybook` and `npm test`.
+  - In a parallel `package` job (no browser): `npm ci` and `npm run test:package`. Publishing waits
+    for it, because `main.yml` calls the whole workflow.
 - After the checks pass, the publish job runs `npm ci`, `npm run build-storybook` and
   `npm publish --provenance`: npm records the workflow run and commit that built the package.
 - After `publish`, the `release` job creates the annotated tag `v<version>` (message `<version>`)

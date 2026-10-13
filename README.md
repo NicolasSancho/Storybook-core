@@ -96,7 +96,9 @@ Tests are `play` functions in the component's story file, not separate test file
 
 1. Branch from `main` (`feat/<description>` or `fix/<description>`) and open a pull request.
 2. Run `npx tsc --noEmit`, `npm run lint`, `npx prettier --check ./src ./.storybook` and `npm test`
-   before pushing. CI runs the same checks plus a Storybook build.
+   before pushing. CI runs the same checks plus a Storybook build. Run `npm run test:package` too
+   when you change exports, styles or imports: it installs the packed package and renders it in
+   plain Node.
 3. Bump the version as the last commit (`npm version <patch|minor> --no-git-tag-version`). CI fails
    a pull request that keeps the version of `main`, and every push to `main` publishes to npm.
 

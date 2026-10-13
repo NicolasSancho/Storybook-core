@@ -1,6 +1,6 @@
 {
   "name": "@nicolassancho/storybook-core",
-  "version": "4.1.1",
+  "version": "4.1.2",
   "description": "Accessible React + Tailwind component library built with tailwind-variants and documented in Storybook.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -31,7 +31,8 @@
     "build-storybook": "storybook build",
     "test": "vitest run",
     "lint": "eslint ./src",
-    "format": "prettier --write ./src ./.storybook"
+    "format": "prettier --write ./src ./.storybook",
+    "test:package": "npm run build && publint --pack npm && attw --pack . --profile esm-only --exclude-entrypoints ./styles/theme.css && node scripts/test-package.mjs"
   },
   "keywords": [
     "react",
@@ -52,6 +53,7 @@
     "url": "https://github.com/NicolasSancho/Storybook-core/issues"
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.5",
     "@eslint/js": "^9.39.5",
     "@storybook/addon-a11y": "^10.6.2",
     "@storybook/addon-docs": "^10.6.2",
@@ -73,6 +75,7 @@
     "playwright": "^1.64.0",
     "postcss": "^8.4.41",
     "prettier": "^3.9.10",
+    "publint": "^0.3.25",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "storybook": "^10.6.2",

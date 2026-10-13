@@ -81,3 +81,25 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: storybook-static
+
+  # Checks the package a consumer installs, not the source: lint rules and Storybook cannot see a
+  # missing `.js` extension, a wrong `exports` entry or a stray "use client". Runs in parallel
+  # with `checks` and needs no browser, so it adds no time to the pipeline.
+  package:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Test the packed package
+        run: npm run test:package
