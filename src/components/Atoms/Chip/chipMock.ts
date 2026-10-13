@@ -12,15 +12,16 @@ export const mockedChipSelected: ChipProps = {
   selected: true,
 };
 
-// Link - a filter that lives in the URL
-export const mockedChipLink: ChipProps = {
-  children: "Shirts",
-  href: "/products?category=shirts",
-  selected: false,
-};
-
 // Disabled - a choice that is not available
 export const mockedChipDisabled: ChipProps = {
   children: "Sold out",
   disabled: true,
+};
+
+// A submit chip with a name and value: a native form control, no handler needed
+export const mockedChipSubmit: ChipProps = {
+  children: "Shirts",
+  type: "submit",
+  name: "category",
+  value: "shirts",
 };
