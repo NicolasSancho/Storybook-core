@@ -4,6 +4,21 @@ All notable changes to `@nicolassancho/storybook-core` are listed here. The form
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## 3.3.0 - 2026-10-13
+
+### Added
+
+- A `Chip` atom for choosing a category or filter. With `href` it is a link (it takes a
+  `LinkComponent` and sets `aria-current="true"` when selected). Without it, it is a button that sets
+  `aria-pressed`. A `type="submit"` chip with a `name` and `value` submits a native form.
+- A "Forms and filters without JavaScript" section in the Consumers guide.
+
+### Changed
+
+- `RadioGroup`, `RadioButton` and `SearchInput` work uncontrolled. `value`, `checked` and `onChange` are
+  now optional, and `defaultValue` (`defaultChecked` on `RadioButton`) sets the starting state. A Server
+  Component can render them inside a native `<form>` with no handler. Controlled use is unchanged.
+
 ## 3.2.0 - 2026-10-12
 
 ### Added
