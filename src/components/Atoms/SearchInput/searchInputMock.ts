@@ -35,3 +35,11 @@ export const mockedSearchInputInvalid: SearchInputProps = {
   variantSize: "medium",
   isInvalid: true,
 };
+
+// Uncontrolled: no `value` and no handler, so a native form submits what was typed.
+export const mockedSearchInputUncontrolled: SearchInputProps = {
+  name: "q",
+  defaultValue: "T-shirt",
+  placeholder: "Search products...",
+  variantSize: "medium",
+};

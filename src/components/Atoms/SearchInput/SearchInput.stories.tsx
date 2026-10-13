@@ -8,6 +8,7 @@ import {
   mockedSearchInputLarge,
   mockedSearchInputWithValue,
   mockedSearchInputInvalid,
+  mockedSearchInputUncontrolled,
 } from "./searchInputMock";
 
 const meta = {
@@ -80,6 +81,30 @@ export const WithName: Story = {
   args: { ...mockedSearchInputDefault, name: "q" },
   play: async ({ canvasElement }) => {
     await expect(within(canvasElement).getByRole("searchbox")).toHaveAttribute("name", "q");
+  },
+};
+
+// No `value` and no handler: the input works inside a native form, as it does when rendered
+// from a Server Component. The submitted text is read from the form, not from a callback.
+export const Uncontrolled: Story = {
+  args: mockedSearchInputUncontrolled,
+  render: (args) => (
+    <form onSubmit={(event) => event.preventDefault()}>
+      <SearchInput {...args} onChange={undefined} />
+    </form>
+  ),
+  play: async ({ canvasElement }) => {
+    const input = within(canvasElement).getByRole("searchbox");
+    const form = canvasElement.querySelector("form") as HTMLFormElement;
+
+    await expect(input).toHaveValue("T-shirt");
+    await expect(new FormData(form).get("q")).toBe("T-shirt");
+
+    // Typing changes the value with no handler involved.
+    await userEvent.clear(input);
+    await userEvent.type(input, "hoodie");
+    await expect(input).toHaveValue("hoodie");
+    await expect(new FormData(form).get("q")).toBe("hoodie");
   },
 };
 
