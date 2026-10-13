@@ -15,8 +15,7 @@ The package is public on npm, so no registry or token setup is needed:
 npm install @nicolassancho/storybook-core
 ```
 
-The library expects these peer dependencies in the app: `react` and `react-dom` (18.3.1 or newer,
-below 20), `tailwindcss` (v4), `tailwind-variants` (v3) and `tailwind-merge` (v3).
+The library expects these peer dependencies in the app: `react` and `react-dom` (19), `tailwindcss` (v4), `tailwind-variants` (v3) and `tailwind-merge` (v3).
 
 ```bash
 npm install tailwindcss tailwind-variants tailwind-merge
@@ -178,10 +177,28 @@ export default function Page() {
 }
 ```
 
-- `LinkComponent` receives `href`, `className` and `children` (plus `onClick` where the component has
-  one, and `aria-current` on `Chip`, which `next/link` forwards). `ImageComponent` receives `src`, `alt`, `className` and the attributes in `imageProps`.
+- `LinkComponent` receives `href`, `className` and `children` (and `aria-current` on `ChipLink`, which
+  `next/link` forwards). `ImageComponent` receives `src`, `alt`, `className` and the attributes in
+  `imageProps`.
 - A product card with an `href` is a real link stretched over the whole card, so middle-click, new tab
-  and crawlable URLs work. Its image is decorative (`alt=""`), because the title names the card.
+  and crawlable URLs work. Its image is decorative (`alt=""`), because the title names the card. Without
+  an `href` the card is display-only.
+- Controls go in the card's `actions` prop, for example an add-to-cart `<form>`. They sit above the
+  stretched link, so pressing one does its own action and pressing anywhere else opens the product:
+
+```tsx
+<ProductCard
+  title="Basic T-Shirt"
+  href="/products/basic-t-shirt"
+  actions={
+    <form action={addToCart}>
+      <Button type="submit">Add to cart</Button>
+    </form>
+  }
+  // ...brand, price and imageUrl
+/>
+```
+
 - `ProductGrid` forwards its `LinkComponent` and `ImageComponent` to every card. A product can bring
   its own.
 - Pass the imported component directly, or define your own outside the render function. A component
@@ -200,7 +217,16 @@ const Good = () => <Breadcrumbs LinkComponent={Link} items={items} />;
 
 The components hold no state and use no browser APIs, so they carry no `"use client"` directive and
 render from Server Components. Static usage needs nothing special: the examples above are Server
-Components. `Header` and its `Header.Left`, `Header.Center` and `Header.Right` slots work there too.
+Components. `Header` takes its brand, actions and navigation as props, so it works there too:
+
+```tsx
+<Header
+  brand={<Link href="/">Shop</Link>}
+  actions={<SearchForm />}
+  navItems={[{ label: "Ceramics", href: "/products?category=ceramics" }]}
+  LinkComponent={Link}
+/>
+```
 
 An event handler (`onClick`, `onChange`) is a function, and Next cannot pass a function from a Server
 Component. Keep the interactive part in a small Client Component in your app, and render it from the
@@ -236,26 +262,26 @@ starting state with `defaultValue`. They then render from a Server Component ins
 and the browser submits what the user chose. Pick one mode per component and keep it: React warns when
 an input switches between controlled and uncontrolled.
 
-`Chip` is a pill for choosing a category or filter. With an `href` it is a link, and `selected` sets
-`aria-current="true"` on it. Without one it is a button, and `selected` sets `aria-pressed`. A
+`ChipLink` is a pill link for a category or filter that lives in the URL, and `selected` sets
+`aria-current="true"` on it. `Chip` is the button version: `selected` sets `aria-pressed`, and a
 `type="submit"` chip with a `name` and `value` submits a form, so it needs no handler either.
 
 ```tsx
 // app/products/page.tsx (a Server Component)
 import Link from "next/link";
-import { Button, Chip, RadioGroup, SearchInput } from "@nicolassancho/storybook-core";
+import { Button, ChipLink, RadioGroup, SearchInput } from "@nicolassancho/storybook-core";
 import { addToCart } from "./actions";
 
 export default function Page() {
   return (
     <>
       <nav aria-label="Categories">
-        <Chip href="/products" LinkComponent={Link} selected>
+        <ChipLink href="/products" LinkComponent={Link} selected>
           All
-        </Chip>
-        <Chip href="/products?category=shirts" LinkComponent={Link}>
+        </ChipLink>
+        <ChipLink href="/products?category=shirts" LinkComponent={Link}>
           Shirts
-        </Chip>
+        </ChipLink>
       </nav>
 
       {/* A GET form: the query lands in the URL, and the page reads it on the server. */}

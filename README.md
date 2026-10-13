@@ -31,12 +31,12 @@ documented in Storybook. It is published to npm as `@nicolassancho/storybook-cor
 
 ## Components
 
-| Layer     | Components                                                                |
-| --------- | ------------------------------------------------------------------------- |
-| Atoms     | Button, Chip, Icon, Image, Label, RadioButton, SearchInput, Spinner, Text |
-| Molecules | Breadcrumbs, CartIcon, ProductCard, ProductDetails, RadioGroup            |
-| Organisms | Footer, Header, ProductGrid                                               |
-| Layouts   | Grid                                                                      |
+| Layer     | Components                                                                          |
+| --------- | ----------------------------------------------------------------------------------- |
+| Atoms     | Button, Chip, ChipLink, Icon, Image, Label, RadioButton, SearchInput, Spinner, Text |
+| Molecules | Breadcrumbs, CartIcon, ProductCard, ProductDetails, RadioGroup                      |
+| Organisms | Footer, Header, ProductGrid                                                         |
+| Layouts   | Grid                                                                                |
 
 The palette and the contrast of each text color are documented under **Foundations / Colors** in
 Storybook.
@@ -61,7 +61,7 @@ npm install @nicolassancho/storybook-core
 
 The library ships its design tokens (colors, font sizes, breakpoints), not compiled CSS: your app's
 Tailwind generates the classes, and `@source` is what makes it scan the library. `react`, `react-dom`
-(18.3.1 or newer, below 20), `tailwindcss` (v4), `tailwind-variants` (v3) and `tailwind-merge` (v3) are
+(19), `tailwindcss` (v4), `tailwind-variants` (v3) and `tailwind-merge` (v3) are
 peer dependencies.
 
 ```tsx

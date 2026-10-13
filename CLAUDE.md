@@ -75,6 +75,9 @@ on npm (public). Storybook is the development and documentation environment.
   `src/index.js` is plain JS (`allowJs`) and imports no CSS.
 - Components import each other via relative paths (`../../Atoms/Button/Button`).
 - Named exports only; no default exports from component files.
+- React: the library supports and is tested on React 19 only (`peerDependencies` `^19.0.0`,
+  `devDependencies` 19.3), because its only consumer runs 19. Keep the two in sync, and do not
+  widen the peer range without testing the older version.
 
 ## Server and client components
 
@@ -87,9 +90,10 @@ The library is consumed from Next.js (App Router), so keep it usable from Server
   state, effects, context or browser APIs. Do not add it just because a component accepts a
   handler: a directive does not let a Server Component pass functions, and it ships
   JavaScript for components that would otherwise render with none.
-- Never make a component with static sub-components (`Header.Left`, `Header.Center`,
-  `Header.Right`) a client component: dotting into a client module from a Server Component
-  returns `undefined`. Export the parts as separate named exports first.
+- Prefer slot props (`brand`, `actions` on Header) over static sub-components (`Header.Left`):
+  dotting into a client module from a Server Component returns `undefined`, so a component with
+  static parts can never become a client component. If one is ever needed, export the parts as
+  separate named exports.
 - Event handlers (`onClick`, `onChange`) cannot be passed from a Server Component. Consumers
   wrap them in their own `"use client"` file. Keep every handler prop optional so the static
   usage still renders on the server. A form control also takes its state as optional `value` plus
@@ -104,9 +108,9 @@ The library is consumed from Next.js (App Router), so keep it usable from Server
 
 - Navigation uses `href`, never a router-specific prop such as `to`.
 - A component that renders links takes an optional `LinkComponent` prop, defaulting to `"a"`,
-  and passes it `href`, `className` and `children` (plus `onClick` when it has one, and
-  `aria-current` on `Chip`, which `next/link` forwards). Consumers pass a framework link
-  (e.g. `next/link`) to get client-side navigation.
+  and passes it `href`, `className` and `children` (and `aria-current` on `ChipLink`, which
+  `next/link` forwards). Consumers pass a framework link (e.g. `next/link`) to get
+  client-side navigation.
 - Images render through the `Image` atom, which takes an optional `ImageComponent`, defaulting
   to `"img"`, and forwards `src`, `alt`, `className` and any other `<img>` attribute
   (`srcSet`, `sizes`, `width`, `height`, `loading`). Components that show images expose those
@@ -222,9 +226,9 @@ conformance. Do not claim WCAG conformance without appropriate testing.
 - Visible keyboard focus: use
   `focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface`
   (as in Button). Never remove the default outline without providing a visible alternative.
-- Hover styles use `enabled:hover:*` so disabled controls do not react to hover. A component that
-  can render a link as well (Chip) uses plain `hover:`, because `:enabled` never matches an `<a>`,
-  and disables pointer events on its disabled button instead.
+- Hover styles use `enabled:hover:*` so disabled controls do not react to hover. Links (Header,
+  Footer, ChipLink) use plain `hover:`, because `:enabled` never matches an `<a>`. Chip, the button,
+  sets `pointer-events-none` when disabled instead.
 - Icons are decorative (`aria-hidden`) by default. Pass `ariaLabel` when an icon conveys
   meaning on its own. Accessible-name props are named `ariaLabel` in Icon and CartIcon.
 - Icon-only controls must have an accessible name: `aria-label`, or visually hidden (`sr-only`)
