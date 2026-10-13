@@ -4,6 +4,20 @@ All notable changes to `@nicolassancho/storybook-core` are listed here. The form
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## 4.1.0 - 2026-10-13
+
+### Added
+
+- A `Container` layout: page content at one width (`max-w-6xl`), centered, with side padding that
+  grows from `px-4` to `px-6` at the `sm` breakpoint. It takes an `as` prop to render a landmark such
+  as `main`.
+
+### Changed
+
+- `Header` and `Footer` keep their bar full-width and put their content in a `Container`, so on a wide
+  screen the content is centered instead of stretching to the edges, and page content wrapped in a
+  `Container` lines up with both. Their side padding is now the `Container`'s.
+
 ## 4.0.1 - 2026-10-13
 
 ### Changed
