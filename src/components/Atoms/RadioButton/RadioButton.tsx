@@ -5,8 +5,15 @@ import { Text } from "../../Atoms/Text/Text";
 export interface RadioButtonProps {
   label: string;
   value: string | number;
-  checked: boolean;
-  onChange: (value: string | number) => void;
+  /**
+   * Makes the radio controlled. Leave it out for an uncontrolled radio (see `defaultChecked`),
+   * which a native form can submit without any handler.
+   */
+  checked?: boolean;
+  /** Initial state of an uncontrolled radio. Ignored when `checked` is set. */
+  defaultChecked?: boolean;
+  /** Called with the radio's `value` when it is selected. Optional, so it renders on the server. */
+  onChange?: (value: string | number) => void;
   name: string;
   className?: string;
 }
@@ -22,6 +29,7 @@ export const RadioButton: React.FC<RadioButtonProps> = ({
   label,
   value,
   checked,
+  defaultChecked,
   onChange,
   name,
   className,
@@ -35,7 +43,8 @@ export const RadioButton: React.FC<RadioButtonProps> = ({
         name={name}
         value={value}
         checked={checked}
-        onChange={() => onChange(value)}
+        defaultChecked={checked === undefined ? defaultChecked : undefined}
+        onChange={onChange && (() => onChange(value))}
         className={styles.input()}
       />
       <Text as="span" size="small" color="dark">

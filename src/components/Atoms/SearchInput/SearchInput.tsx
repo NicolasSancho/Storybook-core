@@ -3,9 +3,15 @@ import { tv } from "tailwind-variants";
 
 export interface SearchInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   placeholder?: string;
-  value: string;
+  /**
+   * Current text. Setting it makes the input controlled: pair it with `onChange`. Leave it out
+   * for an uncontrolled input (set the initial text with `defaultValue`), which a native `<form>`
+   * can submit without any handler, for example a `GET` search form rendered on the server.
+   */
+  value?: string;
   isInvalid?: boolean;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  /** Called on every change. Optional, so the input renders from a Server Component. */
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   className?: string;
   /**
    * Custom visual size of the input.

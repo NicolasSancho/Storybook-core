@@ -21,8 +21,20 @@ export interface RadioGroupProps {
    */
   name?: string;
   options: RadioGroupOption[];
-  value: string | number;
-  onChange: (value: string | number) => void;
+  /**
+   * Selected option. Setting it makes the group controlled: pair it with `onChange`. Leave it
+   * out for an uncontrolled group (see `defaultValue`). Pick one mode and keep it: React warns
+   * when a group switches between them.
+   */
+  value?: string | number;
+  /**
+   * Initially selected option of an uncontrolled group, which a native `<form>` can submit
+   * without any handler (the Server Action receives the option's `value` as a string).
+   * Ignored when `value` is set.
+   */
+  defaultValue?: string | number;
+  /** Called with the selected option's value. Optional, so the group renders on the server. */
+  onChange?: (value: string | number) => void;
   columns?: 1 | 2 | 3 | 4 | 6 | 8 | 12;
   gap?: "none" | "small" | "medium" | "large" | "xl";
   className?: string;
@@ -33,6 +45,7 @@ export const RadioGroup: React.FC<RadioGroupProps> = ({
   name,
   options,
   value,
+  defaultValue,
   onChange,
   columns = 1,
   gap = "small",
@@ -57,7 +70,8 @@ export const RadioGroup: React.FC<RadioGroupProps> = ({
             name={groupName}
             label={option.label}
             value={option.value}
-            checked={value === option.value}
+            checked={value === undefined ? undefined : value === option.value}
+            defaultChecked={value === undefined ? defaultValue === option.value : undefined}
             onChange={onChange}
           />
         ))}
