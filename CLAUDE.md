@@ -92,7 +92,9 @@ The library is consumed from Next.js (App Router), so keep it usable from Server
   returns `undefined`. Export the parts as separate named exports first.
 - Event handlers (`onClick`, `onChange`) cannot be passed from a Server Component. Consumers
   wrap them in their own `"use client"` file. Keep every handler prop optional so the static
-  usage still renders on the server.
+  usage still renders on the server. A form control also takes its state as optional `value` plus
+  `defaultValue` (RadioGroup, SearchInput): without `value` it is uncontrolled and a native form
+  submits it with no handler.
 - `LinkComponent` may be passed from a Server Component as long as the receiving component
   stays server-safe (no `"use client"`). A client component such as `next/link` is always safe
   to pass.
@@ -102,8 +104,9 @@ The library is consumed from Next.js (App Router), so keep it usable from Server
 
 - Navigation uses `href`, never a router-specific prop such as `to`.
 - A component that renders links takes an optional `LinkComponent` prop, defaulting to `"a"`,
-  and passes it `href`, `className` and `children` (plus `onClick` when it has one). Consumers
-  pass a framework link (e.g. `next/link`) to get client-side navigation.
+  and passes it `href`, `className` and `children` (plus `onClick` when it has one, and
+  `aria-current` on `Chip`, which `next/link` forwards). Consumers pass a framework link
+  (e.g. `next/link`) to get client-side navigation.
 - Images render through the `Image` atom, which takes an optional `ImageComponent`, defaulting
   to `"img"`, and forwards `src`, `alt`, `className` and any other `<img>` attribute
   (`srcSet`, `sizes`, `width`, `height`, `loading`). Components that show images expose those
@@ -219,7 +222,9 @@ conformance. Do not claim WCAG conformance without appropriate testing.
 - Visible keyboard focus: use
   `focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface`
   (as in Button). Never remove the default outline without providing a visible alternative.
-- Hover styles use `enabled:hover:*` so disabled controls do not react to hover.
+- Hover styles use `enabled:hover:*` so disabled controls do not react to hover. A component that
+  can render a link as well (Chip) uses plain `hover:`, because `:enabled` never matches an `<a>`,
+  and disables pointer events on its disabled button instead.
 - Icons are decorative (`aria-hidden`) by default. Pass `ariaLabel` when an icon conveys
   meaning on its own. Accessible-name props are named `ariaLabel` in Icon and CartIcon.
 - Icon-only controls must have an accessible name: `aria-label`, or visually hidden (`sr-only`)
