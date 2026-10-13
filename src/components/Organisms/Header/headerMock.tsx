@@ -29,7 +29,7 @@ const UserButton: React.FC = () => (
   </button>
 );
 
-export const mockedHeaderDefault: JSX.Element = (
+export const mockedHeaderDefault: React.JSX.Element = (
   <Header>
     <Header.Left>
       <Logo />
@@ -44,7 +44,7 @@ export const mockedHeaderDefault: JSX.Element = (
   </Header>
 );
 
-export const mockedHeaderSimple: JSX.Element = (
+export const mockedHeaderSimple: React.JSX.Element = (
   <Header>
     <Header.Left>
       <Logo />
@@ -56,7 +56,7 @@ export const mockedHeaderSimple: JSX.Element = (
   </Header>
 );
 
-export const mockedHeaderLogoOnly: JSX.Element = (
+export const mockedHeaderLogoOnly: React.JSX.Element = (
   <Header>
     <Header.Center>
       <Logo />
