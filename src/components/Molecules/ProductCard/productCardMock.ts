@@ -1,3 +1,5 @@
+import type { ProductCardProps } from "./ProductCard";
+
 // Self-contained t-shirt illustration (inline SVG), so stories never depend on a network.
 const mockedImageUrl = `data:image/svg+xml;utf8,${encodeURIComponent(
   `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400">
@@ -9,39 +11,27 @@ const mockedImageUrl = `data:image/svg+xml;utf8,${encodeURIComponent(
   </svg>`
 )}`;
 
+// A display-only card: no link and no controls.
 export const mockedProductDefault = {
   imageUrl: mockedImageUrl,
   title: "Basic T-Shirt",
   brand: "Acme",
   price: "$19.99",
-};
+} satisfies ProductCardProps;
 
 export const mockedProductWithTag = {
   ...mockedProductDefault,
   tag: "New",
-};
+} satisfies ProductCardProps;
 
 export const mockedProductOnSale = {
   ...mockedProductDefault,
   tag: "Sale",
   price: "$14.99",
-  onClick: () => {},
-};
+} satisfies ProductCardProps;
 
-export const mockedProductCardClickable = {
-  ...mockedProductDefault,
-  buttonLabel: "Add to Cart",
-  onProductClick: () => {},
-  onClick: () => {},
-};
-
-export const mockedProductCardNoButton = {
-  ...mockedProductDefault,
-  title: "Display Only Product",
-};
-
+// The title is a real link stretched over the whole card.
 export const mockedProductCardLink = {
   ...mockedProductDefault,
   href: "/products/basic-t-shirt",
-  onClick: () => {},
-};
+} satisfies ProductCardProps;

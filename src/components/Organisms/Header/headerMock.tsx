@@ -1,66 +1,65 @@
 import React from "react";
-import { Header } from "./Header";
-import { Image } from "../../Atoms/Image/Image";
-
-// Standalone mock components
-// Self-contained placeholder mark (inline SVG), so the mock needs no image file.
-const logoSrc = `data:image/svg+xml;utf8,${encodeURIComponent(
-  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-    <rect width="32" height="32" rx="6" fill="#00548a"/>
-    <path d="M9 22l7-13 7 13h-4l-3-6-3 6H9Z" fill="#ffffff"/>
-  </svg>`
-)}`;
-
-const Logo: React.FC = () => <Image src={logoSrc} alt="Acme logo" className="h-8 w-auto" />;
+import { HeaderProps } from "./Header";
+import { Button } from "../../Atoms/Button/Button";
+import { SearchInput } from "../../Atoms/SearchInput/SearchInput";
+import { CartIcon } from "../../Molecules/CartIcon/CartIcon";
 
 const Brand: React.FC = () => (
-  <span className="whitespace-nowrap text-xl font-bold text-neutral-900">ACME</span>
+  <a href="/" className="whitespace-nowrap text-xl font-bold text-neutral-900">
+    ACME
+  </a>
 );
 
-const CartButton: React.FC = () => (
-  <button className="flex items-center gap-2 whitespace-nowrap px-2 py-2 text-sm font-medium text-neutral-700 hover:text-neutral-900">
-    Cart (0)
-  </button>
+// A native search form: it needs no handler, so it also renders from a Server Component.
+const Search: React.FC = () => (
+  <form
+    role="search"
+    action="/products"
+    onSubmit={(event) => event.preventDefault()}
+    className="flex items-center gap-2"
+  >
+    <SearchInput name="q" aria-label="Search products" variantSize="small" />
+    <Button type="submit" size="small">
+      Search
+    </Button>
+  </form>
 );
 
-const UserButton: React.FC = () => (
-  <button className="whitespace-nowrap px-2 py-2 text-sm font-medium text-neutral-700 hover:text-neutral-900">
-    Sign In
-  </button>
+const Cart: React.FC = () => (
+  <a href="/cart" className="inline-flex rounded-sm p-1">
+    <CartIcon count={2} />
+  </a>
 );
 
-export const mockedHeaderDefault: JSX.Element = (
-  <Header>
-    <Header.Left>
-      <Logo />
-    </Header.Left>
-    <Header.Center>
-      <Brand />
-    </Header.Center>
-    <Header.Right>
-      <UserButton />
-      <CartButton />
-    </Header.Right>
-  </Header>
-);
+const mockedNavItems: HeaderProps["navItems"] = [
+  { label: "All products", href: "/products" },
+  { label: "Ceramics", href: "/products?category=ceramics" },
+  { label: "Glassware", href: "/products?category=glassware" },
+  { label: "Lighting", href: "/products?category=lighting" },
+];
 
-export const mockedHeaderSimple: JSX.Element = (
-  <Header>
-    <Header.Left>
-      <Logo />
-      <Brand />
-    </Header.Left>
-    <Header.Right>
-      <UserButton />
-    </Header.Right>
-  </Header>
-);
+export const mockedHeaderDefault: HeaderProps = {
+  brand: <Brand />,
+  actions: (
+    <>
+      <Search />
+      <Cart />
+    </>
+  ),
+  navItems: mockedNavItems,
+};
 
-export const mockedHeaderLogoOnly: JSX.Element = (
-  <Header>
-    <Header.Center>
-      <Logo />
-      <Brand />
-    </Header.Center>
-  </Header>
-);
+// No navigation items, so no navigation landmark is rendered.
+export const mockedHeaderNoNav: HeaderProps = {
+  brand: <Brand />,
+  actions: (
+    <>
+      <Search />
+      <Cart />
+    </>
+  ),
+};
+
+export const mockedHeaderBrandOnly: HeaderProps = {
+  brand: <Brand />,
+};

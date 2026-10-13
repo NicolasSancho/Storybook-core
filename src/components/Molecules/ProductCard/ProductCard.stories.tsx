@@ -2,13 +2,12 @@ import type { ReactNode } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, fn, userEvent, within } from "storybook/test";
 import { ProductCard } from "./ProductCard";
+import { Button } from "../../Atoms/Button/Button";
 import {
   mockedProductDefault,
   mockedProductWithTag,
   mockedProductOnSale,
-  mockedProductCardClickable,
   mockedProductCardLink,
-  mockedProductCardNoButton,
 } from "./productCardMock";
 
 const meta = {
@@ -33,25 +32,8 @@ type Story = StoryObj<typeof meta>;
 // Spy standing in for a framework link (e.g. next/link): records the props it receives.
 // It cancels the navigation so clicking it does not leave the story.
 const linkSpy = fn(
-  ({
-    href,
-    onClick,
-    children,
-    className,
-  }: {
-    href: string;
-    onClick?: () => void;
-    children: ReactNode;
-    className?: string;
-  }) => (
-    <a
-      href={href}
-      className={className}
-      onClick={(event) => {
-        event.preventDefault();
-        onClick?.();
-      }}
-    >
+  ({ href, children, className }: { href: string; children: ReactNode; className?: string }) => (
+    <a href={href} className={className} onClick={(event) => event.preventDefault()}>
       {children}
     </a>
   )
@@ -68,6 +50,13 @@ export const Default: Story = {
     // The image is decorative (the title names the card): it is hidden from screen readers.
     await expect(canvas.queryByRole("img")).not.toBeInTheDocument();
     await expect(canvas.getByRole("presentation")).toHaveAttribute("src", args.imageUrl);
+
+    // Without an href the card is display-only: the title is plain text, with nothing to press.
+    await expect(
+      canvas.getByRole("heading", { level: 3, name: "Basic T-Shirt" })
+    ).toBeInTheDocument();
+    await expect(canvas.queryAllByRole("link")).toHaveLength(0);
+    await expect(canvas.queryAllByRole("button")).toHaveLength(0);
   },
 };
 
@@ -79,37 +68,19 @@ export const OnSale: Story = {
   args: mockedProductOnSale,
 };
 
-// Spies are passed here because the mock's handlers are no-ops.
-export const Clickable: Story = {
-  args: { ...mockedProductCardClickable, onClick: fn(), onProductClick: fn() },
-  play: async ({ args, canvasElement }) => {
-    const canvas = within(canvasElement);
-
-    // The title is the accessible name of the stretched button that opens the product.
-    await userEvent.click(canvas.getByRole("button", { name: "Basic T-Shirt" }));
-    await expect(args.onProductClick).toHaveBeenCalledTimes(1);
-    await expect(args.onClick).not.toHaveBeenCalled();
-
-    await userEvent.click(canvas.getByRole("button", { name: "Add to Cart" }));
-    await expect(args.onClick).toHaveBeenCalledTimes(1);
-    await expect(args.onProductClick).toHaveBeenCalledTimes(1);
-  },
-};
-
-// The title is a real link stretched over the card; Add to Cart stays a separate button.
+// The title is a real link stretched over the card.
 export const WithLink: Story = {
   args: mockedProductCardLink,
   play: async ({ args, canvasElement }) => {
     const canvas = within(canvasElement);
 
-    // With an href the title is a real link (default <a>), not a button.
+    // With an href the title is a real link (default <a>), named by the title.
     await expect(canvas.getByRole("link", { name: "Basic T-Shirt" })).toHaveAttribute(
       "href",
       args.href
     );
-    await expect(canvas.queryByRole("button", { name: "Basic T-Shirt" })).not.toBeInTheDocument();
-    // Add to Cart stays a separate button, outside the link.
-    await expect(canvas.getByRole("button", { name: "Add to Cart" })).toBeInTheDocument();
+    // No controls were passed, so there is nothing else to press.
+    await expect(canvas.queryAllByRole("button")).toHaveLength(0);
   },
 };
 
@@ -120,9 +91,23 @@ const elementAtCenter = (element: Element) => {
   return element.ownerDocument.elementFromPoint(x + width / 2, y + height / 2);
 };
 
-// The title link covers the whole card, except Add to Cart, which stays on top of it.
+// A submit handler for the add-to-cart form in the actions slot. It cancels the submit so the
+// story never reloads.
+const submitSpy = fn((event: React.FormEvent) => event.preventDefault());
+
+// The title link covers the whole card, except the controls in `actions`, which stay on top of it.
 export const StretchedLink: Story = {
-  args: mockedProductCardLink,
+  args: {
+    ...mockedProductCardLink,
+    actions: (
+      <form onSubmit={submitSpy}>
+        <Button type="submit">Add to cart</Button>
+      </form>
+    ),
+  },
+  beforeEach: () => {
+    submitSpy.mockClear();
+  },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const link = canvas.getByRole("link", { name: "Basic T-Shirt" });
@@ -131,36 +116,36 @@ export const StretchedLink: Story = {
     await expect(elementAtCenter(canvas.getByRole("presentation"))).toBe(link);
     await expect(elementAtCenter(canvas.getByText("$19.99"))).toBe(link);
 
-    // The button keeps its own click target.
-    const button = canvas.getByRole("button", { name: "Add to Cart" });
+    // The button keeps its own click target, and pressing it only submits its form.
+    const button = canvas.getByRole("button", { name: "Add to cart" });
     await expect(elementAtCenter(button)).toBe(button);
+    await userEvent.click(button);
+    await expect(submitSpy).toHaveBeenCalledTimes(1);
 
     // Keyboard order: the link first, then the button.
-    await userEvent.tab();
-    await expect(link).toHaveFocus();
+    link.focus();
     await userEvent.tab();
     await expect(button).toHaveFocus();
   },
 };
 
 export const CustomLink: Story = {
-  args: { ...mockedProductCardLink, LinkComponent: linkSpy, onProductClick: fn() },
+  args: { ...mockedProductCardLink, LinkComponent: linkSpy },
   beforeEach: () => {
     linkSpy.mockClear();
   },
   play: async ({ args, canvasElement }) => {
-    const canvas = within(canvasElement);
     const received = linkSpy.mock.calls.map(([props]) => props);
 
-    // The injected component gets the href, a class and the handler as `onClick`.
-    await expect(received).toContainEqual(expect.objectContaining({ href: args.href }));
+    // The injected component gets the href, a class and the title as its children.
+    await expect(received).toContainEqual(
+      expect.objectContaining({ href: args.href, children: "Basic T-Shirt" })
+    );
     await expect(received.every(({ className }) => Boolean(className))).toBe(true);
-    await expect(received.every(({ onClick }) => typeof onClick === "function")).toBe(true);
-
-    // The link wins over the stretched button, and still runs the handler.
-    await expect(canvas.queryByRole("button", { name: "Basic T-Shirt" })).not.toBeInTheDocument();
-    await userEvent.click(canvas.getByRole("link", { name: "Basic T-Shirt" }));
-    await expect(args.onProductClick).toHaveBeenCalledTimes(1);
+    // The result is what the user gets: a real link.
+    await expect(
+      within(canvasElement).getByRole("link", { name: "Basic T-Shirt" })
+    ).toHaveAttribute("href", args.href);
   },
 };
 
@@ -188,18 +173,5 @@ export const CustomImage: Story = {
       })
     );
     await expect(received.every(({ className }) => Boolean(className))).toBe(true);
-  },
-};
-
-export const NoButton: Story = {
-  args: mockedProductCardNoButton,
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
-    // Without handlers the title is plain heading text and no button is rendered.
-    await expect(
-      canvas.getByRole("heading", { level: 3, name: "Display Only Product" })
-    ).toBeInTheDocument();
-    await expect(canvas.queryAllByRole("button")).toHaveLength(0);
   },
 };

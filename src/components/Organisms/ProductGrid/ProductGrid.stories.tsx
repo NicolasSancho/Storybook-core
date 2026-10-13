@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { expect, fn, userEvent, within } from "storybook/test";
+import { expect, fn, within } from "storybook/test";
 import { ProductGrid } from "./ProductGrid";
 import { mockedProductDefault } from "../../Molecules/ProductCard/productCardMock";
 import {
@@ -103,40 +103,8 @@ export const CustomComponents: Story = {
   },
 };
 
-const ownClick = fn();
-const gridClick = fn();
-const getOnProductClick = fn(() => gridClick);
-
-// A product's own `onProductClick` wins; `getOnProductClick` is the fallback for the rest.
-export const ProductClickHandlers: Story = {
-  args: {
-    columns: 3,
-    getOnProductClick,
-    products: [
-      { ...mockedProductDefault, id: "own", title: "Own handler", onProductClick: ownClick },
-      { ...mockedProductDefault, id: "grid", title: "Grid handler" },
-    ],
-  },
-  beforeEach: () => {
-    ownClick.mockClear();
-    gridClick.mockClear();
-    getOnProductClick.mockClear();
-  },
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
-    await userEvent.click(canvas.getByRole("button", { name: "Own handler" }));
-    await expect(ownClick).toHaveBeenCalledTimes(1);
-    await expect(gridClick).not.toHaveBeenCalled();
-
-    await userEvent.click(canvas.getByRole("button", { name: "Grid handler" }));
-    await expect(gridClick).toHaveBeenCalledTimes(1);
-    await expect(ownClick).toHaveBeenCalledTimes(1);
-  },
-};
-
-// Without any handler the title stays plain text.
-export const NoClickHandlers: Story = {
+// Without an href the title stays plain text.
+export const WithoutLinks: Story = {
   args: { columns: 3, products: [{ ...mockedProductDefault, id: "plain", title: "Plain title" }] },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -144,6 +112,6 @@ export const NoClickHandlers: Story = {
     await expect(
       canvas.getByRole("heading", { level: 3, name: "Plain title" })
     ).toBeInTheDocument();
-    await expect(canvas.queryByRole("button", { name: "Plain title" })).not.toBeInTheDocument();
+    await expect(canvas.queryByRole("link", { name: "Plain title" })).not.toBeInTheDocument();
   },
 };

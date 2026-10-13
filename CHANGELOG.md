@@ -4,6 +4,78 @@ All notable changes to `@nicolassancho/storybook-core` are listed here. The form
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## 4.0.0 - 2026-10-13
+
+This release is breaking, so it batches the API cleanups that the first real app needed. The
+library has one consumer, a Next.js storefront, and each item below removes a mode or a prop that
+neither the app nor a test used, or that a Server Component cannot use.
+
+### Removed
+
+- `Header.Left`, `Header.Center`, `Header.Right` and `HeaderSlotProps`. Static sub-components cannot
+  be client components, and the header had a fixed height with three equal slots. See Changed.
+- `onProductClick`, `onClick` and `buttonLabel` on `ProductCard`, and `getOnProductClick` on
+  `ProductGrid`. A Server Component cannot pass handlers, so every card needed a Client Component
+  just to add to the cart. See Added.
+- `Chip` no longer renders a link. Use `ChipLink`.
+- `onClick` is no longer part of the `LinkComponent` contract: a link component receives `href`,
+  `className` and `children` (and `aria-current` on `ChipLink`).
+- Support for React 18. The peer range is now `^19.0.0`.
+
+### Changed
+
+- `Header` takes `brand`, `actions`, `navItems`, `navLabel` and `LinkComponent` as props. It grows with
+  its content (`min-h-16`, wrapping) instead of overflowing on a phone, and the navigation sits between
+  the brand and the actions from `md` up and on a row of its own below.
+- Tests run on React 19.3 (the version the app uses) and Storybook 10.6.2. The lockfile was
+  regenerated to resolve the new peers.
+
+### Added
+
+- `ChipLink`: the link version of `Chip`, with a required `href`, `aria-current` and `LinkComponent`.
+- `actions` on `ProductCard`: controls such as an add-to-cart `<form>` that sit above the stretched
+  link, so pressing one does its own action and pressing anywhere else opens the product.
+- `navItems` and `navLabel` on `Header`: a labelled `<nav>` landmark, rendered only when there are
+  items.
+
+### Migrating
+
+```tsx
+// Header
+-(
+  <Header>
+    <Header.Left>{brand}</Header.Left>
+    <Header.Right>{actions}</Header.Right>
+  </Header>
+) +
+  <Header brand={brand} actions={actions} /> -
+  (
+    // Chip as a link
+    <Chip href="/products" selected>
+      All
+    </Chip>
+  ) +
+  (
+    <ChipLink href="/products" selected>
+      All
+    </ChipLink>
+  ) -
+  (
+    // ProductCard button
+    <ProductCard {...product} onClick={addToCart} buttonLabel="Add to cart" />
+  ) +
+  (
+    <ProductCard
+      {...product}
+      actions={
+        <form action={addToCart}>
+          <Button type="submit">Add to cart</Button>
+        </form>
+      }
+    />
+  );
+```
+
 ## 3.4.0 - 2026-10-13
 
 ### Added

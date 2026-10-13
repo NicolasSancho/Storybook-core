@@ -1,6 +1,5 @@
 import React from "react";
 import { tv } from "tailwind-variants";
-import { Button } from "../../Atoms/Button/Button";
 import { Image, ImageProps } from "../../Atoms/Image/Image";
 import { Text } from "../../Atoms/Text/Text";
 
@@ -12,27 +11,19 @@ export interface ProductCardProps {
   brand: string;
   price: string;
   tag?: string;
-  buttonLabel?: string;
-  onClick?: () => void;
-  /**
-   * Handler for opening the product. Without `href` the title renders as a stretched button.
-   * With `href` it is passed to the link as `onClick`.
-   */
-  onProductClick?: () => void;
   /**
    * Product URL. The title renders as a real link stretched over the whole card, so
-   * middle-click, new tab and crawlable links work. Takes precedence over a button.
+   * middle-click, new tab and crawlable links work. Without it the card is display-only and the
+   * title is plain text.
    */
   href?: string;
   /**
-   * Component used to render the link when `href` is set. Receives `href`, `onClick`,
-   * `className` and `children`, so a framework link (e.g. `next/link`) can be passed
-   * directly. Defaults to a plain `<a>`. Define it outside the render function: an inline
-   * definition remounts the link.
+   * Component used to render the link when `href` is set. Receives `href`, `className` and
+   * `children`, so a framework link (e.g. `next/link`) can be passed directly. Defaults to a
+   * plain `<a>`. Define it outside the render function: an inline definition remounts the link.
    */
   LinkComponent?: React.ElementType<{
     href: string;
-    onClick?: () => void;
     children: React.ReactNode;
     className?: string;
   }>;
@@ -48,6 +39,12 @@ export interface ProductCardProps {
    * `height` or `loading`. The image is decorative (`alt=""`): the title already names the card.
    */
   imageProps?: Omit<ImageProps, "src" | "alt" | "className" | "ImageComponent">;
+  /**
+   * Controls shown under the product info, such as an add-to-cart `<form>` with a submit
+   * `Button`. They sit above the stretched link, so pressing one does its own action and does
+   * not open the product, while pressing anywhere else on the card does.
+   */
+  actions?: React.ReactNode;
   className?: string;
 }
 
@@ -74,31 +71,14 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   brand,
   price,
   tag,
-  buttonLabel = "Add to Cart",
-  onClick,
-  onProductClick,
   href,
   LinkComponent = "a",
   ImageComponent,
   imageProps,
+  actions,
   className,
 }) => {
   const styles = productCardStyles();
-
-  let titleContent: React.ReactNode = title;
-  if (href) {
-    titleContent = (
-      <LinkComponent href={href} onClick={onProductClick} className={styles.titleAction()}>
-        {title}
-      </LinkComponent>
-    );
-  } else if (onProductClick) {
-    titleContent = (
-      <button type="button" onClick={onProductClick} className={styles.titleAction()}>
-        {title}
-      </button>
-    );
-  }
 
   return (
     <div className={styles.base({ className })}>
@@ -115,7 +95,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         </div>
         <div className={styles.productInfo()}>
           <Text as="h3" size="small" weight="semibold" className={styles.title()}>
-            {titleContent}
+            {href ? (
+              <LinkComponent href={href} className={styles.titleAction()}>
+                {title}
+              </LinkComponent>
+            ) : (
+              title
+            )}
           </Text>
           <Text as="p" size="small" color="base" className={styles.subTitle()}>
             {brand}
@@ -124,11 +110,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             {price}
           </Text>
         </div>
-        {onClick && (
-          <Button variant="primary" onClick={onClick} className={styles.action()}>
-            {buttonLabel}
-          </Button>
-        )}
+        {actions && <div className={styles.action()}>{actions}</div>}
       </div>
     </div>
   );
