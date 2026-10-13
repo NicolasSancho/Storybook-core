@@ -18,11 +18,6 @@ export interface ProductGridProps {
    * `ImageComponent`. See `ProductCard`.
    */
   ImageComponent?: ProductCardProps["ImageComponent"];
-  /**
-   * Returns the click handler for a product, called with the product and its index. It is
-   * the fallback: a product that sets its own `onProductClick` keeps it. See `ProductCard`.
-   */
-  getOnProductClick?: (product: ProductCardProps, index: number) => () => void;
 }
 
 const productGridStyles = tv({
@@ -36,17 +31,15 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
   className,
   LinkComponent,
   ImageComponent,
-  getOnProductClick,
 }) => {
   return (
     <Grid columns={columns} gap={gap} className={productGridStyles({ className })}>
-      {products.map((product, idx) => (
+      {products.map((product) => (
         <ProductCard
           key={product.id ?? product.title}
           LinkComponent={LinkComponent}
           ImageComponent={ImageComponent}
           {...product}
-          onProductClick={product.onProductClick ?? getOnProductClick?.(product, idx)}
         />
       ))}
     </Grid>

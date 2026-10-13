@@ -11,19 +11,16 @@ export const mockedProductGridDefault: ProductGridProps = {
   products: mockedProductList,
   columns: 3,
   gap: "medium",
-  getOnProductClick: () => () => {},
 };
 
 export const mockedProductGridFourColumns: ProductGridProps = {
   products: mockedProductList,
   columns: 4,
   gap: "small",
-  getOnProductClick: () => () => {},
 };
 
 export const mockedProductGridLargeGap: ProductGridProps = {
   products: mockedProductList,
   columns: 2,
   gap: "large",
-  getOnProductClick: () => () => {},
 };
