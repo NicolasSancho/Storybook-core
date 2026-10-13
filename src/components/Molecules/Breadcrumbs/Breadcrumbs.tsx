@@ -1,7 +1,7 @@
 import React from "react";
 import { tv } from "tailwind-variants";
-import { Icon } from "../../Atoms/Icon/Icon";
-import { Text } from "../../Atoms/Text/Text";
+import { Icon } from "../../Atoms/Icon/Icon.js";
+import { Text } from "../../Atoms/Text/Text.js";
 
 export interface BreadcrumbsProps {
   /**

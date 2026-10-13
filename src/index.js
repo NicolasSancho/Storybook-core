@@ -1,27 +1,27 @@
 // Atoms
-export * from "./components/Atoms/Button/Button";
-export * from "./components/Atoms/Chip/Chip";
-export * from "./components/Atoms/ChipLink/ChipLink";
-export * from "./components/Atoms/Spinner/Spinner";
-export * from "./components/Atoms/Text/Text";
-export * from "./components/Atoms/Icon/Icon";
-export * from "./components/Atoms/Image/Image";
-export * from "./components/Atoms/Label/Label";
-export * from "./components/Atoms/RadioButton/RadioButton";
-export * from "./components/Atoms/SearchInput/SearchInput";
+export * from "./components/Atoms/Button/Button.js";
+export * from "./components/Atoms/Chip/Chip.js";
+export * from "./components/Atoms/ChipLink/ChipLink.js";
+export * from "./components/Atoms/Spinner/Spinner.js";
+export * from "./components/Atoms/Text/Text.js";
+export * from "./components/Atoms/Icon/Icon.js";
+export * from "./components/Atoms/Image/Image.js";
+export * from "./components/Atoms/Label/Label.js";
+export * from "./components/Atoms/RadioButton/RadioButton.js";
+export * from "./components/Atoms/SearchInput/SearchInput.js";
 
 // Layouts
-export * from "./components/Layouts/Container/Container";
-export * from "./components/Layouts/Grid/Grid";
+export * from "./components/Layouts/Container/Container.js";
+export * from "./components/Layouts/Grid/Grid.js";
 
 // Molecules
-export * from "./components/Molecules/Breadcrumbs/Breadcrumbs";
-export * from "./components/Molecules/CartIcon/CartIcon";
-export * from "./components/Molecules/ProductCard/ProductCard";
-export * from "./components/Molecules/ProductDetails/ProductDetails";
-export * from "./components/Molecules/RadioGroup/RadioGroup";
+export * from "./components/Molecules/Breadcrumbs/Breadcrumbs.js";
+export * from "./components/Molecules/CartIcon/CartIcon.js";
+export * from "./components/Molecules/ProductCard/ProductCard.js";
+export * from "./components/Molecules/ProductDetails/ProductDetails.js";
+export * from "./components/Molecules/RadioGroup/RadioGroup.js";
 
 // Organisms
-export * from "./components/Organisms/Footer/Footer";
-export * from "./components/Organisms/Header/Header";
-export * from "./components/Organisms/ProductGrid/ProductGrid";
+export * from "./components/Organisms/Footer/Footer.js";
+export * from "./components/Organisms/Header/Header.js";
+export * from "./components/Organisms/ProductGrid/ProductGrid.js";

@@ -1,7 +1,7 @@
 import React from "react";
 import { tv } from "tailwind-variants";
-import { Image, ImageProps } from "../../Atoms/Image/Image";
-import { Text } from "../../Atoms/Text/Text";
+import { Image, ImageProps } from "../../Atoms/Image/Image.js";
+import { Text } from "../../Atoms/Text/Text.js";
 
 export interface ProductCardProps {
   /** Optional unique id, used as the React key when rendered in a list (falls back to `title`). */

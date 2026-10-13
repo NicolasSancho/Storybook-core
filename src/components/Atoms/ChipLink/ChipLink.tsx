@@ -1,5 +1,5 @@
 import React from "react";
-import { chipStyles } from "../Chip/chipStyles";
+import { chipStyles } from "../Chip/chipStyles.js";
 
 export interface ChipLinkProps {
   children: React.ReactNode;
