@@ -73,3 +73,17 @@ export const mockedRadioGroupFourColumns: RadioGroupProps = {
   columns: 4, // Four column grid
   gap: "medium",
 };
+
+// Uncontrolled: no `value` and no handler, so a native form submits the selection.
+export const mockedRadioGroupUncontrolled: RadioGroupProps = {
+  label: "Color",
+  name: "color",
+  options: [
+    { label: "Red", value: "red" },
+    { label: "Blue", value: "blue" },
+    { label: "Green", value: "green" },
+  ],
+  defaultValue: "blue",
+  columns: 1,
+  gap: "small",
+};

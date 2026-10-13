@@ -9,6 +9,7 @@ import {
   mockedRadioGroupThreeColumns,
   mockedRadioGroupLargeGap,
   mockedRadioGroupFourColumns,
+  mockedRadioGroupUncontrolled,
 } from "./radioGroupMock";
 
 const meta = {
@@ -97,5 +98,30 @@ export const KeyboardNavigation: Story = {
     await userEvent.keyboard("{ArrowUp}{ArrowUp}");
     // Selection wraps from the first option to the last.
     await expect(canvas.getByRole("radio", { name: "Option 3" })).toBeChecked();
+  },
+};
+
+// No `value` and no handler: the group works inside a native form, as it does when rendered
+// from a Server Component. The submitted value is read from the form, not from a callback.
+export const Uncontrolled: Story = {
+  args: mockedRadioGroupUncontrolled,
+  render: (args) => (
+    <form onSubmit={(event) => event.preventDefault()}>
+      <RadioGroup {...args} onChange={undefined} />
+    </form>
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const form = canvasElement.querySelector("form") as HTMLFormElement;
+
+    // The default option is checked and part of the form data.
+    await expect(canvas.getByRole("radio", { name: "Blue" })).toBeChecked();
+    await expect(new FormData(form).get("color")).toBe("blue");
+
+    // Clicking moves the selection with no handler involved.
+    await userEvent.click(canvas.getByRole("radio", { name: "Green" }));
+    await expect(canvas.getByRole("radio", { name: "Green" })).toBeChecked();
+    await expect(canvas.getByRole("radio", { name: "Blue" })).not.toBeChecked();
+    await expect(new FormData(form).get("color")).toBe("green");
   },
 };
