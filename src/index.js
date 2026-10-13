@@ -11,6 +11,7 @@ export * from "./components/Atoms/RadioButton/RadioButton";
 export * from "./components/Atoms/SearchInput/SearchInput";
 
 // Layouts
+export * from "./components/Layouts/Container/Container";
 export * from "./components/Layouts/Grid/Grid";
 
 // Molecules

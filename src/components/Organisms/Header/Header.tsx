@@ -1,5 +1,6 @@
 import React from "react";
 import { tv } from "tailwind-variants";
+import { Container } from "../../Layouts/Container/Container";
 
 export interface HeaderNavItem {
   label: string;
@@ -44,7 +45,7 @@ export interface HeaderProps {
 const headerStyles = tv({
   base: "w-full bg-surface shadow-sm",
   slots: {
-    inner: "flex min-h-16 flex-wrap items-center gap-x-6 gap-y-2 px-4 py-3",
+    inner: "flex min-h-16 flex-wrap items-center gap-x-6 gap-y-2 py-3",
     brand: "order-1",
     actions: "order-2 ml-auto flex items-center gap-2 md:order-3",
     nav: "order-3 w-full md:order-2 md:w-auto md:flex-1",
@@ -55,8 +56,9 @@ const headerStyles = tv({
 
 /**
  * Page header: a `banner` landmark with a brand, an optional main navigation and a group of
- * actions. It grows with its content instead of overflowing on a phone, and it holds no state, so
- * it renders from a Server Component.
+ * actions. The bar is full-width and its content sits in a `Container`, so it lines up with page
+ * content wrapped in one. It grows with its content instead of overflowing on a phone, and it
+ * holds no state, so it renders from a Server Component.
  */
 export const Header: React.FC<HeaderProps> = ({
   brand,
@@ -70,7 +72,7 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <header className={styles.base({ className })}>
-      <div className={styles.inner()}>
+      <Container className={styles.inner()}>
         <div className={styles.brand()}>{brand}</div>
         {actions && <div className={styles.actions()}>{actions}</div>}
         {navItems.length > 0 && (
@@ -86,7 +88,7 @@ export const Header: React.FC<HeaderProps> = ({
             </ul>
           </nav>
         )}
-      </div>
+      </Container>
     </header>
   );
 };
