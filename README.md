@@ -36,7 +36,7 @@ documented in Storybook. It is published to npm as `@nicolassancho/storybook-cor
 | Atoms     | Button, Chip, ChipLink, Icon, Image, Label, RadioButton, SearchInput, Spinner, Text |
 | Molecules | Breadcrumbs, CartIcon, ProductCard, ProductDetails, RadioGroup                      |
 | Organisms | Footer, Header, ProductGrid                                                         |
-| Layouts   | Grid                                                                                |
+| Layouts   | Container, Grid                                                                     |
 
 The palette and the contrast of each text color are documented under **Foundations / Colors** in
 Storybook.

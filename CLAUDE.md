@@ -75,6 +75,9 @@ on npm (public). Storybook is the development and documentation environment.
   `src/index.js` is plain JS (`allowJs`) and imports no CSS.
 - Components import each other via relative paths (`../../Atoms/Button/Button`).
 - Named exports only; no default exports from component files.
+- Page width lives in `Layouts/Container` only (`max-w-6xl`, `px-4 sm:px-6`). A full-width organism
+  (Header, Footer) keeps its bar full-bleed and puts its content in a `Container`, with no
+  `max-w-*` or horizontal padding of its own.
 - React: the library supports and is tested on React 19 only (`peerDependencies` `^19.0.0`,
   `devDependencies` 19.3), because its only consumer runs 19. Keep the two in sync, and do not
   widen the peer range without testing the older version.

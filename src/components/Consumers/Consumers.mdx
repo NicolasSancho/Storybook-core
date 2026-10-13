@@ -213,6 +213,26 @@ const Bad = () => <Breadcrumbs LinkComponent={(props) => <Link {...props} />} it
 const Good = () => <Breadcrumbs LinkComponent={Link} items={items} />;
 ```
 
+## Page width
+
+`Header` and `Footer` keep their bar full-width and put their content in a `Container`: centered, at
+most 72rem wide, with side padding. Wrap your page content in a `Container` to line it up with both:
+
+```tsx
+import { Container } from "@nicolassancho/storybook-core";
+
+export default function Page() {
+  return (
+    <Container as="main" className="py-12">
+      {/* page content */}
+    </Container>
+  );
+}
+```
+
+Use `className` for spacing. The width and the side padding belong to the design system, so that the
+header, the page and the footer cannot drift apart.
+
 ## Next.js App Router
 
 The components hold no state and use no browser APIs, so they carry no `"use client"` directive and
