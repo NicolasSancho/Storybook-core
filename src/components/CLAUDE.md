@@ -50,9 +50,15 @@ The library is consumed from Next.js (App Router), so keep it usable from Server
 
 ## Styling with `tv()`
 
-- Always define classes with `tv()` from `tailwind-variants` (variants / slots /
-  defaultVariants). Never build class strings by concatenation or template literals;
-  pass `className` into `tv()`:
+- Define a component's classes with `tv()` from `tailwind-variants` (variants / slots /
+  defaultVariants), and pass `className` into it, even when there are no variants (a `tv({ base })`
+  is not boilerplate). Reasons, so nobody "simplifies" it to a plain string:
+  - tailwind-merge lets a consumer's `className` override ours (`px-8` replaces `px-4`). With
+    concatenation both classes stay and the winner depends on CSS order.
+  - Tailwind only generates classes it finds as complete names in the source. Never build class
+    strings by concatenation or template literals: a fragment like `` `bg-${color}-500` `` is
+    invisible to the scanner and silently produces no CSS.
+  - Variants become typed props with defaults, so the API and the styling stay in step.
   ```tsx
   // single element
   className={buttonStyles({ variant, size, className })}
@@ -60,7 +66,8 @@ The library is consumed from Next.js (App Router), so keep it usable from Server
   const styles = cardStyles();
   className={styles.base({ className })}
   ```
-- `tv()` runs tailwind-merge, which resolves conflicts by class prefix. Watch for:
+- `tv()` runs tailwind-merge, which resolves conflicts by class prefix. This is the main trap of
+  the rule above. Watch for:
   - Order matters: a later `border-primary` drops an earlier `border-t-transparent`.
     Put side-specific classes after the general ones in the same variant (see Spinner).
   - Custom class names starting with a Tailwind prefix (`text-button`, `border-card`)
