@@ -17,13 +17,13 @@ Rules for `.github/`. The root `CLAUDE.md` still applies.
   publishes.
 - `.github/workflows/ci.yml` runs on every PR and is called by `main.yml` on every push to
   `main` (it has no push trigger of its own, so the checks do not run twice). Keep it green
-  before merging. It runs, in order:
-  - On PRs only: fails if the `package.json` version equals the one on the base branch, and
-    fails if `CHANGELOG.md` has no `## <version>` section.
-  - `npm ci` (which triggers `prepare` → `npm run build`), `npx tsc --noEmit`, `npm run lint`,
+  before merging. It has two jobs that run in parallel, and publishing waits for both, because
+  `main.yml` calls the whole workflow:
+  - `checks`, in order. On PRs only: fails if the `package.json` version equals the one on the
+    base branch, and fails if `CHANGELOG.md` has no `## <version>` section. Then `npm ci` (which
+    triggers `prepare` → `npm run build`), `npx tsc --noEmit`, `npm run lint`,
     `npx prettier --check ./src ./.storybook`, `npm run build-storybook` and `npm test`.
-  - In a parallel `package` job (no browser): `npm ci` and `npm run test:package`. Publishing waits
-    for it, because `main.yml` calls the whole workflow.
+  - `package` (no browser): `npm ci` and `npm run test:package`.
 - After the checks pass, the publish job runs `npm ci`, `npm run build-storybook` and
   `npm publish --provenance`: npm records the workflow run and commit that built the package.
 - After `publish`, the `release` job creates the annotated tag `v<version>` (message `<version>`)

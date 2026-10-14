@@ -7,8 +7,10 @@ Rules for code in `src/components/`. The root `CLAUDE.md` still applies.
 The library is consumed from Next.js (App Router), so keep it usable from Server Components.
 
 - Components are presentational and stateless: no `useState`, `useEffect`, context or browser
-  APIs, and therefore no `"use client"` directive. Verified in a Next.js smoke test: every
-  component renders from a Server Component, and `useId` (RadioGroup) works on the server.
+  APIs, and therefore no `"use client"` directive. Verified in a Next.js smoke test when this
+  was set up: every component rendered from a Server Component, and `useId` (RadioGroup) works on
+  the server. `npm run test:package` keeps checking the injection props and an uncontrolled
+  RadioGroup in plain Node.
 - Add `"use client"` (as the first statement of the file) only when a component starts using
   state, effects, context or browser APIs. Do not add it just because a component accepts a
   handler: a directive does not let a Server Component pass functions, and it ships
@@ -82,8 +84,8 @@ conformance. Do not claim WCAG conformance without appropriate testing.
   `focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface`
   (as in Button). Never remove the default outline without providing a visible alternative.
 - Hover styles use `enabled:hover:*` so disabled controls do not react to hover. Links (Header,
-  Footer, ChipLink) use plain `hover:`, because `:enabled` never matches an `<a>`. Chip, the button,
-  sets `pointer-events-none` when disabled instead.
+  Footer, ChipLink) use plain `hover:`, because `:enabled` never matches an `<a>`. `Chip`, which is a
+  button, sets `pointer-events-none` when disabled instead.
 - Icons are decorative (`aria-hidden`) by default. Pass `ariaLabel` when an icon conveys
   meaning on its own. Accessible-name props are named `ariaLabel` in Icon and CartIcon.
 - Icon-only controls must have an accessible name: `aria-label`, or visually hidden (`sr-only`)
@@ -116,7 +118,8 @@ conformance. Do not claim WCAG conformance without appropriate testing.
 ### Tests
 
 - Tests are `play` functions in `<Name>.stories.tsx`, using `expect`, `fn`, `userEvent` and
-  `within` from `storybook/test`. No `*.test.tsx` files and no other test library.
+  `within` from `storybook/test`. No `*.test.tsx` files and no other test library, unless an approved
+  change adds one (see the root `CLAUDE.md`).
 - Put the `play` on the existing story that already shows the state. Create a separate
   story only when the interaction changes what is rendered (see RadioGroup, where the
   selection moves), so the visual stories keep their documented state.

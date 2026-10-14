@@ -6,9 +6,9 @@ on npm (public). Storybook is the development and documentation environment.
 ## Working rules
 
 - Read this file before making changes.
-- Do not change architecture, conventions or tooling unless explicitly requested. If a
-  requested change conflicts with a convention, explain the conflict before proceeding.
-- Do not fix items under "Known limitations" unless explicitly requested.
+- Do not change architecture, conventions or tooling unless requested. If a requested change
+  conflicts with a convention, explain the conflict before proceeding. A question about best
+  practice gets an honest answer, even when it differs from a convention here.
 - Prefer existing project patterns over new dependencies or abstractions.
 - Inspect only the files relevant to the task; do not scan or summarize the whole repo
   unless asked.
@@ -16,7 +16,7 @@ on npm (public). Storybook is the development and documentation environment.
 - Only commit when asked. A conditional request ("commit if it's OK") approves only the
   clean case: if you find any issue, report it and wait for a decision instead of
   committing and mentioning it afterwards. Never push unless asked.
-- Before considering a task done, run `npx tsc --noEmit`, `npm run lint` and
+- Before considering a task done, run `npx tsc --noEmit`, `npm run lint`, `npm test` and
   `npx prettier --check` on the changed files (plus `npm run build` and `npm run test:package`
   when touching exports, styles, config or imports in shipped code).
 
@@ -47,8 +47,9 @@ on npm (public). Storybook is the development and documentation environment.
   Server/Client behavior: that needs a real Next app. Add a check there only for a packaging risk
   that a story cannot see; the checks live in `scripts/package-fixture/`, outside the ESLint and
   Prettier globs, so run `npx prettier --write scripts` after editing them.
-- Component tests are `play` functions in the stories (see "Tests" under Stories). Don't add test
-  tooling (other test libraries, addons, CI steps) unless explicitly asked.
+- Component tests are `play` functions in the stories (see "Tests" in `src/components/CLAUDE.md`).
+  Add other test tooling (test libraries, addons, CI steps) only when it is the best option for
+  the problem and the change is approved. Update this file in the same change.
 
 ## Architecture
 
