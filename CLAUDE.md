@@ -212,7 +212,10 @@ The library is consumed from Next.js (App Router), so keep it usable from Server
     white in dark mode.
 - Every `Text` color option must reach 4.5:1 on the surface of both themes; don't add pale shades
   as text colors.
-- Icons: react-feather, registered in `Atoms/Icon/iconsMap.ts`.
+- Icons: inline SVGs from Feather (MIT), registered in `Atoms/Icon/iconsMap.tsx`, so the library has
+  no runtime dependencies. To add one, paste the shapes of its Feather SVG into a `createIcon` call
+  and register it in `IconsMap`; the license notice at the top of the file already covers it. Keep
+  `Icon`'s props the same.
 - `tailwindcss` (v4), `tailwind-variants` (v3) and `tailwind-merge` (v3) are
   peerDependencies; keep them there. `tv()` only resolves class conflicts when
   `tailwind-merge` is installed.
