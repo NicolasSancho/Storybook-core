@@ -12,9 +12,10 @@ Rules for `.github/`. The root `CLAUDE.md` still applies.
   `npm version <patch|minor> --no-git-tag-version` (updates package.json and the lockfile).
   Use at least `minor` when a change is visible to consumers (colors, behavior, new props).
   Add the matching `CHANGELOG.md` entry (same version, today's date, heading `## <version> - <date>`)
-  in that same commit: the GitHub Release notes are taken from it, and CI fails without it. A change
-  that touches no package code (a workflow edit) still needs the bump, because every push to `main`
-  publishes.
+  in that same commit: the GitHub Release notes are taken from it, and CI fails without it.
+  Group the lines under `### Added`, `### Changed`, `### Fixed` or `### Removed` (and `### Migrating`
+  for upgrade steps), as earlier entries do. A change that touches no package code (a workflow
+  edit) still needs the bump, because every push to `main` publishes.
 - `.github/workflows/ci.yml` runs on every PR and is called by `main.yml` on every push to
   `main` (it has no push trigger of its own, so the checks do not run twice). Keep it green
   before merging. It has two jobs that run in parallel, and publishing waits for both, because

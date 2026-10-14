@@ -22,6 +22,8 @@ on npm (public). Storybook is the development and documentation environment.
 
 ## Commands
 
+Use Node 24, the version CI runs.
+
 - `npm run storybook`: dev server on :6006. Restart it after editing `src/styles/theme.css` or
   adding a file whose classes are used nowhere else; the compiled CSS can be stale until then.
 - `npm run build-storybook`: static Storybook build (CI runs this)
@@ -59,6 +61,10 @@ on npm (public). Storybook is the development and documentation environment.
   - `<Name>.stories.tsx`: `title: "<Type>/<Name>"`, `tags: ["autodocs"]`, args from the mock
   - `<camelName>Mock.ts`: `mocked<Name>...` objects typed as `<Name>Props`
 - Components are created by hand: copy an existing component folder as the starting point.
+  A new component also needs: the export in `src/index.js`, a `play` test when it has behavior,
+  a row in the README components table, a note in `Consumers.mdx` if it changes what a consumer
+  must do, and a `minor` version bump.
+- `scripts/` holds the package check (`test-package.mjs` and its fixture). It is not shipped.
 - `src/components/Foundations/<Topic>/` holds documentation-only stories (e.g. `Colors`): a
   `<Topic>.stories.tsx` with no component, no mock, no `src/index.js` export. Colors reads
   its values from the `--color-*` variables on the page, so it needs no edit when a token changes.
@@ -105,6 +111,8 @@ on npm (public). Storybook is the development and documentation environment.
 
 ## Packaging
 
+- The library has no runtime `dependencies`; keep it that way. What it needs at runtime is a peer
+  dependency, or is small enough to copy in with its license notice (the icons).
 - `tailwindcss` (v4), `tailwind-variants` (v3) and `tailwind-merge` (v3) are
   peerDependencies; keep them there. `tv()` only resolves class conflicts when
   `tailwind-merge` is installed.
