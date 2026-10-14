@@ -4,6 +4,13 @@ All notable changes to `@nicolassancho/storybook-core` are listed here. The form
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## 4.1.4 - 2026-10-13
+
+### Changed
+
+- The contributor guidance in `CLAUDE.md` is split into one file per area (components, styles, CI),
+  with stale statements fixed. The package did not change.
+
 ## 4.1.3 - 2026-10-13
 
 ### Changed
