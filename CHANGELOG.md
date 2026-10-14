@@ -4,6 +4,14 @@ All notable changes to `@nicolassancho/storybook-core` are listed here. The form
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## 4.1.3 - 2026-10-13
+
+### Changed
+
+- The icons are now inline SVGs from Feather instead of the `react-feather` package, which was
+  last published in 2022. The package has no runtime dependencies any more. The `Icon` props and the
+  markup it renders are unchanged.
+
 ## 4.1.2 - 2026-10-13
 
 ### Changed
