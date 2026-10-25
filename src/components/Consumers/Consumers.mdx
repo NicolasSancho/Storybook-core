@@ -178,8 +178,8 @@ export default function Page() {
 ```
 
 - `LinkComponent` receives `href`, `className` and `children` (and `aria-current` on `ChipLink`, which
-  `next/link` forwards). `ImageComponent` receives `src`, `alt`, `className` and the attributes in
-  `imageProps`.
+  `next/link` forwards). `ButtonLink` takes the same `LinkComponent`. `ImageComponent` receives `src`,
+  `alt`, `className` and the attributes in `imageProps`.
 - A product card with an `href` is a real link stretched over the whole card, so middle-click, new tab
   and crawlable URLs work. Its image is decorative (`alt=""`), because the title names the card. Without
   an `href` the card is display-only.
@@ -285,6 +285,10 @@ an input switches between controlled and uncontrolled.
 `ChipLink` is a pill link for a category or filter that lives in the URL, and `selected` sets
 `aria-current="true"` on it. `Chip` is the button version: `selected` sets `aria-pressed`, and a
 `type="submit"` chip with a `name` and `value` submits a form, so it needs no handler either.
+
+`ButtonLink` is a link that looks like a `Button`, for a call to action that goes to another page.
+Use `Button` for an action that runs code or submits a form. A link cannot be disabled, so
+`ButtonLink` has no `disabled` prop.
 
 ```tsx
 // app/products/page.tsx (a Server Component)
