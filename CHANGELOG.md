@@ -4,6 +4,15 @@ All notable changes to `@nicolassancho/storybook-core` are listed here. The form
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## 4.2.0 - 2026-10-25
+
+### Added
+
+- `ButtonLink`: a link that looks like a `Button`, for a call to action that goes to another page. It
+  takes `href`, `variant`, `size`, `className` and an optional `LinkComponent` (for example
+  `next/link`), and has no `disabled` prop because a link cannot be disabled. `Button` is unchanged: the two
+  share their styles.
+
 ## 4.1.4 - 2026-10-13
 
 ### Changed

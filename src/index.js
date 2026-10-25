@@ -1,5 +1,6 @@
 // Atoms
 export * from "./components/Atoms/Button/Button.js";
+export * from "./components/Atoms/ButtonLink/ButtonLink.js";
 export * from "./components/Atoms/Chip/Chip.js";
 export * from "./components/Atoms/ChipLink/ChipLink.js";
 export * from "./components/Atoms/Spinner/Spinner.js";
