@@ -25,15 +25,19 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({ details, classNa
   const styles = detailsStyles();
 
   return (
-    <ul className={styles.base({ className })}>
+    <dl className={styles.base({ className })}>
       {details.map((item) => (
-        <li key={item.label} className={styles.item()}>
-          <Text as="span" weight="semibold" className={styles.label()}>
-            {item.label}
-          </Text>
-          <Text as="span">{item.value}</Text>
-        </li>
+        <div key={item.label} className={styles.item()}>
+          <dt>
+            <Text as="span" weight="semibold" className={styles.label()}>
+              {item.label}
+            </Text>
+          </dt>
+          <dd>
+            <Text as="span">{item.value}</Text>
+          </dd>
+        </div>
       ))}
-    </ul>
+    </dl>
   );
 };
