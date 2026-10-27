@@ -4,6 +4,13 @@ All notable changes to `@nicolassancho/storybook-core` are listed here. The form
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## 4.2.1 - 2026-10-26
+
+### Fixed
+
+- `ProductDetails` renders a description list (`<dl>` with `<dt>` and `<dd>`) instead of a bulleted
+  list, so screen readers announce each label with its value. Props and styling are unchanged.
+
 ## 4.2.0 - 2026-10-25
 
 ### Added
