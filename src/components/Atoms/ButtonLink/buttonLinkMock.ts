@@ -20,6 +20,12 @@ export const mockedButtonLinkText: ButtonLinkProps = {
   className: "button-link-text",
 };
 
+export const mockedButtonLinkOutline: ButtonLinkProps = {
+  ...mockedButtonLinkPrimary,
+  variant: "outline",
+  className: "outline-button-link",
+};
+
 export const mockedButtonLinkLarge: ButtonLinkProps = {
   ...mockedButtonLinkPrimary,
   size: "large",

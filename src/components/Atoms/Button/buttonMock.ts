@@ -24,6 +24,14 @@ export const mockedButtonText: ButtonProps = {
   className: "button-text",
 };
 
+export const mockedButtonOutline: ButtonProps = {
+  variant: "outline",
+  size: "medium",
+  disabled: false,
+  children: "Outline Button",
+  className: "outline-button",
+};
+
 export const mockedButtonDisabled: ButtonProps = {
   variant: "primary",
   size: "medium",

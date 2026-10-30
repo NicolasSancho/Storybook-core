@@ -7,9 +7,10 @@ export interface ButtonLinkProps {
   /** Link contents */
   children: React.ReactNode;
   /**
-   * The type of the button
+   * The type of the button. `outline` is a neutral bordered button for secondary actions: it does
+   * not follow the brand colors, so it looks the same under any theme.
    */
-  variant?: "primary" | "secondary" | "text";
+  variant?: "primary" | "secondary" | "text" | "outline";
   /**
    * How large should the button be?
    */
