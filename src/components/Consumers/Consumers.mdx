@@ -117,6 +117,35 @@ sets it).
 The Storybook toolbar has a theme switch (Light, Dark, System) so you can see every component in
 both themes. `npm test` runs every story in both, with the axe checks.
 
+## Brands (one app, many tenants)
+
+A brand is two tokens: `--color-primary` and `--color-primary-darker` (the hover step). Every component
+reads them through classes such as `bg-primary`, `text-primary`, `ring-primary` and `bg-primary/10`, so
+overriding the two variables re-themes everything below them. Each takes a light and a dark value:
+
+```css
+/* app/globals.css, after the theme import */
+:root[data-brand="green"] {
+  --color-primary: light-dark(#1f5f4a, #62a088);
+  --color-primary-darker: light-dark(#024b38, #78b69e);
+}
+```
+
+Then set `data-brand="green"` on `<html>`. To avoid a flash of the default brand, write the choice in a
+non-sensitive cookie and copy it to `<html>` with a small inline script in `<head>` that runs before the first
+paint (add `suppressHydrationWarning` to `<html>`). In a Next.js 16.4 production build, this kept the page
+static and painted the right brand from the first frame. Reading the tenant in the root layout, or injecting a
+`<style>` there, either fails the build with Cache Components or flashes the wrong brand.
+
+- Keep the brand in your stylesheet. Turbopack rewrites every `light-dark()` in CSS files so a nested
+  `data-theme` cannot switch it, and a runtime `<style>` with native `light-dark()` only works in browsers that
+  support the function.
+- The text on a brand fill (`on-primary`) is white in light mode and near-black in dark mode, whatever the
+  brand. Check each brand in both themes: `primary` against `on-primary` and against the page surface needs
+  4.5:1. A very light brand, such as yellow, fails with white text.
+- The **Foundations / Brands** story and the **Brand** control in the Storybook toolbar show three example
+  brands. They are examples, not part of the package.
+
 ## Quick start
 
 Import components from the package root. Unused components are dropped from your bundle.
