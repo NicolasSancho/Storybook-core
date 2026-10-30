@@ -18,6 +18,7 @@ export * from "./components/Layouts/Grid/Grid.js";
 // Molecules
 export * from "./components/Molecules/Breadcrumbs/Breadcrumbs.js";
 export * from "./components/Molecules/CartIcon/CartIcon.js";
+export * from "./components/Molecules/Input/Input.js";
 export * from "./components/Molecules/ProductCard/ProductCard.js";
 export * from "./components/Molecules/ProductDetails/ProductDetails.js";
 export * from "./components/Molecules/RadioGroup/RadioGroup.js";

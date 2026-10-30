@@ -4,7 +4,7 @@ import { readdirSync, readFileSync } from "node:fs";
 import { pathToFileURL } from "node:url";
 import { createElement as h } from "react";
 import { renderToString } from "react-dom/server";
-import { Button, Header, ProductGrid, RadioGroup } from "@nicolassancho/storybook-core";
+import { Button, Header, Input, ProductGrid, RadioGroup } from "@nicolassancho/storybook-core";
 
 const distDir = new URL("./node_modules/@nicolassancho/storybook-core/dist/", import.meta.url);
 
@@ -107,5 +107,17 @@ assert.match(
   inputs.find((input) => input.includes('value="m"')),
   /\schecked/
 );
+
+// Input wires its label, description and error with ids from useId, which must match on the server.
+const field = renderToString(
+  h(Input, { label: "Email", name: "email", description: "Help text", error: "Bad email" })
+);
+const fieldId = field.match(/<label[^>]*\sfor="([^"]+)"/)?.[1];
+assert.ok(fieldId, "the label has no for attribute");
+const fieldInput = field.match(/<input[^>]*>/)?.[0] ?? "";
+assert.ok(fieldInput.includes(`id="${fieldId}"`), "the input id does not match the label");
+assert.ok(fieldInput.includes('aria-invalid="true"'));
+assert.match(fieldInput, new RegExp(`aria-describedby="${fieldId}-description ${fieldId}-error"`));
+assert.ok(field.includes(`id="${fieldId}-error"`) && field.includes(`id="${fieldId}-description"`));
 
 console.log("Server render checks passed.");
