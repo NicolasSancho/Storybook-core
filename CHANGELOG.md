@@ -4,6 +4,21 @@ All notable changes to `@nicolassancho/storybook-core` are listed here. The form
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## 4.2.2 - 2026-10-30
+
+### Changed
+
+- The library no longer requires every component to be a Server Component. Presentational components stay
+  server-safe and carry no `"use client"` directive. A component that needs interaction (a menu, a dialog)
+  will be a client component, with the directive at the top of its own file and a note in its documentation.
+  No component changes in this release: every component is still presentational.
+- The package check (`npm run test:package`) now compares the source with the build. It fails when a
+  source file starts with `"use client"` and its compiled file does not, when a compiled file has the
+  directive and its source does not, and when the directive is not the first statement.
+- The README, the Consumers guide and the contributor rules describe the Server and Client boundary. A
+  client component exported from the single entry point renders from a Server Component, and only its own
+  file reaches the browser: this was checked in a real Next.js 16.4 app with a throwaway component.
+
 ## 4.2.1 - 2026-10-26
 
 ### Fixed
