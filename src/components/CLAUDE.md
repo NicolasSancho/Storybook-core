@@ -4,29 +4,42 @@ Rules for code in `src/components/`. The root `CLAUDE.md` still applies.
 
 ## Server and client components
 
-The library is consumed from Next.js (App Router), so keep it usable from Server Components.
+The library is consumed from Next.js (App Router). The default is a component that works from a Server
+Component. The exception is a component that needs interaction, which is a client component on purpose.
 
-- Components are presentational and stateless: no `useState`, `useEffect`, context or browser
-  APIs, and therefore no `"use client"` directive. Verified in a Next.js smoke test when this
-  was set up: every component rendered from a Server Component, and `useId` (RadioGroup) works on
-  the server. `npm run test:package` keeps checking the injection props and an uncontrolled
-  RadioGroup in plain Node.
-- Add `"use client"` (as the first statement of the file) only when a component starts using
-  state, effects, context or browser APIs. Do not add it just because a component accepts a
-  handler: a directive does not let a Server Component pass functions, and it ships
-  JavaScript for components that would otherwise render with none.
+- **Presentational components** (no state, no effects, no context, no browser APIs) stay server-safe and carry
+  no `"use client"` directive. Verified in a Next.js smoke test when this was set up: every component rendered
+  from a Server Component, and `useId` (RadioGroup) works on the server. `npm run test:package` keeps checking
+  the injection props and an uncontrolled RadioGroup in plain Node.
+- **Interactive components** (a menu, a dialog, a toast, a drawer, anything that needs state, effects, context or
+  browser APIs) carry `"use client"` as the first statement of their own file. Put it on the smallest component
+  that needs it, and keep the interactive part small: a server-safe component can render a small client one for
+  the part that needs it. Say in the component's JSDoc that it is a client component. Do not add the directive
+  just because a component accepts a handler: a directive does not let a Server Component pass functions, and it
+  ships JavaScript for components that would otherwise render with none.
+- **The package check compares the source with the build.** `npm run test:package` fails when a source file
+  starts with `"use client"` and its compiled file does not, when a compiled file has the directive and its
+  source does not, and when the directive is not the first statement (React ignores it there). It does not
+  decide which components should be client components: that is a review decision, and the real-app test below
+  is the gate.
+- **Test a client component in a real Next app before releasing it.** The package check cannot render
+  Server/Client behavior. Pack the library, install the tarball in a Next app, render the component from a Server
+  Component, and check that it hydrates, responds to input, and that the server-only components are not in the
+  browser's JavaScript. This was done once with a throwaway component: the directive survives `tsc`, the single
+  `index.js` can export client and server components together, and only the client file reaches the browser.
 - Prefer slot props (`brand`, `actions` on Header) over static sub-components (`Header.Left`):
   dotting into a client module from a Server Component returns `undefined`, so a component with
   static parts can never become a client component. If one is ever needed, export the parts as
   separate named exports.
-- Event handlers (`onClick`, `onChange`) cannot be passed from a Server Component. Consumers
+- Event handlers (`onClick`, `onChange`) cannot be passed from a Server Component to a client component (Next
+  fails the build with "Event handlers cannot be passed to Client Component props"). Consumers
   wrap them in their own `"use client"` file. Keep every handler prop optional so the static
   usage still renders on the server. A form control also takes its state as optional `value` plus
   `defaultValue` (RadioGroup, SearchInput): without `value` it is uncontrolled and a native form
   submits it with no handler.
 - `LinkComponent` may be passed from a Server Component as long as the receiving component
   stays server-safe (no `"use client"`). A client component such as `next/link` is always safe
-  to pass.
+  to pass. A client component that itself takes `LinkComponent` needs its own check in a real Next app first.
 - Prefer real links (`href`) over handlers for navigation: they need no JavaScript.
 
 ## Links and images

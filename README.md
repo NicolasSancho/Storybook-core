@@ -17,8 +17,10 @@ documented in Storybook. It is published to npm as `@nicolassancho/storybook-cor
   `prefers-reduced-motion` support. [axe](https://github.com/dequelabs/axe-core) runs on every story
   in CI, and a violation fails the build. Automated checks catch only part of what matters, so this
   is a safety net, not a claim of WCAG conformance.
-- **Works from Next.js Server Components.** The components are stateless, so they carry no
-  `"use client"` directive and render on the server with no client JavaScript.
+- **Server Components first.** Presentational components are stateless, so they carry no
+  `"use client"` directive and render on the server with no client JavaScript. A component that needs
+  interaction marks itself as a client component, and the package check verifies that the directive
+  survives the build.
 - **Bring your own router and image component.** Navigation uses `href` and renders a plain `<a>`
   by default. Pass `LinkComponent` (e.g. `next/link`) or `ImageComponent` (e.g. `next/image`) to
   plug in your framework.

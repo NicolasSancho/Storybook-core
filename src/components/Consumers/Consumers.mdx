@@ -91,7 +91,7 @@ Two things are on your side:
   `on-danger`). Do not use `bg-white` or `text-white` for these: they stay white in dark mode.
 
 For a toggle that remembers the choice and does not flash on load, `next-themes` works with the
-attribute (a client component, as the library holds no state):
+attribute (the provider is a client component in your app):
 
 ```tsx
 // app/providers.tsx
@@ -235,9 +235,14 @@ header, the page and the footer cannot drift apart.
 
 ## Next.js App Router
 
-The components hold no state and use no browser APIs, so they carry no `"use client"` directive and
-render from Server Components. Static usage needs nothing special: the examples above are Server
-Components. `Header` takes its brand, actions and navigation as props, so it works there too:
+Presentational components hold no state and use no browser APIs, so they carry no `"use client"` directive
+and render from Server Components. Components that need interaction (a menu or a dialog, for example) are
+client components: each carries `"use client"` in its own file and says so in its documentation. You import
+both kinds the same way from a Server Component. A client component is a small island of client JavaScript in
+an otherwise server-rendered page, and a Server Component cannot pass it functions such as event handlers
+(pass data, or wrap it in your own `"use client"` file). Static usage needs nothing special: the examples
+above are Server Components. `Header` takes its brand, actions and navigation as props, so it works there
+too:
 
 ```tsx
 <Header
