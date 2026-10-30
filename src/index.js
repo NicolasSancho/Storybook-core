@@ -17,6 +17,7 @@ export * from "./components/Layouts/Container/Container.js";
 export * from "./components/Layouts/Grid/Grid.js";
 
 // Molecules
+export * from "./components/Molecules/Alert/Alert.js";
 export * from "./components/Molecules/Breadcrumbs/Breadcrumbs.js";
 export * from "./components/Molecules/CartIcon/CartIcon.js";
 export * from "./components/Molecules/Input/Input.js";

@@ -5,7 +5,7 @@ import { IconsMap } from "./iconsMap.js";
 export interface IconProps {
   name: keyof typeof IconsMap;
   size?: "small" | "medium" | "large";
-  color?: "primary" | "secondary" | "black";
+  color?: "primary" | "secondary" | "danger" | "black";
   /**
    * Accessible name for icons that convey meaning on their own.
    * Without it the icon is treated as decorative and hidden from screen readers.
@@ -24,6 +24,7 @@ const iconStyles = tv({
     color: {
       primary: "text-primary",
       secondary: "text-secondary",
+      danger: "text-danger",
       black: "text-neutral-950",
     },
   },
