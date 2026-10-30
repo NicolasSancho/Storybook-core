@@ -1,20 +1,58 @@
 // Runs in plain Node against the installed package: no bundler, no browser, no JSX.
 import assert from "node:assert/strict";
 import { readdirSync, readFileSync } from "node:fs";
+import { pathToFileURL } from "node:url";
 import { createElement as h } from "react";
 import { renderToString } from "react-dom/server";
 import { Button, Header, ProductGrid, RadioGroup } from "@nicolassancho/storybook-core";
 
 const distDir = new URL("./node_modules/@nicolassancho/storybook-core/dist/", import.meta.url);
 
-// Components are stateless, so none may opt into the client: a directive would stop a Server
-// Component from passing them functions and would ship JavaScript for nothing.
-const jsFiles = readdirSync(distDir, { recursive: true }).filter((file) => file.endsWith(".js"));
+// Presentational components are stateless, so they stay server-safe: a directive would stop a Server
+// Component from passing them functions and would ship JavaScript for nothing. A component that needs
+// state or browser APIs is a client component on purpose, with "use client" as the first statement of
+// its own source file. The build must keep that directive on exactly those files, and React ignores it
+// anywhere but first, so a misplaced one is an error too.
+assert.ok(
+  process.env.PACKAGE_SRC_DIR,
+  "PACKAGE_SRC_DIR is not set (run this through test-package.mjs)"
+);
+const srcDir = pathToFileURL(`${process.env.PACKAGE_SRC_DIR}/`);
+
+const listFiles = (dir, keep) =>
+  readdirSync(dir, { recursive: true })
+    .map((file) => file.replaceAll("\\", "/"))
+    .filter(keep);
+const read = (dir, file) => readFileSync(new URL(file, dir), "utf8");
+const isFirstStatement = (source) => /^\s*["']use client["']/.test(source);
+
+// The same files tsconfig.build.json compiles.
+const sourceFiles = listFiles(
+  srcDir,
+  (file) => /\.tsx?$/.test(file) && !/\.stories\.tsx?$|Mock\.tsx?$|\.d\.ts$/.test(file)
+);
+const jsFiles = listFiles(distDir, (file) => file.endsWith(".js"));
+assert.ok(sourceFiles.length > 0, "src/ has no source files");
 assert.ok(jsFiles.length > 0, "dist/ has no JavaScript files");
+
+const sourceClientFiles = sourceFiles
+  .filter((file) => isFirstStatement(read(srcDir, file)))
+  .map((file) => file.replace(/\.tsx?$/, ".js"));
+const builtClientFiles = [];
 for (const file of jsFiles) {
-  const source = readFileSync(new URL(file, distDir), "utf8");
-  assert.doesNotMatch(source, /["']use client["']/, `${file} has a "use client" directive`);
+  const source = read(distDir, file);
+  assert.equal(
+    /["']use client["']/.test(source),
+    isFirstStatement(source),
+    `${file} has a "use client" that is not the first statement`
+  );
+  if (isFirstStatement(source)) builtClientFiles.push(file);
 }
+assert.deepEqual(
+  builtClientFiles.sort(),
+  sourceClientFiles.sort(),
+  'the files with "use client" in dist/ differ from the source files that start with it'
+);
 
 // A plain component renders on the server.
 assert.match(

@@ -10,7 +10,8 @@ import { fileURLToPath } from "node:url";
 const root = fileURLToPath(new URL("..", import.meta.url));
 const fixture = fileURLToPath(new URL("./package-fixture", import.meta.url));
 
-const run = (command, args, cwd) => execFileSync(command, args, { cwd, stdio: "inherit" });
+const run = (command, args, cwd, env) =>
+  execFileSync(command, args, { cwd, stdio: "inherit", env: { ...process.env, ...env } });
 
 // The version this repo tests against, so the result does not change when a peer releases.
 const installedVersion = (name) =>
@@ -46,7 +47,7 @@ try {
   );
 
   cpSync(fixture, workDir, { recursive: true });
-  run("node", ["render.mjs"], workDir);
+  run("node", ["render.mjs"], workDir, { PACKAGE_SRC_DIR: join(root, "src") });
   run("node", ["styles.mjs"], workDir);
   console.log("Package smoke test passed.");
 } finally {
