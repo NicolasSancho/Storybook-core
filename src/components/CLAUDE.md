@@ -35,7 +35,7 @@ Component. The exception is a component that needs interaction, which is a clien
   fails the build with "Event handlers cannot be passed to Client Component props"). Consumers
   wrap them in their own `"use client"` file. Keep every handler prop optional so the static
   usage still renders on the server. A form control also takes its state as optional `value` plus
-  `defaultValue` (RadioGroup, SearchInput): without `value` it is uncontrolled and a native form
+  `defaultValue` (RadioGroup, Input): without `value` it is uncontrolled and a native form
   submits it with no handler.
 - `LinkComponent` may be passed from a Server Component as long as the receiving component
   stays server-safe (no `"use client"`). A client component such as `next/link` is always safe

@@ -1,8 +1,8 @@
 import React from "react";
 import { HeaderProps } from "./Header";
 import { Button } from "../../Atoms/Button/Button";
-import { SearchInput } from "../../Atoms/SearchInput/SearchInput";
 import { CartIcon } from "../../Molecules/CartIcon/CartIcon";
+import { Input } from "../../Molecules/Input/Input";
 
 const Brand: React.FC = () => (
   <a href="/" className="whitespace-nowrap text-xl font-bold text-neutral-900">
@@ -18,7 +18,7 @@ const Search: React.FC = () => (
     onSubmit={(event) => event.preventDefault()}
     className="flex items-center gap-2"
   >
-    <SearchInput name="q" aria-label="Search products" variantSize="small" />
+    <Input type="search" name="q" label="Search products" hideLabel />
     <Button type="submit" size="small">
       Search
     </Button>

@@ -1,6 +1,7 @@
 // Atoms
 export * from "./components/Atoms/Button/Button.js";
 export * from "./components/Atoms/ButtonLink/ButtonLink.js";
+export * from "./components/Atoms/Card/Card.js";
 export * from "./components/Atoms/Chip/Chip.js";
 export * from "./components/Atoms/ChipLink/ChipLink.js";
 export * from "./components/Atoms/Spinner/Spinner.js";
@@ -16,8 +17,10 @@ export * from "./components/Layouts/Container/Container.js";
 export * from "./components/Layouts/Grid/Grid.js";
 
 // Molecules
+export * from "./components/Molecules/Alert/Alert.js";
 export * from "./components/Molecules/Breadcrumbs/Breadcrumbs.js";
 export * from "./components/Molecules/CartIcon/CartIcon.js";
+export * from "./components/Molecules/Input/Input.js";
 export * from "./components/Molecules/ProductCard/ProductCard.js";
 export * from "./components/Molecules/ProductDetails/ProductDetails.js";
 export * from "./components/Molecules/RadioGroup/RadioGroup.js";

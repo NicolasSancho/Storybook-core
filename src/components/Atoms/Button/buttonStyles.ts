@@ -9,6 +9,7 @@ export const buttonStyles = tv({
       primary: "rounded-sm bg-primary text-on-primary",
       secondary: "rounded-sm bg-secondary text-on-secondary focus-visible:ring-secondary",
       text: "rounded-sm text-primary",
+      outline: "rounded-sm border border-neutral-400 bg-surface text-neutral-900",
     },
     size: {
       small: "text-xs px-2 py-1",
@@ -28,6 +29,8 @@ export const buttonStyles = tv({
     { variant: "primary", link: true, class: "hover:bg-primary-darker" },
     { variant: "secondary", link: false, class: "enabled:hover:bg-secondary-darker" },
     { variant: "secondary", link: true, class: "hover:bg-secondary-darker" },
+    { variant: "outline", link: false, class: "enabled:hover:bg-neutral-100" },
+    { variant: "outline", link: true, class: "hover:bg-neutral-100" },
     { variant: "text", link: false, class: "enabled:hover:underline" },
     { variant: "text", link: true, class: "hover:underline" },
   ],

@@ -4,6 +4,27 @@ All notable changes to `@nicolassancho/storybook-core` are listed here. The form
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## 4.3.0 - 2026-10-30
+
+### Added
+
+- `Button` and `ButtonLink` have an `outline` variant: a neutral bordered button for secondary actions.
+  It uses the `neutral` and `surface` tokens, so it looks the same under any brand override.
+- `Input` is a text field with a required `label` (which `hideLabel` hides visually), optional
+  `description` and `error`. It links them with `aria-describedby`, sets `aria-invalid` when there is an
+  error, and takes `type="search"` for a search box. Uncontrolled by default, so a native form submits it
+  without a handler.
+- `Card` is a bordered surface for grouping content. It renders a `div`, `section` or `article`.
+- `Alert` shows a message with a title, optional detail and an optional `action`. The only variant is
+  `error`, which uses the danger colors and `role="alert"`.
+- `Icon` has an `AlertCircle` icon and a `danger` color.
+
+### Deprecated
+
+- `SearchInput` is deprecated. Use `Input` with `type="search"` and `hideLabel`, which adds a real label,
+  help text and an error message. `SearchInput` keeps working and will be removed in the next major
+  version.
+
 ## 4.2.2 - 2026-10-30
 
 ### Changed

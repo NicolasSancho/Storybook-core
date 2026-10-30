@@ -6,6 +6,7 @@ import {
   mockedButtonLinkPrimary,
   mockedButtonLinkSecondary,
   mockedButtonLinkText,
+  mockedButtonLinkOutline,
   mockedButtonLinkLarge,
   mockedButtonLinkSmall,
 } from "./buttonLinkMock";
@@ -46,6 +47,10 @@ export const Secondary: Story = {
 
 export const Text: Story = {
   args: mockedButtonLinkText,
+};
+
+export const Outline: Story = {
+  args: mockedButtonLinkOutline,
 };
 
 export const Large: Story = {

@@ -6,6 +6,7 @@ import {
   mockedButtonPrimary,
   mockedButtonSecondary,
   mockedButtonText,
+  mockedButtonOutline,
   mockedButtonDisabled,
   mockedButtonLarge,
   mockedButtonSmall,
@@ -43,6 +44,10 @@ export const Secondary: Story = {
 
 export const Text: Story = {
   args: mockedButtonText,
+};
+
+export const Outline: Story = {
+  args: mockedButtonOutline,
 };
 
 export const Disabled: Story = {
