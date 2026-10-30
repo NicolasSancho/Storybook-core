@@ -36,7 +36,7 @@ documented in Storybook. It is published to npm as `@nicolassancho/storybook-cor
 | Layer     | Components                                                                          |
 | --------- | ----------------------------------------------------------------------------------- |
 | Atoms     | Button, ButtonLink, Card, Chip, ChipLink, Icon, Image, Label, RadioButton, SearchInput (deprecated), Spinner, Text |
-| Molecules | Alert, Breadcrumbs, CartIcon, Input, Popover, ProductCard, ProductDetails, RadioGroup       |
+| Molecules | Alert, Breadcrumbs, CartIcon, Input, Popover, ProductCard, ProductDetails, RadioGroup, SidebarNav |
 | Organisms | Footer, Header, ProductGrid                                                         |
 | Layouts   | Container, Grid                                                                     |
 
