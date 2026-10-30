@@ -262,7 +262,7 @@ server page:
 "use client";
 
 import { useState } from "react";
-import { Button, SearchInput, Text } from "@nicolassancho/storybook-core";
+import { Button, Input, Text } from "@nicolassancho/storybook-core";
 
 export function SearchBar() {
   const [query, setQuery] = useState("");
@@ -270,7 +270,13 @@ export function SearchBar() {
 
   return (
     <>
-      <SearchInput value={query} onChange={(event) => setQuery(event.target.value)} />
+      <Input
+        type="search"
+        label="Search"
+        hideLabel
+        value={query}
+        onChange={(event) => setQuery(event.target.value)}
+      />
       <Button onClick={() => setSubmitted(query)}>Search</Button>
       {submitted && <Text>Searching for {submitted}</Text>}
     </>
@@ -282,7 +288,7 @@ Prefer a real link over a handler when the action is navigation: a link needs no
 
 ## Forms and filters without JavaScript
 
-`RadioGroup`, `SearchInput` and `Input` also work uncontrolled: leave out `value` and `onChange`, and set the
+`RadioGroup` and `Input` also work uncontrolled: leave out `value` and `onChange`, and set the
 starting state with `defaultValue`. They then render from a Server Component inside a native `<form>`,
 and the browser submits what the user chose. Pick one mode per component and keep it: React warns when
 an input switches between controlled and uncontrolled.
@@ -298,7 +304,7 @@ Use `Button` for an action that runs code or submits a form. A link cannot be di
 ```tsx
 // app/products/page.tsx (a Server Component)
 import Link from "next/link";
-import { Button, ChipLink, RadioGroup, SearchInput } from "@nicolassancho/storybook-core";
+import { Button, ChipLink, Input, RadioGroup } from "@nicolassancho/storybook-core";
 import { addToCart } from "./actions";
 
 export default function Page() {
@@ -315,7 +321,7 @@ export default function Page() {
 
       {/* A GET form: the query lands in the URL, and the page reads it on the server. */}
       <form action="/products">
-        <SearchInput name="q" defaultValue="shirt" />
+        <Input type="search" label="Search" hideLabel name="q" defaultValue="shirt" />
         <Button type="submit">Search</Button>
       </form>
 
@@ -355,7 +361,7 @@ works in bundlers (Next.js, Vite, webpack) and in Node's native ESM loader.
 
 ## Accessibility
 
-- Give inputs an accessible name: `SearchInput` falls back to "Search", and you can pass your own
-  `aria-label`, or point `aria-labelledby` at a visible `Label`. An `id` alone does not name it.
+- Give inputs an accessible name: `Input` requires a `label` (visible, or hidden with `hideLabel`),
+  which names the field for screen readers.
 - Icons are decorative by default. Pass `ariaLabel` when an icon carries meaning on its own.
 - Use `alt=""` for purely decorative images, and a real description otherwise.

@@ -1,6 +1,10 @@
 import React from "react";
 import { tv } from "tailwind-variants";
 
+/**
+ * @deprecated Use `Input` with `type="search"` instead. It adds a real label (which can be visually
+ * hidden), help text and an error message. `SearchInput` will be removed in the next major version.
+ */
 export interface SearchInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   placeholder?: string;
   /**
@@ -38,6 +42,10 @@ const searchInputStyles = tv({
   },
 });
 
+/**
+ * @deprecated Use `Input` with `type="search"` and `hideLabel` instead. It will be removed in the
+ * next major version.
+ */
 export const SearchInput: React.FC<SearchInputProps> = ({
   placeholder = "Search…",
   value,
