@@ -44,7 +44,7 @@ Use Node 24, the version CI runs.
   `attw` (types and module resolution; the CSS entry point is excluded because attw reads only JS
   and types) and `scripts/test-package.mjs`. The script packs the tarball, installs it with the
   peer dependencies in a temp project and, in plain Node, renders Button, Header (`LinkComponent`),
-  ProductGrid (`ImageComponent`), an uncontrolled RadioGroup and an Input with its label, description and error, asserts that the files
+  ProductGrid (`ImageComponent`), an uncontrolled RadioGroup and an Input with its label, description and error, a Popover (a client component), asserts that the files
   with `"use client"` in `dist/` are the source files that start with it, and compiles the Consumers-guide Tailwind setup. It cannot test Next.js
   Server/Client behavior: that needs a real Next app. Add a check there only for a packaging risk
   that a story cannot see; the checks live in `scripts/package-fixture/`, outside the ESLint and

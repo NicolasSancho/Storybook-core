@@ -351,6 +351,38 @@ page's job.
 Use the controlled form (`value` and `onChange`) only when the page needs the live value, and keep it in
 a Client Component as shown above.
 
+## Menus and drawers with `Popover`
+
+`Popover` is a button that opens a panel, for a user menu, a dropdown or a navigation drawer. It is the
+library's first client component, and you still render it from a Server Component without writing any client
+code:
+
+```tsx
+// app/(app)/layout.tsx (a Server Component)
+import Link from "next/link";
+import { Button, Popover } from "@nicolassancho/storybook-core";
+import { signOut } from "./actions";
+
+<Popover trigger="Ana Ruiz" placement="bottom-end">
+  <Link href="/settings">Settings</Link>
+  <form action={signOut}>
+    <Button type="submit" variant="outline">
+      Sign out
+    </Button>
+  </form>
+</Popover>;
+```
+
+It uses the browser's native `popover`, so the browser closes it on an outside click and on Esc, returns focus
+to the button and draws it above the page. The component adds `aria-expanded` on the button, closes the panel
+when a link inside it is clicked or a form inside it is submitted (so `next/link` and Server Actions work with
+no router code), and places a dropdown under its button. The panel content stays a Server Component. Every prop
+must be serializable: pass text and elements, not functions. Without JavaScript the panel still opens and
+closes through the native attributes; only the closing on a link click and `aria-expanded` need it.
+
+`placement="drawer"` opens a full-height panel from the left edge. It is not modal: keyboard focus can still
+move to the page behind it.
+
 ## What the package exposes
 
 - `@nicolassancho/storybook-core`: every component and its types.
