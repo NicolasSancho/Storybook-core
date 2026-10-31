@@ -4,6 +4,14 @@ All notable changes to `@nicolassancho/storybook-core` are listed here. The form
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## 4.4.1 - 2026-10-30
+
+### Changed
+
+- Releases are published from the tarball that the package check verified, instead of rebuilding the
+  same commit in the publish job. The package contents do not change. The publish job no longer installs
+  dependencies or builds Storybook, which shortens the release by about a minute.
+
 ## 4.4.0 - 2026-10-30
 
 ### Added
