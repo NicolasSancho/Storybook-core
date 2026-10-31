@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { action } from "storybook/actions";
 import { expect, fn, userEvent, within } from "storybook/test";
+import { Icon } from "../Icon/Icon";
 import { Button } from "./Button";
 import {
   mockedButtonPrimary,
@@ -72,4 +73,28 @@ export const Large: Story = {
 
 export const Small: Story = {
   args: mockedButtonSmall,
+};
+
+export const WithIcon: Story = {
+  args: {
+    ...mockedButtonOutline,
+    children: (
+      <>
+        <Icon name="Package" size="small" />
+        Add product
+      </>
+    ),
+  },
+  play: async ({ canvasElement }) => {
+    const button = within(canvasElement).getByRole("button", { name: "Add product" });
+    const icon = button.querySelector("svg");
+    const label = [...button.childNodes].find((node) => node.nodeType === Node.TEXT_NODE);
+    if (!icon || !label) throw new Error("The button needs an icon and a text label");
+
+    // The label starts 8px after the icon (gap-2 at the medium size), instead of touching it.
+    const range = document.createRange();
+    range.selectNodeContents(label);
+    const space = range.getBoundingClientRect().left - icon.getBoundingClientRect().right;
+    await expect(Math.round(space)).toBe(8);
+  },
 };
