@@ -4,6 +4,28 @@ All notable changes to `@nicolassancho/storybook-core` are listed here. The form
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## 4.5.0 - 2026-10-31
+
+### Changed
+
+- `Button`, `ButtonLink` and the `Popover` trigger leave a gap between their children, so an icon no longer
+  touches its label. The gap is half the horizontal padding: 4px small, 8px medium, 12px large. A button
+  with a single child looks the same as before.
+- `Icon` takes the text color of the element around it by default (the new `color="current"`), instead of
+  `black`. An icon inside a filled button now matches its label instead of staying near-black on the brand
+  color. Pass `color="black"` for the previous look. `SidebarNav` and the `Popover` close button change
+  from neutral-950 to their text color (neutral-900); `Alert`, `Breadcrumbs` and `CartIcon` set their own
+  color and do not change.
+
+### Added
+
+- **Molecules / SidebarNav** has two stories that place it in a responsive app layout: a side column from
+  the `md` breakpoint up, and a `Popover` drawer below it. The docs explain why the navigation is rendered
+  in both places.
+- The README has a **Versioning** section: which changes are major, minor or patch, and how long a
+  deprecated component or prop keeps working (`SearchInput` is removed in 5.0.0).
+- The Consumers guide says that `secondary` is not part of a brand.
+
 ## 4.4.1 - 2026-10-30
 
 ### Changed
