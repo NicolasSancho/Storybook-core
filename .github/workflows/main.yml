@@ -22,23 +22,23 @@ jobs:
       id-token: write
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "24"
           registry-url: https://registry.npmjs.org
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build Storybook
-        run: npm run build-storybook
+      # The tarball that `checks` built and ran the package check on. Nothing is installed or built
+      # here, so the published file is the tested one.
+      - name: Download the verified package
+        uses: actions/download-artifact@v4
+        with:
+          name: package
+          path: package
 
       - name: Publish to npm
-        run: npm publish --provenance
+        # `./` matters: without it npm reads `package/x.tgz` as a GitHub `owner/repo` shorthand.
+        run: npm publish ./package/*.tgz --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 

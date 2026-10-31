@@ -24,9 +24,12 @@ Rules for `.github/`. The root `CLAUDE.md` still applies.
     base branch, and fails if `CHANGELOG.md` has no `## <version>` section. Then `npm ci` (which
     triggers `prepare` → `npm run build`), `npx tsc --noEmit`, `npm run lint`,
     `npx prettier --check ./src ./.storybook`, `npm run build-storybook` and `npm test`.
-  - `package` (no browser): `npm ci` and `npm run test:package`.
-- After the checks pass, the publish job runs `npm ci`, `npm run build-storybook` and
-  `npm publish --provenance`: npm records the workflow run and commit that built the package.
+  - `package` (no browser): `npm ci` and `npm run test:package`. On pushes to `main` it then packs the
+    tarball (`npm pack`) and uploads it as the `package` artifact.
+- After the checks pass, the publish job downloads that artifact and publishes the file with provenance. It
+  installs and builds nothing, so the file that reaches npm is the one the package check verified. npm records
+  the workflow run and commit that published it. The path is `./package/*.tgz`: without the `./`, npm reads
+  `package/x.tgz` as a GitHub `owner/repo` shorthand and fails.
 - After `publish`, the `release` job creates the annotated tag `v<version>` (message `<version>`)
   on the published commit and a GitHub Release with that version's `CHANGELOG.md` section as its
   notes. CI creates tags, so nobody pushes them by hand. The job skips a tag that exists, and it is
