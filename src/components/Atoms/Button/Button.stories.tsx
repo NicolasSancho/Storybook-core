@@ -33,6 +33,9 @@ export const Primary: Story = {
     // Buttons default to type="button", so one inside a form never submits it by accident.
     await expect(button).toHaveAttribute("type", "button");
 
+    // Tailwind v4 leaves buttons with the default arrow: an enabled one must show the pointer.
+    await expect(getComputedStyle(button).cursor).toBe("pointer");
+
     await userEvent.click(button);
     await expect(args.onClick).toHaveBeenCalledTimes(1);
   },
@@ -56,6 +59,7 @@ export const Disabled: Story = {
     const button = within(canvasElement).getByRole("button", { name: "Disabled Button" });
 
     await expect(button).toBeDisabled();
+    await expect(getComputedStyle(button).cursor).toBe("not-allowed");
 
     await userEvent.click(button);
     await expect(args.onClick).not.toHaveBeenCalled();

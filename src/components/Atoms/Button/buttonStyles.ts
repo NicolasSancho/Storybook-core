@@ -3,7 +3,7 @@ import { tv } from "tailwind-variants";
 // Shared by Button and ButtonLink, not exported from `src/index.js`. The hover classes are in
 // `compoundVariants` because `enabled:` never matches an `<a>`.
 export const buttonStyles = tv({
-  base: "font-bold inline-flex items-center focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface",
+  base: "font-bold inline-flex items-center enabled:cursor-pointer focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface",
   variants: {
     variant: {
       primary: "rounded-sm bg-primary text-on-primary",
