@@ -25,8 +25,12 @@ Component. The exception is a component that needs interaction, which is a clien
 - **Test a client component in a real Next app before releasing it.** The package check cannot render
   Server/Client behavior. Pack the library, install the tarball in a Next app, render the component from a Server
   Component, and check that it hydrates, responds to input, and that the server-only components are not in the
-  browser's JavaScript. This was done once with a throwaway component: the directive survives `tsc`, the single
-  `index.js` can export client and server components together, and only the client file reaches the browser.
+  browser's JavaScript. This was done with a throwaway component (the directive survives `tsc`, the single
+  `index.js` can export client and server components together, and only the client file reaches the browser)
+  and again for `Popover`, the first real client component: in a Next 16.4 production build, with real input,
+  it hydrates, opens, closes on an outside click, Esc, a `next/link` click in a layout that persists and a
+  Server Action form submit, and returns focus. Storybook's `userEvent` sends synthetic events, so native
+  dismissal (outside click, Esc, focus return) cannot be tested there.
 - Prefer slot props (`brand`, `actions` on Header) over static sub-components (`Header.Left`):
   dotting into a client module from a Server Component returns `undefined`, so a component with
   static parts can never become a client component. If one is ever needed, export the parts as

@@ -21,9 +21,11 @@ export * from "./components/Molecules/Alert/Alert.js";
 export * from "./components/Molecules/Breadcrumbs/Breadcrumbs.js";
 export * from "./components/Molecules/CartIcon/CartIcon.js";
 export * from "./components/Molecules/Input/Input.js";
+export * from "./components/Molecules/Popover/Popover.js";
 export * from "./components/Molecules/ProductCard/ProductCard.js";
 export * from "./components/Molecules/ProductDetails/ProductDetails.js";
 export * from "./components/Molecules/RadioGroup/RadioGroup.js";
+export * from "./components/Molecules/SidebarNav/SidebarNav.js";
 
 // Organisms
 export * from "./components/Organisms/Footer/Footer.js";

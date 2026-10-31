@@ -117,6 +117,35 @@ sets it).
 The Storybook toolbar has a theme switch (Light, Dark, System) so you can see every component in
 both themes. `npm test` runs every story in both, with the axe checks.
 
+## Brands (one app, many tenants)
+
+A brand is two tokens: `--color-primary` and `--color-primary-darker` (the hover step). Every component
+reads them through classes such as `bg-primary`, `text-primary`, `ring-primary` and `bg-primary/10`, so
+overriding the two variables re-themes everything below them. Each takes a light and a dark value:
+
+```css
+/* app/globals.css, after the theme import */
+:root[data-brand="green"] {
+  --color-primary: light-dark(#1f5f4a, #62a088);
+  --color-primary-darker: light-dark(#024b38, #78b69e);
+}
+```
+
+Then set `data-brand="green"` on `<html>`. To avoid a flash of the default brand, write the choice in a
+non-sensitive cookie and copy it to `<html>` with a small inline script in `<head>` that runs before the first
+paint (add `suppressHydrationWarning` to `<html>`). In a Next.js 16.4 production build, this kept the page
+static and painted the right brand from the first frame. Reading the tenant in the root layout, or injecting a
+`<style>` there, either fails the build with Cache Components or flashes the wrong brand.
+
+- Keep the brand in your stylesheet. Turbopack rewrites every `light-dark()` in CSS files so a nested
+  `data-theme` cannot switch it, and a runtime `<style>` with native `light-dark()` only works in browsers that
+  support the function.
+- The text on a brand fill (`on-primary`) is white in light mode and near-black in dark mode, whatever the
+  brand. Check each brand in both themes: `primary` against `on-primary` and against the page surface needs
+  4.5:1. A very light brand, such as yellow, fails with white text.
+- The **Foundations / Brands** story and the **Brand** control in the Storybook toolbar show three example
+  brands. They are examples, not part of the package.
+
 ## Quick start
 
 Import components from the package root. Unused components are dropped from your bundle.
@@ -212,6 +241,32 @@ const Bad = () => <Breadcrumbs LinkComponent={(props) => <Link {...props} />} it
 // Stable:
 const Good = () => <Breadcrumbs LinkComponent={Link} items={items} />;
 ```
+
+### Typed routes
+
+With `typedRoutes: true` in `next.config`, Next types `Link`'s `href` as a known route. The library passes the
+`href` string you gave it, so `LinkComponent={Link}` fails the type check with "is not assignable to type
+ElementType". Wrap `Link` once and pass the wrapper. The hrefs are your own props, so the cast hides nothing
+the compiler could have checked:
+
+```tsx
+// components/nav-link.tsx
+import Link from "next/link";
+import type { ComponentProps } from "react";
+
+type Href = ComponentProps<typeof Link>["href"];
+
+export const NavLink = ({
+  href,
+  ...props
+}: Omit<ComponentProps<typeof Link>, "href"> & { href: string }) => (
+  <Link href={href as Href} {...props} />
+);
+
+// <ButtonLink href="/products" LinkComponent={NavLink}>Products</ButtonLink>
+```
+
+The wrapper is a Server Component, so it adds no client JavaScript.
 
 ## Page width
 
@@ -350,6 +405,41 @@ page's job.
 
 Use the controlled form (`value` and `onChange`) only when the page needs the live value, and keep it in
 a Client Component as shown above.
+
+## Menus and drawers with `Popover`
+
+`Popover` is a button that opens a panel, for a user menu, a dropdown or a navigation drawer. It is the
+library's first client component, and you still render it from a Server Component without writing any client
+code:
+
+```tsx
+// app/(app)/layout.tsx (a Server Component)
+import Link from "next/link";
+import { Button, Popover } from "@nicolassancho/storybook-core";
+import { signOut } from "./actions";
+
+<Popover trigger="Ana Ruiz" placement="bottom-end">
+  <Link href="/settings">Settings</Link>
+  <form action={signOut}>
+    <Button type="submit" variant="outline">
+      Sign out
+    </Button>
+  </form>
+</Popover>;
+```
+
+It uses the browser's native `popover`, so the browser closes it on an outside click and on Esc, returns focus
+to the button and draws it above the page. The component adds `aria-expanded` on the button, closes the panel
+when a link inside it is clicked or a form inside it is submitted (so `next/link` and Server Actions work with
+no router code), and places a dropdown under its button. The panel content stays a Server Component. Every prop
+must be serializable: pass text and elements, not functions. Without JavaScript the panel still opens and
+closes through the native attributes; only the closing on a link click and `aria-expanded` need it.
+
+`placement="drawer"` opens a full-height panel from the left edge, with a close button at the top
+(`closeLabel` sets its accessible name, "Close menu" by default). It is not modal: keyboard focus can still
+move to the page behind it. Put a `SidebarNav` inside it for a navigation drawer. `SidebarNav` stays a Server
+Component, so it is not added to the client bundle. It cannot know the URL, so pass `current: true` on the
+item for the page the user is on, which an app usually derives with `usePathname` in a small Client Component.
 
 ## What the package exposes
 

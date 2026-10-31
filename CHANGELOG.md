@@ -4,6 +4,31 @@ All notable changes to `@nicolassancho/storybook-core` are listed here. The form
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## 4.4.0 - 2026-10-30
+
+### Added
+
+- `Popover` is a button that opens a panel using the browser's native `popover`: the browser closes it on an
+  outside click and on Esc, returns focus to the button and draws it above the page. It is the library's first
+  client component (`"use client"` in its own file). It adds `aria-expanded` on the button, closes the panel when
+  a link inside it is clicked or a form inside it is submitted, and places a dropdown under its button
+  (`bottom-start` or `bottom-end`). `placement="drawer"` opens a full-height panel from the left edge with a close button (`closeLabel`), not modal.
+  The panel content can be Server Components. Checked in a Next.js 16.4 production build with real input.
+- `SidebarNav` is the navigation list for an app's side panel: a labelled `nav` with icon-and-text links, the
+  current page marked with `aria-current="page"` and a brand tint, and a `header` slot. It has no layout of its
+  own, takes `LinkComponent` and stays a server component.
+- `Package`, `Menu` and `X` icons.
+- The Storybook toolbar has a **Brand** control, and **Foundations / Brands** shows the components under three
+  example brands with axe in both themes. Neither is part of the package.
+
+### Changed
+
+- `Button`, `ButtonLink` and `Chip` show the pointer cursor when enabled. Tailwind v4 leaves buttons with the
+  default arrow, so an enabled button looked less clickable than a link. A disabled one still shows
+  `not-allowed`.
+- The Consumers guide documents `Popover` and `SidebarNav`, a wrapper for `next/link` in apps with `typedRoutes`
+  (passing `Link` directly fails the type check there), and how to set a per-tenant brand.
+
 ## 4.3.0 - 2026-10-30
 
 ### Added

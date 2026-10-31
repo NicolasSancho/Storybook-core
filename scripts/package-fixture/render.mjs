@@ -4,7 +4,14 @@ import { readdirSync, readFileSync } from "node:fs";
 import { pathToFileURL } from "node:url";
 import { createElement as h } from "react";
 import { renderToString } from "react-dom/server";
-import { Button, Header, Input, ProductGrid, RadioGroup } from "@nicolassancho/storybook-core";
+import {
+  Button,
+  Header,
+  Input,
+  Popover,
+  ProductGrid,
+  RadioGroup,
+} from "@nicolassancho/storybook-core";
 
 const distDir = new URL("./node_modules/@nicolassancho/storybook-core/dist/", import.meta.url);
 
@@ -119,5 +126,14 @@ assert.ok(fieldInput.includes(`id="${fieldId}"`), "the input id does not match t
 assert.ok(fieldInput.includes('aria-invalid="true"'));
 assert.match(fieldInput, new RegExp(`aria-describedby="${fieldId}-description ${fieldId}-error"`));
 assert.ok(field.includes(`id="${fieldId}-error"`) && field.includes(`id="${fieldId}-description"`));
+
+// Popover is a client component that still renders on the server: the trigger points at the panel
+// by id, the panel is a native popover, and its children are in the HTML.
+const popover = renderToString(h(Popover, { trigger: "Menu" }, h("a", { href: "/x" }, "Inside")));
+const popoverId = popover.match(/<button[^>]*\spopovertarget="([^"]+)"/i)?.[1];
+assert.ok(popoverId, "the trigger has no popovertarget");
+assert.match(popover, new RegExp(`<div[^>]*\\sid="${popoverId}"[^>]*\\spopover="auto"`));
+assert.match(popover, /aria-expanded="false"/);
+assert.ok(popover.includes('<a href="/x">Inside</a>'));
 
 console.log("Server render checks passed.");
