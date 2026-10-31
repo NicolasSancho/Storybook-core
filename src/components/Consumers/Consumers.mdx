@@ -143,6 +143,8 @@ static and painted the right brand from the first frame. Reading the tenant in t
 - The text on a brand fill (`on-primary`) is white in light mode and near-black in dark mode, whatever the
   brand. Check each brand in both themes: `primary` against `on-primary` and against the page surface needs
   4.5:1. A very light brand, such as yellow, fails with white text.
+- `secondary` (the orange) is not part of a brand: it keeps its color under every brand override. In an app
+  where each tenant has its own brand, use `primary` for brand-colored elements and leave `secondary` out.
 - The **Foundations / Brands** story and the **Brand** control in the Storybook toolbar show three example
   brands. They are examples, not part of the package.
 
