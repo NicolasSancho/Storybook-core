@@ -454,4 +454,6 @@ works in bundlers (Next.js, Vite, webpack) and in Node's native ESM loader.
 - Give inputs an accessible name: `Input` requires a `label` (visible, or hidden with `hideLabel`),
   which names the field for screen readers.
 - Icons are decorative by default. Pass `ariaLabel` when an icon carries meaning on its own.
+- An icon takes the text color of the element around it, so inside a button or a link it matches the
+  label. Pass `color` to set a token color instead.
 - Use `alt=""` for purely decorative images, and a real description otherwise.
