@@ -111,6 +111,8 @@ const X = createIcon(
   </>
 );
 
+const ChevronDown = createIcon(<polyline points="6 9 12 15 18 9" />);
+
 const AlertCircle = createIcon(
   <>
     <circle cx="12" cy="12" r="10" />
@@ -148,6 +150,7 @@ export const IconsMap = {
   ShoppingCart,
   ArrowDown,
   ArrowLeft,
+  ChevronDown,
   AlertCircle,
   AlertOctagon,
   AlertTriangle,
