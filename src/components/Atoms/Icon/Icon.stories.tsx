@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, within } from "storybook/test";
+import { Button } from "../Button/Button";
 import { Icon } from "./Icon";
 import { mockedIcon, smallSecondaryIcon, largePrimaryIcon, largeBlackIcon } from "./iconMock";
 import { IconsMap } from "./iconsMap";
@@ -39,6 +40,23 @@ export const LargePrimary: Story = {
 };
 export const LargeBlack: Story = {
   args: largeBlackIcon,
+};
+
+export const InheritsTextColor: Story = {
+  render: () => (
+    <Button>
+      <Icon name="Package" size="small" />
+      Add product
+    </Button>
+  ),
+  play: async ({ canvasElement }) => {
+    const button = within(canvasElement).getByRole("button", { name: "Add product" });
+    const icon = button.querySelector("svg");
+    if (!icon) throw new Error("The button needs an icon");
+
+    // By default the icon takes the label's color, here the text on the primary fill, in both themes.
+    await expect(getComputedStyle(icon).color).toBe(getComputedStyle(button).color);
+  },
 };
 
 export const Labelled: Story = {

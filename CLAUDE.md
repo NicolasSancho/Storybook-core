@@ -7,8 +7,7 @@ on npm (public). Storybook is the development and documentation environment.
 
 - Read this file before making changes.
 - Do not change architecture, conventions or tooling unless requested. If a requested change
-  conflicts with a convention, explain the conflict before proceeding. A question about best
-  practice gets an honest answer, even when it differs from a convention here.
+  conflicts with a convention, explain the conflict before proceeding.
 - Prefer existing project patterns over new dependencies or abstractions.
 - Inspect only the files relevant to the task; do not scan or summarize the whole repo
   unless asked.

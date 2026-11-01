@@ -143,6 +143,8 @@ static and painted the right brand from the first frame. Reading the tenant in t
 - The text on a brand fill (`on-primary`) is white in light mode and near-black in dark mode, whatever the
   brand. Check each brand in both themes: `primary` against `on-primary` and against the page surface needs
   4.5:1. A very light brand, such as yellow, fails with white text.
+- `secondary` (the orange) is not part of a brand: it keeps its color under every brand override. In an app
+  where each tenant has its own brand, use `primary` for brand-colored elements and leave `secondary` out.
 - The **Foundations / Brands** story and the **Brand** control in the Storybook toolbar show three example
   brands. They are examples, not part of the package.
 
@@ -454,4 +456,6 @@ works in bundlers (Next.js, Vite, webpack) and in Node's native ESM loader.
 - Give inputs an accessible name: `Input` requires a `label` (visible, or hidden with `hideLabel`),
   which names the field for screen readers.
 - Icons are decorative by default. Pass `ariaLabel` when an icon carries meaning on its own.
+- An icon takes the text color of the element around it, so inside a button or a link it matches the
+  label. Pass `color` to set a token color instead.
 - Use `alt=""` for purely decorative images, and a real description otherwise.

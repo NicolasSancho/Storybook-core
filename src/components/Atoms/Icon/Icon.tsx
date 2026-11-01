@@ -5,7 +5,12 @@ import { IconsMap } from "./iconsMap.js";
 export interface IconProps {
   name: keyof typeof IconsMap;
   size?: "small" | "medium" | "large";
-  color?: "primary" | "secondary" | "danger" | "black";
+  /**
+   * Icon color. `current` (the default) takes the text color of the element around it, so an icon
+   * inside a button or a link matches its label in every variant, theme and brand. The other values
+   * set a token color.
+   */
+  color?: "current" | "primary" | "secondary" | "danger" | "black";
   /**
    * Accessible name for icons that convey meaning on their own.
    * Without it the icon is treated as decorative and hidden from screen readers.
@@ -22,6 +27,7 @@ const iconStyles = tv({
       large: "w-8 h-8",
     },
     color: {
+      current: "text-current",
       primary: "text-primary",
       secondary: "text-secondary",
       danger: "text-danger",
@@ -30,11 +36,11 @@ const iconStyles = tv({
   },
   defaultVariants: {
     size: "medium",
-    color: "primary",
+    color: "current",
   },
 });
 
-export const Icon: React.FC<IconProps> = ({ name, size, color = "black", ariaLabel }) => {
+export const Icon: React.FC<IconProps> = ({ name, size, color = "current", ariaLabel }) => {
   const IconComponent = IconsMap[name];
   const a11yProps = ariaLabel
     ? { role: "img", "aria-label": ariaLabel }
