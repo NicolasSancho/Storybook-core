@@ -4,6 +4,12 @@ All notable changes to `@nicolassancho/storybook-core` are listed here. The form
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## 4.6.0 - 2026-11-01
+
+### Added
+
+- `Icon` has a `ChevronDown` icon (`name="ChevronDown"`), for a button that opens a menu or a list.
+
 ## 4.5.0 - 2026-10-31
 
 ### Changed
