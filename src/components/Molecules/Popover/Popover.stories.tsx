@@ -69,7 +69,8 @@ export const Menu: Story = {
     // A dropdown does not dim the page behind it.
     await expect(getComputedStyle(panel, "::backdrop").backgroundColor).toBe("rgba(0, 0, 0, 0)");
 
-    // A dropdown has no close button: it closes on an outside click, Esc or a link.
+    // A dropdown has no close button: it closes on an outside click, Esc, a link or
+    // focus moving outside.
     await expect(canvas.queryByRole("button", { name: "Close menu" })).not.toBeInTheDocument();
 
     // Choosing a link closes the panel.
@@ -97,6 +98,41 @@ export const AlignedToStart: Story = {
     await expect(Math.round(panel.getBoundingClientRect().left)).toBe(
       Math.round(trigger.getBoundingClientRect().left)
     );
+  },
+};
+
+export const ClosesWhenFocusLeaves: Story = {
+  args: { ...mockedPopoverMenu, children: <MenuContent /> },
+  decorators: [
+    (Story) => (
+      <div className="flex min-h-72 items-start justify-end gap-4 p-4">
+        <Story />
+        <a href="#next" className="text-sm">
+          Next on the page
+        </a>
+      </div>
+    ),
+  ],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const trigger = canvas.getByRole("button", { name: "Ana Ruiz" });
+
+    await userEvent.click(trigger);
+    await waitFor(() => expect(trigger).toHaveAttribute("aria-expanded", "true"));
+
+    // Going back to the trigger is not leaving: it is the panel's toggle.
+    await userEvent.tab();
+    await expect(canvas.getByRole("link", { name: "Products" })).toHaveFocus();
+    await userEvent.tab({ shift: true });
+    await expect(trigger).toHaveFocus();
+    await expect(trigger).toHaveAttribute("aria-expanded", "true");
+
+    // Tab through the panel and past its last link.
+    await userEvent.tab();
+    await userEvent.tab();
+    await userEvent.tab();
+    await expect(canvas.getByRole("link", { name: "Next on the page" })).toHaveFocus();
+    await waitFor(() => expect(trigger).toHaveAttribute("aria-expanded", "false"));
   },
 };
 
