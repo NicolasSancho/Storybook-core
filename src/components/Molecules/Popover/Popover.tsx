@@ -21,6 +21,7 @@ export interface PopoverProps {
    * Where the panel appears. `bottom-start` and `bottom-end` open a dropdown under the trigger,
    * aligned to its left or right edge. `drawer` slides a full-height panel in from the left edge of
    * the screen, with a dimmed backdrop. The drawer is not modal: keyboard focus can still leave it.
+   * Like a dropdown, it closes when focus reaches an element outside it and the trigger.
    */
   placement?: "bottom-start" | "bottom-end" | "drawer";
   /**
@@ -60,8 +61,8 @@ const GAP = 4;
  * an outside click and on Esc, returning focus to the button, and drawing the panel above the page.
  *
  * This is a client component. It adds what the native popover lacks: `aria-expanded` on the button,
- * closing when a link inside the panel is clicked or a form inside it is submitted, and placing a
- * dropdown under its button. Render it from a Server Component; every prop is serializable.
+ * closing when a link inside the panel is clicked, a form inside it is submitted or focus reaches
+ * an element outside the panel and the button, and placing a dropdown under its button. Render it from a Server Component; every prop is serializable.
  */
 export const Popover: React.FC<PopoverProps> = ({
   trigger,
@@ -104,6 +105,22 @@ export const Popover: React.FC<PopoverProps> = ({
       window.removeEventListener("scroll", place, true);
     };
   }, [open, place]);
+
+  // A panel left open can hide the next element the keyboard reaches. This listens for `focusin`
+  // because it fires only when an element receives focus. Safari does not focus a clicked button, so
+  // a `focusout` check on `relatedTarget` could close the panel while focus is still inside it. The
+  // trigger counts as inside: it toggles the panel, so Shift+Tab onto it keeps the panel open.
+  useEffect(() => {
+    if (!open) return;
+    const closeOnFocusOutside = (event: FocusEvent) => {
+      const target = event.target;
+      if (!(target instanceof Node)) return;
+      if (panelRef.current?.contains(target) || triggerRef.current?.contains(target)) return;
+      panelRef.current?.hidePopover();
+    };
+    document.addEventListener("focusin", closeOnFocusOutside);
+    return () => document.removeEventListener("focusin", closeOnFocusOutside);
+  }, [open]);
 
   const closeOnNavigation = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target instanceof Element && event.target.closest("a[href]")) {

@@ -433,13 +433,15 @@ import { signOut } from "./actions";
 It uses the browser's native `popover`, so the browser closes it on an outside click and on Esc, returns focus
 to the button and draws it above the page. The component adds `aria-expanded` on the button, closes the panel
 when a link inside it is clicked or a form inside it is submitted (so `next/link` and Server Actions work with
-no router code), and places a dropdown under its button. The panel content stays a Server Component. Every prop
+no router code), closes it when focus reaches an element outside the panel and the button (so the panel does
+not stay over the page while the keyboard moves on), and places a dropdown under its button. The panel content stays a Server Component. Every prop
 must be serializable: pass text and elements, not functions. Without JavaScript the panel still opens and
-closes through the native attributes; only the closing on a link click and `aria-expanded` need it.
+closes through the native attributes; `aria-expanded`, the dropdown's placement and the closing on a link
+click, a form submit or focus moving outside need it.
 
 `placement="drawer"` opens a full-height panel from the left edge, with a close button at the top
 (`closeLabel` sets its accessible name, "Close menu" by default). It is not modal: keyboard focus can still
-move to the page behind it. Put a `SidebarNav` inside it for a navigation drawer. `SidebarNav` stays a Server
+move to the page behind it, and focus on anything but its button closes the drawer. Put a `SidebarNav` inside it for a navigation drawer. `SidebarNav` stays a Server
 Component, so it is not added to the client bundle. It cannot know the URL, so pass `current: true` on the
 item for the page the user is on, which an app usually derives with `usePathname` in a small Client Component.
 
