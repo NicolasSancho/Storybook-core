@@ -4,6 +4,14 @@ All notable changes to `@nicolassancho/storybook-core` are listed here. The form
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## 4.7.0 - 2026-11-04
+
+### Changed
+
+- `Popover` closes when focus reaches an element outside the panel and the trigger, in every placement, so
+  the panel does not stay over the page while the keyboard moves on. Focus on the trigger keeps it open. When
+  focus leaves the page, the panel stays open until focus reaches such an element.
+
 ## 4.6.0 - 2026-11-01
 
 ### Added
