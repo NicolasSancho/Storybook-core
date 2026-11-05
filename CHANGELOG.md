@@ -4,6 +4,40 @@ All notable changes to `@nicolassancho/storybook-core` are listed here. The form
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## 4.9.0 - 2026-11-05
+
+Visual consistency across the library. No prop changes.
+
+### Changed
+
+- Control heights follow one scale: 32px small, 40px medium, 48px large. `Button` and `ButtonLink` have all three (from
+  24, 36 and 52px). `SearchInput` has all three (from 26, 38 and 50px). `Chip`, `ChipLink`, `Input` and `Select` have one
+  size, which is 40px (from 38 or 39px).
+- `Button` and `ButtonLink` labels are medium weight instead of bold, and `small` uses `text-sm` instead of `text-xs`, as
+  does `SearchInput`. `ProductCard` and `EmptyState` titles are
+  semibold.
+- Keyboard focus is one ring. `Input` and `SearchInput` show it through `focus-visible`, and an invalid field shows danger
+  through its border and message. `RadioButton` and `Breadcrumbs` gain the ring, and `secondary` buttons lose their own
+  color.
+- `Breadcrumbs` links are neutral with an underline on hover, like `Header` and `Footer`, and the current page is darker.
+- `Pagination` links use the light underline that goes dark on hover.
+- `RadioButton` follows the brand color.
+- `secondary` is now a neutral fill, so it sits beside any brand. To keep a second color, set `--color-secondary` and
+  `--color-secondary-darker` in your stylesheet. The previous values were `light-dark(#c2410c, #d9653e)` and
+  `light-dark(#9a3412, #ec886b)`.
+
+### Fixed
+
+- The focus ring of a `ProductCard` link is visible. The card clipped it.
+
+### Deprecated
+
+- The `secondary-50` to `secondary-950` tokens and `secondary-lighter`. They are removed in 5.0.0.
+
+### Added
+
+- Foundations / Controls in Storybook shows the rules above.
+
 ## 4.8.0 - 2026-11-05
 
 ### Added
