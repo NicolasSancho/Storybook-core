@@ -31,6 +31,7 @@ export * from "./components/Molecules/ProductDetails/ProductDetails.js";
 export * from "./components/Molecules/RadioGroup/RadioGroup.js";
 export * from "./components/Molecules/Select/Select.js";
 export * from "./components/Molecules/SidebarNav/SidebarNav.js";
+export * from "./components/Molecules/Table/Table.js";
 
 // Organisms
 export * from "./components/Organisms/Footer/Footer.js";
