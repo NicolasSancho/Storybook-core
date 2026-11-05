@@ -67,8 +67,8 @@ const ramps: Ramp[] = [
   {
     title: "Secondary",
     description:
-      "Brand orange, used sparingly (one call to action per screen). 700 is `secondary`, the lightest step that is safe for button text in light mode, and 800 is `secondary-darker`. `secondary-lighter` is the original brand orange: decorative only, and the same in both themes.",
-    tokens: [...steps("secondary", BRAND_STEPS), "secondary-lighter"],
+      "Neutral fill for a second action, so it sits beside any brand. An app that wants a second color sets these two variables in its own stylesheet.",
+    tokens: ["secondary", "secondary-darker"],
   },
   {
     title: "Neutral",
@@ -137,8 +137,12 @@ const pairings: Pairing[] = [
     min: AA_TEXT,
   },
   { label: "Primary focus ring", foreground: "primary", background: "surface", min: AA_UI },
-  { label: "Secondary brand text", foreground: "secondary", background: "surface", min: AA_TEXT },
-  { label: "Secondary focus ring", foreground: "secondary", background: "surface", min: AA_UI },
+  {
+    label: "Secondary color as text",
+    foreground: "secondary",
+    background: "surface",
+    min: AA_TEXT,
+  },
   { label: "Danger text", foreground: "danger", background: "surface", min: AA_TEXT },
   { label: "Success text", foreground: "success", background: "surface", min: AA_TEXT },
   { label: "Warning text", foreground: "warning", background: "surface", min: AA_TEXT },
@@ -564,11 +568,11 @@ const Colors: React.FC = () => {
       <header className={styles.intro()}>
         <h1 className={styles.title()}>Colors</h1>
         <p className={styles.lead()}>
-          The palette: two brand colors, one neutral scale and three semantic colors, in light and
-          dark. Every swatch shows both values (light on the left, dark on the right), read from the
-          design tokens. The chips under a swatch mark the steps that are safe to use as text on the
-          surface of their theme (WCAG AA, 4.5:1). Switch the theme in the toolbar to see the
-          components in dark.
+          The palette: one brand color, a neutral secondary, one neutral scale and three semantic
+          colors, in light and dark. Every swatch shows both values (light on the left, dark on the
+          right), read from the design tokens. The chips under a swatch mark the steps that are safe
+          to use as text on the surface of their theme (WCAG AA, 4.5:1). Switch the theme in the
+          toolbar to see the components in dark.
         </p>
       </header>
       {ramps.map((item) => (

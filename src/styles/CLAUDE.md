@@ -10,9 +10,9 @@ Rules for `src/styles/`. The root `CLAUDE.md` still applies. The `tv()` and tail
   they would drift:
   - Brand colors:
     - `primary` (also `-50..950`; `-600` is the lightest step usable as text on white).
-    - `secondary` (also `-50..950`; `-700` is `DEFAULT` and the lightest step usable as text on
-      white; `-800` is `darker`). `secondary-lighter` is the original brand orange and fails
-      contrast with white text: decorative use only.
+    - `secondary` and `secondary-darker` are neutral, so they sit beside any brand. An app sets its own
+      second color through these two variables. The `-50..950` ramp and `secondary-lighter` are
+      deprecated, used by no component, and removed in 5.0.0.
   - Semantic colors: `danger`, `success`, `warning`, each with `DEFAULT` (text/icons) and
     `subtle` (background). Use them instead of Tailwind's `red-*` / `green-*` / `yellow-*`,
     and never rely on color alone.
