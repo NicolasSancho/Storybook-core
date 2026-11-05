@@ -94,6 +94,19 @@ Component. The exception is a component that needs interaction, which is a clien
     names (`rounded-btn`, `shadow-card`, `w-icon-small`) would not be overridden by a
     consumer's `className` (both classes stay). Don't add them; colors are safe.
 
+## Visual rules
+
+The Foundations / Controls story shows these and asserts the heights. Shared styles live in
+`src/components/styles/` and are not exported from `src/index.js`.
+
+- Control height: small 32px, medium 40px, large 48px, the same for buttons, chips and fields. Buttons
+  and chips use `min-h-*`, so a long label can wrap. Fields use `h-*`.
+- Links: `linkStyles`. `inline` is always underlined, for links in content. `nav` underlines on hover,
+  for lists of links. SidebarNav items are a list item style of their own.
+- Font weight: 400 body, 500 controls and labels, 600 titles and headings, 700 display text only.
+- Color: one brand color (`primary`), neutrals, and semantic colors for status. `outline` is the default for
+  a second action. `secondary` is a filled slot with as much emphasis as `primary`, which an app can color.
+
 ## Accessibility
 
 Accessibility is a design goal. Follow the practices below for all new and modified
