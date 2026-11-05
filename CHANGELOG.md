@@ -4,6 +4,19 @@ All notable changes to `@nicolassancho/storybook-core` are listed here. The form
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## 4.8.0 - 2026-11-05
+
+### Added
+
+- `Table`, built from `TableHead`, `TableBody`, `TableRow`, `TableHeaderCell` and `TableCell`: a labelled, focusable
+  scroll region. A sortable header is a link, with `href`, `sort` and `LinkComponent`.
+- `Pagination`: previous and next links, the page and the range, from `previousHref` and `nextHref` strings. A link
+  without an href is left out, and with neither link only the range shows.
+- `Select`: a native `<select>` with a label, styled like `Input`.
+- `Badge`, with `neutral` and `success` variants.
+- `TableSkeleton`, a placeholder for tabular content with a status label.
+- `EmptyState`, with a title, a description and an `action` slot.
+
 ## 4.7.0 - 2026-11-04
 
 ### Changed
