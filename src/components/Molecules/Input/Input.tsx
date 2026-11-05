@@ -1,6 +1,7 @@
 import React, { useId } from "react";
 import { tv } from "tailwind-variants";
 import { Label } from "../../Atoms/Label/Label.js";
+import { fieldStyles } from "./fieldStyles.js";
 
 export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "type"> {
   /**
@@ -38,18 +39,9 @@ export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElem
 const inputStyles = tv({
   slots: {
     root: "flex flex-col gap-1",
-    field:
-      "w-full rounded-sm border bg-surface px-3 py-2 text-sm text-neutral-900 placeholder:text-neutral-500 focus:outline-hidden focus:ring-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed",
     description: "text-sm text-neutral-500",
     error: "text-sm text-danger",
   },
-  variants: {
-    invalid: {
-      true: { field: "border-danger focus:border-danger focus:ring-danger" },
-      false: { field: "border-neutral-400 focus:border-primary focus:ring-primary" },
-    },
-  },
-  defaultVariants: { invalid: false },
 });
 
 /**
@@ -73,7 +65,7 @@ export const Input: React.FC<InputProps> = ({
   const descriptionId = `${inputId}-description`;
   const errorId = `${inputId}-error`;
   const ids = [describedBy, description && descriptionId, error && errorId].filter(Boolean);
-  const styles = inputStyles({ invalid: Boolean(error) });
+  const styles = inputStyles();
 
   return (
     <div className={styles.root()}>
@@ -86,7 +78,7 @@ export const Input: React.FC<InputProps> = ({
         type={type}
         aria-invalid={error ? true : undefined}
         aria-describedby={ids.length > 0 ? ids.join(" ") : undefined}
-        className={styles.field({ className })}
+        className={fieldStyles({ invalid: Boolean(error), className })}
       />
       {description && (
         <p id={descriptionId} className={styles.description()}>
