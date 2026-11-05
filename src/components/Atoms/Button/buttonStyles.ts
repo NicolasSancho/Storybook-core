@@ -5,7 +5,7 @@ import { focusRing } from "../../styles/focusRing.js";
 // `compoundVariants` because `enabled:` never matches an `<a>`. The gap between children (an icon
 // and a label) is half the horizontal padding, so it scales with the size.
 export const buttonStyles = tv({
-  base: ["font-bold inline-flex items-center enabled:cursor-pointer", focusRing],
+  base: ["font-medium inline-flex items-center enabled:cursor-pointer", focusRing],
   variants: {
     variant: {
       primary: "rounded-sm bg-primary text-on-primary",
@@ -14,7 +14,7 @@ export const buttonStyles = tv({
       outline: "rounded-sm border border-neutral-400 bg-surface text-neutral-900",
     },
     size: {
-      small: "min-h-8 gap-1 text-xs px-2 py-1",
+      small: "min-h-8 gap-1 text-sm px-2 py-1",
       medium: "min-h-10 gap-2 text-sm px-4 py-2",
       large: "min-h-12 gap-3 text-lg px-6 py-2",
     },
