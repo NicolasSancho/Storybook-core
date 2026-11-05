@@ -31,9 +31,9 @@ const searchInputStyles = tv({
   ],
   variants: {
     variantSize: {
-      small: "text-xs py-1 px-2",
-      medium: "text-sm py-2 px-3",
-      large: "text-base py-3 px-4",
+      small: "h-8 text-xs px-2",
+      medium: "h-10 text-sm px-3",
+      large: "h-12 text-base px-4",
     },
     isInvalid: {
       true: "border border-danger",

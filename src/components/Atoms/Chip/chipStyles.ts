@@ -5,7 +5,7 @@ import { focusRing } from "../../styles/focusRing.js";
 // from `src/index.js`: it is an implementation detail, not public API.
 export const chipStyles = tv({
   base: [
-    "inline-flex items-center enabled:cursor-pointer rounded-full border px-4 py-2 text-sm font-medium no-underline transition-colors",
+    "inline-flex min-h-10 items-center enabled:cursor-pointer rounded-full border px-4 py-2 text-sm font-medium no-underline transition-colors",
     focusRing,
   ],
   variants: {

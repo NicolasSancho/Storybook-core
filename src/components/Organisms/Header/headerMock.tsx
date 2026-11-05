@@ -19,9 +19,7 @@ const Search: React.FC = () => (
     className="flex items-center gap-2"
   >
     <Input type="search" name="q" label="Search products" hideLabel />
-    <Button type="submit" size="small">
-      Search
-    </Button>
+    <Button type="submit">Search</Button>
   </form>
 );
 

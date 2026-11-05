@@ -14,9 +14,9 @@ export const buttonStyles = tv({
       outline: "rounded-sm border border-neutral-400 bg-surface text-neutral-900",
     },
     size: {
-      small: "gap-1 text-xs px-2 py-1",
-      medium: "gap-2 text-sm px-4 py-2",
-      large: "gap-3 text-lg px-6 py-3",
+      small: "min-h-8 gap-1 text-xs px-2 py-1",
+      medium: "min-h-10 gap-2 text-sm px-4 py-2",
+      large: "min-h-12 gap-3 text-lg px-6 py-2",
     },
     disabled: {
       true: "opacity-50 cursor-not-allowed",
