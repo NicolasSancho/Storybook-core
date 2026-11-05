@@ -1,4 +1,5 @@
 // Atoms
+export * from "./components/Atoms/Badge/Badge.js";
 export * from "./components/Atoms/Button/Button.js";
 export * from "./components/Atoms/ButtonLink/ButtonLink.js";
 export * from "./components/Atoms/Card/Card.js";
