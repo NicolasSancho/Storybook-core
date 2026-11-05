@@ -1,5 +1,6 @@
 import React from "react";
 import { tv } from "tailwind-variants";
+import { focusRing } from "../../styles/focusRing.js";
 import { Icon } from "../../Atoms/Icon/Icon.js";
 import { Text } from "../../Atoms/Text/Text.js";
 
@@ -20,7 +21,7 @@ const cartIconStyles = tv({
   base: "relative inline-flex items-center",
   variants: {
     interactive: {
-      true: "cursor-pointer rounded-sm focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface",
+      true: ["cursor-pointer rounded-sm", focusRing],
     },
   },
   slots: {

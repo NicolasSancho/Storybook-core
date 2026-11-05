@@ -54,7 +54,8 @@ Use Node 24, the version CI runs.
 
 ## Architecture
 
-- Atomic design: `src/components/{Atoms,Molecules,Organisms,Layouts}/<Name>/`
+- Atomic design: `src/components/{Atoms,Molecules,Organisms,Layouts}/<Name>/`. Styles shared across
+  layers (focus, links) are in `src/components/styles/`.
 - Each component folder has 3 files:
   - `<Name>.tsx`: `export interface <Name>Props` + `export const <Name>: React.FC<<Name>Props>`
   - `<Name>.stories.tsx`: `title: "<Type>/<Name>"`, `tags: ["autodocs"]`, args from the mock

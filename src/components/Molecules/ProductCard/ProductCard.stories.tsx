@@ -96,6 +96,18 @@ const elementAtCenter = (element: Element) => {
 const submitSpy = fn((event: React.FormEvent) => event.preventDefault());
 
 // The title link covers the whole card, except the controls in `actions`, which stay on top of it.
+export const KeyboardFocus: Story = {
+  args: mockedProductCardLink,
+  play: async ({ canvasElement }) => {
+    const link = within(canvasElement).getByRole("link");
+
+    await userEvent.tab();
+
+    await expect(link).toHaveFocus();
+    await expect(getComputedStyle(link, "::after").boxShadow).toContain("inset");
+  },
+};
+
 export const StretchedLink: Story = {
   args: {
     ...mockedProductCardLink,

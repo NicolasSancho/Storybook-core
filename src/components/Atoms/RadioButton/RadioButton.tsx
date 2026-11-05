@@ -1,5 +1,6 @@
 import React from "react";
 import { tv } from "tailwind-variants";
+import { focusRing } from "../../styles/focusRing.js";
 import { Text } from "../../Atoms/Text/Text.js";
 
 export interface RadioButtonProps {
@@ -21,7 +22,7 @@ export interface RadioButtonProps {
 const radioButtonStyles = tv({
   base: "flex items-center gap-2 cursor-pointer",
   slots: {
-    input: "text-primary",
+    input: ["rounded-full text-primary", focusRing],
   },
 });
 

@@ -104,9 +104,9 @@ conformance. Do not claim WCAG conformance without appropriate testing.
   `onClick` on a `<div>`. Buttons default to `type="button"`. For a fully clickable card,
   use the stretched pattern (see ProductCard): a real link when there is an `href`, a button
   only when there is none.
-- Visible keyboard focus: use
-  `focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface`
-  (as in Button). Never remove the default outline without providing a visible alternative.
+- Visible keyboard focus: use `focusRing` from `src/components/styles/focusRing.ts`. Never remove the
+  default outline without providing a visible alternative. An element whose ring would be clipped
+  paints an equivalent instead: ProductCard uses an inset ring on `::after`.
 - Hover styles use `enabled:hover:*` so disabled controls do not react to hover. Links (Header,
   Footer, ChipLink) use plain `hover:`, because `:enabled` never matches an `<a>`. `Chip`, which is a
   button, sets `pointer-events-none` when disabled instead.

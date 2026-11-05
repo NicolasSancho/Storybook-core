@@ -1,5 +1,6 @@
 import React from "react";
 import { tv } from "tailwind-variants";
+import { focusRing } from "../../styles/focusRing.js";
 
 /**
  * @deprecated Use `Input` with `type="search"` instead. It adds a real label (which can be visually
@@ -24,7 +25,10 @@ export interface SearchInputProps extends React.InputHTMLAttributes<HTMLInputEle
 }
 
 const searchInputStyles = tv({
-  base: "w-full rounded-sm bg-surface px-3 py-2 text-sm text-neutral-900 placeholder:text-neutral-500 focus:outline-hidden focus:ring-2 transition-colors",
+  base: [
+    "w-full rounded-sm bg-surface text-neutral-900 placeholder:text-neutral-500 transition-colors",
+    focusRing,
+  ],
   variants: {
     variantSize: {
       small: "text-xs py-1 px-2",
@@ -32,8 +36,8 @@ const searchInputStyles = tv({
       large: "text-base py-3 px-4",
     },
     isInvalid: {
-      true: "border border-danger focus:border-danger focus:ring-danger",
-      false: "border border-neutral-400 focus:border-primary focus:ring-primary",
+      true: "border border-danger",
+      false: "border border-neutral-400",
     },
   },
   defaultVariants: {
