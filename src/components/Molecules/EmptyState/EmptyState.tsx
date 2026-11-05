@@ -15,7 +15,7 @@ export interface EmptyStateProps {
 const emptyStateStyles = tv({
   slots: {
     base: "px-4 py-12 text-center",
-    title: "font-medium text-neutral-900",
+    title: "font-semibold text-neutral-900",
     description: "mt-1 text-sm text-neutral-600",
     action: "mt-4",
   },

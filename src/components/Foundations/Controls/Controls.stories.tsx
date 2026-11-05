@@ -8,6 +8,7 @@ import { ChipLink } from "../../Atoms/ChipLink/ChipLink";
 import { SearchInput } from "../../Atoms/SearchInput/SearchInput";
 import { Text } from "../../Atoms/Text/Text";
 import { Input } from "../../Molecules/Input/Input";
+import { Select } from "../../Molecules/Select/Select";
 import { linkStyles } from "../../styles/linkStyles";
 
 /**
@@ -62,6 +63,14 @@ export const Rules: Story = {
           <div className="w-56">
             <Input label="Search" hideLabel name="controls-search" placeholder="Search" />
           </div>
+          <div className="w-40">
+            <Select
+              label="Status"
+              hideLabel
+              name="controls-status"
+              options={[{ value: "active", label: "Active" }]}
+            />
+          </div>
           <Button>Search</Button>
           <Button variant="secondary">Secondary</Button>
           <Button variant="outline">Outline</Button>
@@ -115,6 +124,7 @@ export const Rules: Story = {
     await expect(height(canvas.getByRole("button", { name: "Medium" }))).toBe(40);
     await expect(height(canvas.getByRole("button", { name: "Large" }))).toBe(48);
     await expect(height(canvas.getByRole("textbox", { name: "Search" }))).toBe(40);
+    await expect(height(canvas.getByRole("combobox", { name: "Status" }))).toBe(40);
     await expect(height(canvas.getByRole("button", { name: "Search" }))).toBe(40);
     await expect(height(canvas.getByRole("button", { name: "Secondary" }))).toBe(40);
     await expect(height(canvas.getByRole("button", { name: "Outline" }))).toBe(40);

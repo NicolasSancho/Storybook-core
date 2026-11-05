@@ -119,7 +119,8 @@ conformance. Do not claim WCAG conformance without appropriate testing.
   only when there is none.
 - Visible keyboard focus: use `focusRing` from `src/components/styles/focusRing.ts`. Never remove the
   default outline without providing a visible alternative. An element whose ring would be clipped
-  paints an equivalent instead: ProductCard uses an inset ring on `::after`.
+  paints an equivalent instead: ProductCard uses an inset ring on `::after`, and Table's scroll region an
+  inset outline.
 - Hover styles use `enabled:hover:*` so disabled controls do not react to hover. Links (Header,
   Footer, ChipLink) use plain `hover:`, because `:enabled` never matches an `<a>`. `Chip`, which is a
   button, sets `pointer-events-none` when disabled instead.
