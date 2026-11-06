@@ -4,6 +4,12 @@ All notable changes to `@nicolassancho/storybook-core` are listed here. The form
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## 4.10.0 - 2026-11-05
+
+### Added
+
+- `TextLink`: a link in content, such as a sentence or a table cell. It is always underlined and takes `LinkComponent`.
+
 ## 4.9.0 - 2026-11-05
 
 Visual consistency across the library. No prop changes.

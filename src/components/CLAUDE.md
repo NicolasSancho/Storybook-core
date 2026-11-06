@@ -102,7 +102,8 @@ The Foundations / Controls story shows these and asserts the heights. Shared sty
 - Control height: small 32px, medium 40px, large 48px, the same for buttons, chips and fields. Buttons
   and chips use `min-h-*`, so a long label can wrap. Fields use `h-*`.
 - Links: `linkStyles`. `inline` is always underlined, for links in content. `nav` underlines on hover,
-  for lists of links. SidebarNav items are a list item style of their own.
+  for lists of links. SidebarNav items are a list item style of their own. `TextLink` is the exported
+  `inline` link, so apps do not copy link classes.
 - Font weight: 400 body, 500 controls and labels, 600 titles and headings, 700 display text only.
 - Color: one brand color (`primary`), neutrals, and semantic colors for status. `outline` is the default for
   a second action. `secondary` is a filled slot with as much emphasis as `primary`, which an app can color.
