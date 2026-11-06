@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import React from "react";
 import { expect, fn, userEvent, within } from "storybook/test";
 import { Badge } from "../../Atoms/Badge/Badge";
-import { linkStyles } from "../../styles/linkStyles";
+import { TextLink } from "../../Atoms/TextLink/TextLink";
 import {
   Table,
   TableBody,
@@ -33,12 +33,9 @@ const ProductRows = () => (
     {mockedTableProducts.map((product) => (
       <TableRow key={product.id}>
         <TableCell>
-          <a
-            href={`#${product.id}`}
-            className={linkStyles({ variant: "inline", className: "font-medium" })}
-          >
+          <TextLink href={`#${product.id}`} className="font-medium">
             {product.name}
-          </a>
+          </TextLink>
         </TableCell>
         <TableCell>
           <Badge variant={product.status === "Active" ? "success" : "neutral"}>
