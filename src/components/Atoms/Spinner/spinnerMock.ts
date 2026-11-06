@@ -18,7 +18,7 @@ export const mockedSpinnerLarge: SpinnerProps = {
   color: "primary",
 };
 
-// Secondary color - alternative brand color
+// Secondary color - neutral unless the app sets its own
 export const mockedSpinnerSecondary: SpinnerProps = {
   size: "medium",
   color: "secondary",

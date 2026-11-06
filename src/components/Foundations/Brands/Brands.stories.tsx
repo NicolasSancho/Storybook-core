@@ -43,6 +43,7 @@ export const Examples: Story = {
           </Text>
           <div className="flex gap-2">
             <Button>Primary</Button>
+            <Button variant="secondary">Secondary</Button>
             <Button variant="outline">Outline</Button>
           </div>
           <Input label="Email" name={`email-${brand.id}`} defaultValue="ana@example.com" />

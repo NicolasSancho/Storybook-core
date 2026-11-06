@@ -1,7 +1,7 @@
 import React from "react";
 import { tv } from "tailwind-variants";
+import { linkStyles } from "../../styles/linkStyles.js";
 import { Icon } from "../../Atoms/Icon/Icon.js";
-import { Text } from "../../Atoms/Text/Text.js";
 
 export interface BreadcrumbsProps {
   /**
@@ -30,8 +30,8 @@ const breadcrumbsStyles = tv({
   slots: {
     list: "flex items-center gap-1",
     item: "flex items-center gap-1",
-    link: "no-underline text-inherit hover:underline text-primary",
-    current: "text-neutral-600",
+    link: linkStyles({ variant: "nav" }),
+    current: "text-neutral-900",
     separator: "text-neutral-400",
   },
 });
@@ -52,15 +52,11 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
 
           const content = isFirst ? (
             <>
-              <Icon name="Home" size="small" color="primary" />
+              <Icon name="Home" size="small" />
               <span className="sr-only">{label}</span>
             </>
-          ) : isLast ? (
-            label
           ) : (
-            <Text as="span" size="small" color="primary">
-              {label}
-            </Text>
+            label
           );
 
           return (

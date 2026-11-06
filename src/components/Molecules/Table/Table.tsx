@@ -1,5 +1,6 @@
 import React from "react";
 import { tv } from "tailwind-variants";
+import { focusRing } from "../../styles/focusRing.js";
 import { Icon } from "../../Atoms/Icon/Icon.js";
 
 export interface TableProps {
@@ -67,7 +68,7 @@ const headerCellStyles = tv({
   slots: {
     cell: "h-10 whitespace-nowrap bg-neutral-50 px-4 font-medium",
     label: "inline-flex items-center gap-1",
-    link: "inline-flex items-center gap-1 rounded-sm hover:text-neutral-900 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary",
+    link: ["inline-flex items-center gap-1 rounded-sm hover:text-neutral-900", focusRing],
   },
   variants: {
     align: {

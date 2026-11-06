@@ -1,8 +1,9 @@
 import { buttonStyles } from "./buttonStyles.js";
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   /**
-   * The type of the button. `outline` is a neutral bordered button for secondary actions: it does
-   * not follow the brand colors, so it looks the same under any theme.
+   * The type of the button. `outline` is the default for a second action: it does not follow the
+   * brand colors, so it looks the same under any theme. `secondary` is a filled button with as much
+   * emphasis as `primary`, neutral unless the app sets its own color.
    */
   variant?: "primary" | "secondary" | "text" | "outline";
   /**

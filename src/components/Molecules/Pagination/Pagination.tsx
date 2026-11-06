@@ -1,5 +1,6 @@
 import React from "react";
 import { tv } from "tailwind-variants";
+import { linkStyles } from "../../styles/linkStyles.js";
 
 export interface PaginationProps {
   /**
@@ -36,7 +37,7 @@ const paginationStyles = tv({
   slots: {
     base: "flex flex-wrap items-center justify-between gap-3 text-sm text-neutral-600",
     nav: "flex items-center gap-3",
-    link: "rounded-sm text-neutral-900 underline underline-offset-2 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface",
+    link: linkStyles({ variant: "inline" }),
   },
 });
 

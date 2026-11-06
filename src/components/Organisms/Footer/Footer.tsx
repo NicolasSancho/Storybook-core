@@ -1,5 +1,6 @@
 import React from "react";
 import { tv } from "tailwind-variants";
+import { linkStyles } from "../../styles/linkStyles.js";
 import { Text } from "../../Atoms/Text/Text.js";
 import { Container } from "../../Layouts/Container/Container.js";
 
@@ -48,7 +49,7 @@ const footerStyles = tv({
     brand: "md:max-w-xs",
     columns: "flex flex-wrap gap-x-12 gap-y-8",
     list: "mt-3 flex flex-col gap-2",
-    link: "rounded-sm text-sm text-neutral-600 underline-offset-4 hover:text-neutral-900 hover:underline focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface",
+    link: linkStyles({ variant: "nav" }),
     legal: "border-t border-neutral-200 pt-6 text-sm text-neutral-600",
   },
 });

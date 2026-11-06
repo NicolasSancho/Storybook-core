@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import React from "react";
 import { expect, fn, userEvent, within } from "storybook/test";
 import { Badge } from "../../Atoms/Badge/Badge";
+import { linkStyles } from "../../styles/linkStyles";
 import {
   Table,
   TableBody,
@@ -34,7 +35,7 @@ const ProductRows = () => (
         <TableCell>
           <a
             href={`#${product.id}`}
-            className="font-medium underline decoration-neutral-400 underline-offset-2 hover:decoration-neutral-900"
+            className={linkStyles({ variant: "inline", className: "font-medium" })}
           >
             {product.name}
           </a>

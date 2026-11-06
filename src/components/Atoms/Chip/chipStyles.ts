@@ -1,9 +1,13 @@
 import { tv } from "tailwind-variants";
+import { focusRing } from "../../styles/focusRing.js";
 
 // Shared by Chip (a button) and ChipLink (a link) so the two look the same. It is not exported
 // from `src/index.js`: it is an implementation detail, not public API.
 export const chipStyles = tv({
-  base: "inline-flex items-center enabled:cursor-pointer rounded-full border px-4 py-2 text-sm font-medium no-underline transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface",
+  base: [
+    "inline-flex min-h-10 items-center enabled:cursor-pointer rounded-full border px-4 py-2 text-sm font-medium no-underline transition-colors",
+    focusRing,
+  ],
   variants: {
     selected: {
       true: "border-primary bg-primary text-on-primary hover:bg-primary-darker",

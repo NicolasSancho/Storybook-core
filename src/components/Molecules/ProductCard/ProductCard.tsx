@@ -56,9 +56,9 @@ const productCardStyles = tv({
     tag: "absolute top-2 left-2 bg-neutral-950 text-neutral-25 text-xs px-2 py-1 rounded-sm",
     body: "p-2 flex flex-col",
     productInfo: "flex flex-col",
-    title: "text-sm font-medium",
+    title: "text-sm",
     titleAction:
-      "text-left after:absolute after:inset-0 after:content-[''] focus-visible:outline-hidden focus-visible:after:ring-2 focus-visible:after:ring-primary focus-visible:after:rounded-lg",
+      "text-left after:absolute after:inset-0 after:content-[''] focus-visible:outline-hidden focus-visible:after:ring-2 focus-visible:after:ring-inset focus-visible:after:ring-primary focus-visible:after:rounded-lg",
     subTitle: "text-sm text-neutral-600",
     price: "text-sm text-neutral-600",
     action: "relative z-10 mt-2",

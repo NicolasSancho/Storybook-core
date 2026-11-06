@@ -1,5 +1,6 @@
 import React from "react";
 import { tv } from "tailwind-variants";
+import { linkStyles } from "../../styles/linkStyles.js";
 import { Container } from "../../Layouts/Container/Container.js";
 
 export interface HeaderNavItem {
@@ -50,7 +51,7 @@ const headerStyles = tv({
     actions: "order-2 ml-auto flex items-center gap-2 md:order-3",
     nav: "order-3 w-full md:order-2 md:w-auto md:flex-1",
     list: "flex flex-wrap items-center gap-x-4 gap-y-1",
-    link: "rounded-sm text-sm text-neutral-600 underline-offset-4 hover:text-neutral-900 hover:underline focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface",
+    link: linkStyles({ variant: "nav" }),
   },
 });
 

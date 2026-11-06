@@ -1,5 +1,6 @@
 import React from "react";
 import { tv } from "tailwind-variants";
+import { focusRing } from "../../styles/focusRing.js";
 import { Icon, IconProps } from "../../Atoms/Icon/Icon.js";
 
 export interface SidebarNavItem {
@@ -42,7 +43,10 @@ const sidebarNavStyles = tv({
   slots: {
     base: "flex flex-col gap-4",
     list: "flex flex-col gap-1",
-    link: "flex items-center gap-2 rounded-sm border-l-2 px-3 py-2 text-sm font-medium text-neutral-900 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface",
+    link: [
+      "flex items-center gap-2 rounded-sm border-l-2 px-3 py-2 text-sm font-medium text-neutral-900",
+      focusRing,
+    ],
   },
   variants: {
     current: {

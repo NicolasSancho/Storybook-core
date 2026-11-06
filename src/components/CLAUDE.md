@@ -94,6 +94,19 @@ Component. The exception is a component that needs interaction, which is a clien
     names (`rounded-btn`, `shadow-card`, `w-icon-small`) would not be overridden by a
     consumer's `className` (both classes stay). Don't add them; colors are safe.
 
+## Visual rules
+
+The Foundations / Controls story shows these and asserts the heights. Shared styles live in
+`src/components/styles/` and are not exported from `src/index.js`.
+
+- Control height: small 32px, medium 40px, large 48px, the same for buttons, chips and fields. Buttons
+  and chips use `min-h-*`, so a long label can wrap. Fields use `h-*`.
+- Links: `linkStyles`. `inline` is always underlined, for links in content. `nav` underlines on hover,
+  for lists of links. SidebarNav items are a list item style of their own.
+- Font weight: 400 body, 500 controls and labels, 600 titles and headings, 700 display text only.
+- Color: one brand color (`primary`), neutrals, and semantic colors for status. `outline` is the default for
+  a second action. `secondary` is a filled slot with as much emphasis as `primary`, which an app can color.
+
 ## Accessibility
 
 Accessibility is a design goal. Follow the practices below for all new and modified
@@ -104,9 +117,10 @@ conformance. Do not claim WCAG conformance without appropriate testing.
   `onClick` on a `<div>`. Buttons default to `type="button"`. For a fully clickable card,
   use the stretched pattern (see ProductCard): a real link when there is an `href`, a button
   only when there is none.
-- Visible keyboard focus: use
-  `focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface`
-  (as in Button). Never remove the default outline without providing a visible alternative.
+- Visible keyboard focus: use `focusRing` from `src/components/styles/focusRing.ts`. Never remove the
+  default outline without providing a visible alternative. An element whose ring would be clipped
+  paints an equivalent instead: ProductCard uses an inset ring on `::after`, and Table's scroll region an
+  inset outline.
 - Hover styles use `enabled:hover:*` so disabled controls do not react to hover. Links (Header,
   Footer, ChipLink) use plain `hover:`, because `:enabled` never matches an `<a>`. `Chip`, which is a
   button, sets `pointer-events-none` when disabled instead.
