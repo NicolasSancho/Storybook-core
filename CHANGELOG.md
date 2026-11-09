@@ -4,6 +4,13 @@ All notable changes to `@nicolassancho/storybook-core` are listed here. The form
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## 4.11.0 - 2026-11-09
+
+### Added
+
+- `Text` and `Container` pass HTML attributes (`id`, `aria-*`, `data-*` and so on) and `ref` to the element they render,
+  so a `Text` heading can name a section and a `Container` section can have an accessible name.
+
 ## 4.10.0 - 2026-11-05
 
 ### Added
