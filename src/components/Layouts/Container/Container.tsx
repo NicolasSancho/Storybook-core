@@ -1,10 +1,17 @@
 import React from "react";
 import { tv } from "tailwind-variants";
 
-export interface ContainerProps {
+export interface ContainerProps extends React.HTMLAttributes<HTMLElement> {
   children: React.ReactNode;
-  /** Element to render. Defaults to a `div`; pass `main`, `section` and so on for a landmark. */
+  /**
+   * Element to render. Defaults to a `div`; pass `main`, `section` and so on for a landmark. Pass
+   * an HTML element name: only global HTML attributes (`id`, `aria-*`, `data-*` and so on) are
+   * typed, and they are passed to the element. A `section` is only a landmark when it has an
+   * accessible name, so pass `aria-labelledby` (or `aria-label`) with it.
+   */
   as?: React.ElementType;
+  /** A ref to the rendered element. */
+  ref?: React.Ref<HTMLElement>;
   className?: string;
 }
 
@@ -21,4 +28,9 @@ export const Container: React.FC<ContainerProps> = ({
   children,
   as: Component = "div",
   className,
-}) => <Component className={containerStyles({ className })}>{children}</Component>;
+  ...props
+}) => (
+  <Component {...props} className={containerStyles({ className })}>
+    {children}
+  </Component>
+);

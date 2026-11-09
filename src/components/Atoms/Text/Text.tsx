@@ -1,8 +1,15 @@
 import React from "react";
 import { tv } from "tailwind-variants";
 
-export interface TextProps {
+export interface TextProps extends React.HTMLAttributes<HTMLElement> {
+  /**
+   * The element to render, such as `p`, `span` or `h1` to `h6`. Pass an HTML element name: only
+   * global HTML attributes (`id`, `aria-*`, `data-*` and so on) are typed, and they are passed to
+   * the element.
+   */
   as?: React.ElementType;
+  /** A ref to the rendered element. */
+  ref?: React.Ref<HTMLElement>;
   /**
    * Text color. Every option reaches the 4.5:1 text contrast on white.
    */
@@ -72,9 +79,13 @@ export const Text: React.FC<TextProps> = ({
   underline = false,
   children,
   className = "",
+  ...props
 }) => {
   return (
-    <Component className={textStyles({ font, color, size, weight, underline, className })}>
+    <Component
+      {...props}
+      className={textStyles({ font, color, size, weight, underline, className })}
+    >
       {children}
     </Component>
   );

@@ -20,12 +20,13 @@ export const Default: Story = {
 };
 
 export const AsMain: Story = {
-  args: mockedContainerMain,
+  args: { ...mockedContainerMain, "aria-label": "Page" },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    // `as` changes the element, so the container can be the page's main landmark.
-    const main = canvas.getByRole("main");
+    // `as` changes the element, so the container can be the page's main landmark, and attributes
+    // such as its accessible name reach the element.
+    const main = canvas.getByRole("main", { name: "Page" });
     await expect(within(main).getByText("Main page content")).toBeInTheDocument();
   },
 };
