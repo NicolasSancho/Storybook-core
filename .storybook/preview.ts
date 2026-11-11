@@ -1,5 +1,6 @@
 import type { Preview } from "@storybook/react-vite";
 import "../src/styles/tailwind.css";
+import { brandTokenNames } from "../src/brand/brand";
 import { brandTokens, mockedBrands } from "../src/components/Foundations/Brands/brandsMock";
 import { ThemedDocsContainer } from "./ThemedDocsContainer";
 import { initialThemeChoice, parseThemeChoice, setThemeChoice } from "./theme";
@@ -8,7 +9,8 @@ import { initialThemeChoice, parseThemeChoice, setThemeChoice } from "./theme";
 const applyBrand = (id: unknown): void => {
   const root = document.documentElement.style;
   const tokens = brandTokens(mockedBrands.find((brand) => brand.id === id) ?? mockedBrands[0]);
-  ["--color-primary", "--color-primary-darker"].forEach((name) => {
+  brandTokenNames.forEach((token) => {
+    const name = `--${token}`;
     if (name in tokens) root.setProperty(name, tokens[name]);
     else root.removeProperty(name);
   });
@@ -16,7 +18,7 @@ const applyBrand = (id: unknown): void => {
 
 const preview: Preview = {
   // Theme switch in the toolbar: Light and Dark force the theme, System follows the OS. The Brand
-  // switch sets the two brand tokens on <html> from example brands, to see any story re-themed.
+  // switch sets the brand tokens on <html> from example brands, to see any story re-themed.
   globalTypes: {
     brand: {
       description: "Example brand",

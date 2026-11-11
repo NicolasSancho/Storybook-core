@@ -35,6 +35,11 @@
   */
   --font-display: var(--font-sans);
 
+  /*
+    Deprecated in 5.1.0, removed in 6.0: the primary ramp (`primary-50` to `primary-950`) and
+    `primary-lighter`. No component reads them, and a brand that overrides `primary` leaves them
+    blue. Use `primary`, `primary-darker` or a translucent `primary` (`bg-primary/10`) instead.
+  */
   --color-primary-50: light-dark(#f9fbfc, #12191d);
   --color-primary-100: light-dark(#f1f7fa, #121e23);
   --color-primary-200: light-dark(#d9e7ef, #192b35);

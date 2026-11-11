@@ -39,12 +39,19 @@ Use Node 24, the version CI runs.
   real contrast bug, not test noise.
   `@storybook/addon-a11y` runs axe on every story (`a11y.test: "error"` in `.storybook/preview.ts`), so a
   violation fails the story. Opt a story out with `parameters.a11y.test = "todo"` and a comment saying why.
+  A third project, `unit`, runs `src/**/*.test.ts` in Node: plain functions with no component (the brand
+  contract in `src/brand/`). It reads `theme.css` with a `?raw` import, which needs `css.include` in the
+  project config (Vitest returns an empty string for CSS otherwise). There are no `@types/node`; use Vite
+  imports instead of `node:` modules.
 - `npm run test:package`: builds, then checks the package as a consumer installs it: `publint`,
   `attw` (types and module resolution; the CSS entry point is excluded because attw reads only JS
   and types) and `scripts/test-package.mjs`. The script packs the tarball, installs it with the
   peer dependencies in a temp project and, in plain Node, renders Button, Header (`LinkComponent`), a ButtonLink with forwarded `<a>` attributes,
   ProductGrid (`ImageComponent`), an uncontrolled RadioGroup and an Input with its label, description and error, a Popover (a client component), asserts that the files
-  with `"use client"` in `dist/` are the source files that start with it, and compiles the Consumers-guide Tailwind setup. It cannot test Next.js
+  with `"use client"` in `dist/` are the source files that start with it and that none of them is in `dist/brand/`, calls
+  `validateBrand` and `brandToCssVariables`, and compiles the Consumers-guide Tailwind setup. The compiled CSS is also checked against the
+  brand contract: every `--color-*`, `--radius-*` and `--font-*` variable a utility reads must be a brand token or
+  on the fixed list in `styles.mjs`. It cannot test Next.js
   Server/Client behavior: that needs a real Next app. Add a check there only for a packaging risk
   that a story cannot see; the checks live in `scripts/package-fixture/`, outside the ESLint and
   Prettier globs, so run `npx prettier --write scripts` after editing them.
@@ -64,11 +71,16 @@ Use Node 24, the version CI runs.
   A new component also needs: the export in `src/index.js`, a `play` test when it has behavior,
   a row in the README components table, a note in `Consumers.mdx` if it changes what a consumer
   must do, and a `minor` version bump.
+- `src/brand/` holds the brand contract, which is not a component: `brand.ts` (the brand token names and
+  the `Brand` type, exported), `validateBrand.ts` (`validateBrand` and `brandToCssVariables`, exported), and the internal `pairings.ts` (default colors
+  and the contrast pairings) and `contrast.ts`. A component that starts reading a new token needs it in
+  `brandTokenNames` or on the fixed list in `scripts/package-fixture/styles.mjs`, or `test:package` fails.
+  These modules must never start with `"use client"`: apps may call them from server code.
 - `scripts/` holds the package check (`test-package.mjs` and its fixture). It is not shipped.
 - `src/components/Foundations/<Topic>/` holds documentation-only stories (e.g. `Colors`): a
   `<Topic>.stories.tsx` with no component, no mock, no `src/index.js` export. Colors reads
   its values from the `--color-*` variables on the page, so it needs no edit when a token changes.
-  Its list of pairings is asserted by its `play` function. A token the story shows must also be
+  Its pairings come from `src/brand/pairings.ts`, and its `play` function asserts them against the page. A token the story shows must also be
   listed in the `@source inline` safelist in `src/styles/tailwind.css` (Tailwind emits only the
   variables a utility uses), or the story throws. `Typography` works the same way for the type
   scale: it reads `--text-*` and `--text-*--line-height` from the page, and its `play` function

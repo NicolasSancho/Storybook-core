@@ -2,6 +2,8 @@ import React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect } from "storybook/test";
 import { tv } from "../../styles/tv";
+import { composite, contrastRatio } from "../../../brand/contrast";
+import { AA_TEXT, pairings, type Pairing } from "../../../brand/pairings";
 
 /**
  * Documentation-only story that previews the palette in both themes. It has no color data of its
@@ -38,18 +40,8 @@ interface OnColor {
   on: string;
 }
 
-interface Pairing {
-  label: string;
-  foreground: string;
-  background: string;
-  /** Minimum contrast ratio: 4.5 for text, 3 for UI such as borders and focus rings. */
-  min: number;
-}
-
 const THEMES: Theme[] = ["light", "dark"];
 const THEME_LABEL: Record<Theme, string> = { light: "Light", dark: "Dark" };
-const AA_TEXT = 4.5;
-const AA_UI = 3;
 
 const BRAND_STEPS = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
 const NEUTRAL_STEPS = [25, ...BRAND_STEPS];
@@ -61,7 +53,7 @@ const ramps: Ramp[] = [
   {
     title: "Primary",
     description:
-      "Brand blue, used for actions, links and focus. 800 is `primary`. Steps 500 and lighter are for backgrounds and borders, not for text on the surface. In dark mode the steps are inverted, so 600 and up are the readable ones there too.",
+      "Brand blue, used for actions, links and focus. 800 is `primary`. The ramp and `primary-lighter` are deprecated and removed in 6.0: no component reads them, and a brand leaves them blue. Steps 500 and lighter are for backgrounds and borders, not for text on the surface. In dark mode the steps are inverted, so 600 and up are the readable ones there too.",
     tokens: steps("primary", BRAND_STEPS),
   },
   {
@@ -105,87 +97,25 @@ const onColors: OnColor[] = [
   { title: "danger", fill: "danger", on: "on-danger" },
 ];
 
-const pairings: Pairing[] = [
-  { label: "Body text", foreground: "neutral-900", background: "surface", min: AA_TEXT },
-  {
-    label: "Body text on page background",
-    foreground: "neutral-900",
-    background: "neutral-50",
-    min: AA_TEXT,
-  },
-  {
-    label: "Text component, default color",
-    foreground: "neutral-700",
-    background: "surface",
-    min: AA_TEXT,
-  },
-  { label: "Secondary text", foreground: "neutral-600", background: "surface", min: AA_TEXT },
-  {
-    label: "Secondary text on page background",
-    foreground: "neutral-600",
-    background: "neutral-50",
-    min: AA_TEXT,
-  },
-  { label: "Placeholder", foreground: "neutral-500", background: "surface", min: AA_TEXT },
-  { label: "Icon, dark", foreground: "neutral-950", background: "surface", min: AA_TEXT },
-  { label: "Input border", foreground: "neutral-400", background: "surface", min: AA_UI },
-  { label: "Primary text and links", foreground: "primary", background: "surface", min: AA_TEXT },
-  {
-    label: "Primary 600, lightest text step",
-    foreground: "primary-600",
-    background: "surface",
-    min: AA_TEXT,
-  },
-  { label: "Primary focus ring", foreground: "primary", background: "surface", min: AA_UI },
-  {
-    label: "Secondary color as text",
-    foreground: "secondary",
-    background: "surface",
-    min: AA_TEXT,
-  },
-  { label: "Danger text", foreground: "danger", background: "surface", min: AA_TEXT },
-  { label: "Success text", foreground: "success", background: "surface", min: AA_TEXT },
-  { label: "Warning text", foreground: "warning", background: "surface", min: AA_TEXT },
-  {
-    label: "Danger on its subtle background",
-    foreground: "danger",
-    background: "danger-subtle",
-    min: AA_TEXT,
-  },
-  {
-    label: "Success on its subtle background",
-    foreground: "success",
-    background: "success-subtle",
-    min: AA_TEXT,
-  },
-  {
-    label: "Warning on its subtle background",
-    foreground: "warning",
-    background: "warning-subtle",
-    min: AA_TEXT,
-  },
-  { label: "Primary button text", foreground: "on-primary", background: "primary", min: AA_TEXT },
-  {
-    label: "Primary button text, hover",
-    foreground: "on-primary",
-    background: "primary-darker",
-    min: AA_TEXT,
-  },
-  {
-    label: "Secondary button text",
-    foreground: "on-secondary",
-    background: "secondary",
-    min: AA_TEXT,
-  },
-  {
-    label: "Secondary button text, hover",
-    foreground: "on-secondary",
-    background: "secondary-darker",
-    min: AA_TEXT,
-  },
-  { label: "Danger badge text", foreground: "on-danger", background: "danger", min: AA_TEXT },
-  { label: "Product tag text", foreground: "neutral-25", background: "neutral-950", min: AA_TEXT },
-];
+/** Pairings name tokens with their `color-` prefix; the story uses the bare name. */
+const bare = (token: string): string => token.replace(/^color-/, "");
+
+const pairingTokens = ({ foreground, background }: Pairing): string[] =>
+  typeof background === "string"
+    ? [bare(foreground), bare(background)]
+    : [bare(foreground), bare(background.color), bare(background.over)];
+
+/** The resolved background of a pairing in one theme, blending a translucent fill. */
+const pairingBackground = ({ background }: Pairing, colors: Record<string, string>): string =>
+  typeof background === "string"
+    ? colors[bare(background)]
+    : composite(colors[bare(background.color)], background.alpha, colors[bare(background.over)]);
+
+/** How a pairing's background is written in the table: `primary/10 over surface`. */
+const backgroundLabel = ({ background }: Pairing): string =>
+  typeof background === "string"
+    ? bare(background)
+    : `${bare(background.color)}/${background.alpha * 100} over ${bare(background.over)}`;
 
 const tokenNames = (): string[] => [
   ...new Set([
@@ -193,7 +123,7 @@ const tokenNames = (): string[] => [
     ...ramps.flatMap((ramp) => ramp.tokens),
     ...semantic.flatMap((item) => [item.strong, item.subtle]),
     ...onColors.flatMap((item) => [item.fill, item.on]),
-    ...pairings.flatMap((pairing) => [pairing.foreground, pairing.background]),
+    ...pairings.flatMap((pairing) => pairingTokens(pairing)),
   ]),
 ];
 
@@ -240,23 +170,6 @@ const resolveTokens = (): Resolved => {
   return resolved;
 };
 
-const channelToLinear = (value: number): number => {
-  const normalized = value / 255;
-  return normalized <= 0.03928 ? normalized / 12.92 : ((normalized + 0.055) / 1.055) ** 2.4;
-};
-
-const luminance = (hex: string): number => {
-  const [r, g, b] = [1, 3, 5].map((start) =>
-    channelToLinear(parseInt(hex.slice(start, start + 2), 16))
-  );
-  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
-};
-
-const contrastRatio = (foreground: string, background: string): number => {
-  const [lighter, darker] = [luminance(foreground), luminance(background)].sort((a, b) => b - a);
-  return (lighter + 0.05) / (darker + 0.05);
-};
-
 const readableTextOn = (background: string): string =>
   contrastRatio("#000000", background) >= contrastRatio("#ffffff", background)
     ? "#000000"
@@ -267,7 +180,10 @@ const evaluatePairings = (colors: Resolved) =>
     pairings.map((pairing) => ({
       ...pairing,
       theme,
-      ratio: contrastRatio(colors[theme][pairing.foreground], colors[theme][pairing.background]),
+      ratio: contrastRatio(
+        colors[theme][bare(pairing.foreground)],
+        pairingBackground(pairing, colors[theme])
+      ),
     }))
   );
 
@@ -493,12 +409,12 @@ const PairingsSection: React.FC<{ colors: Resolved }> = ({ colors }) => {
         </thead>
         <tbody>
           {pairings.map((pairing) => (
-            <tr key={`${pairing.label}-${pairing.foreground}-${pairing.background}`}>
+            <tr key={`${pairing.label}-${pairing.foreground}-${backgroundLabel(pairing)}`}>
               <th scope="row" className={styles.tableHead()}>
                 {pairing.label}
               </th>
               <td className={styles.tableCell()}>
-                {pairing.foreground} on {pairing.background}
+                {bare(pairing.foreground)} on {backgroundLabel(pairing)}
               </td>
               <td className={styles.tableCell()}>{pairing.min}:1</td>
               {THEMES.map((theme) => {
@@ -507,7 +423,7 @@ const PairingsSection: React.FC<{ colors: Resolved }> = ({ colors }) => {
                     item.theme === theme &&
                     item.label === pairing.label &&
                     item.foreground === pairing.foreground &&
-                    item.background === pairing.background
+                    backgroundLabel(item) === backgroundLabel(pairing)
                 );
                 const ratio = result?.ratio ?? 0;
                 return (
@@ -603,7 +519,7 @@ export const Palette: Story = {
       .filter((result) => result.ratio < result.min)
       .map(
         (result) =>
-          `${result.theme}: ${result.label} (${result.foreground} on ${result.background}) is ${result.ratio.toFixed(2)}:1, needs ${result.min}:1`
+          `${result.theme}: ${result.label} (${bare(result.foreground)} on ${backgroundLabel(result)}) is ${result.ratio.toFixed(2)}:1, needs ${result.min}:1`
       );
     expect(failures).toEqual([]);
   },

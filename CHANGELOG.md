@@ -5,6 +5,34 @@ All notable changes to `@nicolassancho/ui` are listed here. Up to 4.11.0 it was 
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## 5.1.0 - 2026-11-11
+
+A brand contract: the package now says which tokens a brand may override, and checks a brand before an
+app applies it.
+
+### Added
+
+- `brandTokenNames` and the `Brand` and `BrandToken` types: the tokens a brand may override. Colors:
+  `primary`, `primary-darker`, `secondary`, `secondary-darker`, `surface` and `neutral-25` to
+  `neutral-950`. Radius: `radius-button`, `radius-field`, `radius-card`, `radius-sm` and `radius-lg`.
+  Fonts: `font-sans` and `font-display`. Every other token is fixed.
+- `validateBrand(brand)`: rejects values that are not `[light, dark]` hex pairs, lengths or font-family
+  lists, then checks the library's list of contrast pairings in both themes, with the brand laid over
+  the defaults. It returns the failures as data, with a stable id for each pairing. It is not a client
+  module, so server code can call it.
+- `brandToCssVariables(brand)`: a brand as CSS custom properties. It throws on a brand whose format is
+  invalid.
+- Contrast checks for the current SidebarNav item (`neutral-900` on `primary/10` over `surface`), the
+  hover background of outline buttons and sidebar items (`neutral-900` on `neutral-100`), table headers
+  and neutral badges (`neutral-700` on `neutral-50`), and the Alert body (`neutral-900` on
+  `danger-subtle`).
+
+### Deprecated
+
+- The primary ramp (`primary-50` to `primary-950`) and `primary-lighter`. No component reads them, and
+  a brand that overrides `primary` leaves them blue. Use `primary`, `primary-darker` or a translucent
+  `primary` (`bg-primary/10`). They are removed in 6.0.
+
 ## 5.0.0 - 2026-11-11
 
 The package is renamed `@nicolassancho/ui`: it is a design system, and Storybook is only where it is

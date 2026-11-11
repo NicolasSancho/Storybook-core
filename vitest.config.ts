@@ -27,8 +27,19 @@ const storybookProject = (theme: "light" | "dark") => ({
   },
 });
 
+// Plain functions that need no browser (the brand contract) run in Node.
+const unitProject = {
+  extends: true,
+  test: {
+    name: "unit",
+    include: ["src/**/*.test.ts"],
+    environment: "node",
+    css: { include: [/theme\.css/] },
+  },
+};
+
 export default defineConfig({
   test: {
-    projects: [storybookProject("light"), storybookProject("dark")],
+    projects: [unitProject, storybookProject("light"), storybookProject("dark")],
   },
 });
