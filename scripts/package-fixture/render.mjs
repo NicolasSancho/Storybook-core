@@ -6,6 +6,7 @@ import { createElement as h } from "react";
 import { renderToString } from "react-dom/server";
 import {
   Button,
+  ButtonLink,
   Header,
   Input,
   Popover,
@@ -79,6 +80,15 @@ const header = renderToString(
 );
 assert.match(header, /<nav[^>]*aria-label="Main"/);
 assert.match(header, /<a[^>]*href="\/women"[^>]*data-injected="link"[^>]*>Women<\/a>/);
+
+// A link atom passes every <a> attribute through, and still renders its button classes.
+const cta = renderToString(
+  h(ButtonLink, { href: "/pt", lang: "pt", hrefLang: "pt", "data-analytics": "cta" }, "Português")
+);
+assert.match(cta, /<a[^>]*lang="pt"[^>]*>Português<\/a>/);
+assert.match(cta, /hrefLang="pt"|hreflang="pt"/);
+assert.match(cta, /data-analytics="cta"/);
+assert.match(cta, /class="[^"]+"/);
 
 // ImageComponent output is used for every product image.
 const Img = ({ src, alt, className }) =>

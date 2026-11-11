@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { LinkComponentProps } from "../../types/linkComponent";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, fn, userEvent, within } from "storybook/test";
 import { ChipLink } from "./ChipLink";
@@ -18,17 +18,7 @@ type Story = StoryObj<typeof meta>;
 
 // Spy standing in for a framework link (e.g. next/link): records the props it receives.
 const linkSpy = fn(
-  ({
-    href,
-    children,
-    className,
-    "aria-current": ariaCurrent,
-  }: {
-    href: string;
-    children: ReactNode;
-    className?: string;
-    "aria-current"?: "true";
-  }) => (
+  ({ href, children, className, "aria-current": ariaCurrent }: LinkComponentProps) => (
     <a href={href} className={className} aria-current={ariaCurrent}>
       {children}
     </a>
@@ -123,5 +113,47 @@ export const FilterList: Story = {
     const current = links.filter((link) => link.getAttribute("aria-current") === "true");
     await expect(current).toHaveLength(1);
     await expect(current[0]).toHaveAccessibleName("All");
+  },
+};
+
+// Spy that renders every prop it receives, so forwarded attributes reach the rendered link.
+const forwardingSpy = fn(({ children, ...props }: LinkComponentProps) => (
+  <a {...props}>{children}</a>
+));
+
+export const Attributes: Story = {
+  args: {
+    ...mockedChipLinkDefault,
+    LinkComponent: forwardingSpy,
+    rel: "external",
+    hrefLang: "pt",
+    lang: "pt",
+    ref: fn(),
+  },
+  // `data-*` attributes are valid JSX but not part of the props type, so they go in the render.
+  // `aria-current` is passed too: `selected` owns it, so an unselected chip must not be current.
+  render: (args) => <ChipLink {...args} data-analytics="cta" aria-current="page" />,
+  beforeEach: () => {
+    forwardingSpy.mockClear();
+  },
+  play: async ({ args, canvasElement }) => {
+    const link = within(canvasElement).getByRole("link", { name: "Shirts" });
+
+    // The link component receives every attribute, and they reach the rendered link with the ref.
+    await expect(forwardingSpy.mock.calls.map(([props]) => props)).toContainEqual(
+      expect.objectContaining({
+        href: "/products?category=shirts",
+        rel: "external",
+        hrefLang: "pt",
+        lang: "pt",
+        "data-analytics": "cta",
+      })
+    );
+    await expect(link).toHaveAttribute("rel", "external");
+    await expect(link).toHaveAttribute("hreflang", "pt");
+    await expect(link).toHaveAttribute("lang", "pt");
+    await expect(link).toHaveAttribute("data-analytics", "cta");
+    await expect(args.ref).toHaveBeenCalledWith(link);
+    await expect(link).not.toHaveAttribute("aria-current");
   },
 };

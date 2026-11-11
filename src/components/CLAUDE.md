@@ -49,16 +49,24 @@ Component. The exception is a component that needs interaction, which is a clien
 ## Links and images
 
 - Navigation uses `href`, never a router-specific prop such as `to`.
-- A component that renders links takes an optional `LinkComponent` prop, defaulting to `"a"`,
-  and passes it `href`, `className` and `children` (and `aria-current` on `ChipLink`, which
-  `next/link` forwards). Consumers pass a framework link (e.g. `next/link`) to get
-  client-side navigation.
+- A component that renders links takes an optional `LinkComponent` prop, typed
+  `LinkComponentType` from `src/components/types/linkComponent.ts` (exported, so apps can type
+  their own link wrappers): `"a"` (the default) or a component taking `LinkComponentProps`. It
+  passes `href`, `className` and `children` (and `aria-current` on `ChipLink` and `SidebarNav`,
+  which `next/link` forwards). Consumers pass a framework link (e.g. `next/link`) to get
+  client-side navigation. Do not type it as `React.ElementType<...>`: that accepts elements that
+  are not links and rejects forwarding attributes.
+- The single-link atoms (`ButtonLink`, `ChipLink`, `TextLink`) take every `<a>` attribute
+  (`LinkAttributes`) and spread it first, so the props the component owns (`href`, `className`,
+  and `aria-current` on `ChipLink`) win. Their `Attributes` stories check that the attributes and
+  the ref arrive, and ChipLink's that a passed `aria-current` loses to `selected`. Lists of
+  links (Header, Footer, Breadcrumbs) take only `{ label, href }` per item.
 - Images render through the `Image` atom, which takes an optional `ImageComponent`, defaulting
   to `"img"`, and forwards `src`, `alt`, `className` and any other `<img>` attribute
   (`srcSet`, `sizes`, `width`, `height`, `loading`). Components that show images expose those
   attributes through an `imageProps` prop. `ImageComponent` is typed as a minimal contract
-  (`src`, `alt`, `className`), like `LinkComponent`: extra attributes are forwarded but not
-  type-checked against it, because `next/image` narrows some (e.g. `width`).
+  (`src`, `alt`, `className`): extra attributes are forwarded but not type-checked against it,
+  because `next/image` narrows some (e.g. `width`).
 - Define `LinkComponent` and `ImageComponent` outside the render function: an inline definition
   remounts them.
 - Purely decorative images use `alt=""` (e.g. the ProductCard image, since the title names the

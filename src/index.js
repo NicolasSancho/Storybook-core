@@ -1,3 +1,6 @@
+// Types shared by components
+export * from "./components/types/linkComponent.js";
+
 // Atoms
 export * from "./components/Atoms/Badge/Badge.js";
 export * from "./components/Atoms/Button/Button.js";

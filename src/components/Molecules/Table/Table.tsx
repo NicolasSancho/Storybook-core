@@ -2,6 +2,7 @@ import React from "react";
 import { tv } from "tailwind-variants";
 import { focusRing } from "../../styles/focusRing.js";
 import { Icon } from "../../Atoms/Icon/Icon.js";
+import type { LinkComponentType } from "../../types/linkComponent.js";
 
 export interface TableProps {
   /** Accessible name of the scroll region, for example "Products table". */
@@ -38,11 +39,7 @@ export interface TableHeaderCellProps extends React.ThHTMLAttributes<HTMLTableCe
    * framework link (e.g. `next/link`) can be passed directly. Defaults to a plain `<a>`. Define it
    * outside the render function: an inline definition remounts the link.
    */
-  LinkComponent?: React.ElementType<{
-    href: string;
-    children: React.ReactNode;
-    className?: string;
-  }>;
+  LinkComponent?: LinkComponentType;
   /** Additional classes for custom styling */
   className?: string;
 }

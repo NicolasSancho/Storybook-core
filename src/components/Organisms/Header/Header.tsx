@@ -2,6 +2,7 @@ import React from "react";
 import { tv } from "tailwind-variants";
 import { linkStyles } from "../../styles/linkStyles.js";
 import { Container } from "../../Layouts/Container/Container.js";
+import type { LinkComponentType } from "../../types/linkComponent.js";
 
 export interface HeaderNavItem {
   label: string;
@@ -35,11 +36,7 @@ export interface HeaderProps {
    * so a framework link (e.g. `next/link`) can be passed directly. Defaults to a plain `<a>`.
    * Define it outside the render function: an inline definition remounts the links.
    */
-  LinkComponent?: React.ElementType<{
-    href: string;
-    children: React.ReactNode;
-    className?: string;
-  }>;
+  LinkComponent?: LinkComponentType;
   className?: string;
 }
 

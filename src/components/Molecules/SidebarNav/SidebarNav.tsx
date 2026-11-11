@@ -1,6 +1,7 @@
 import React from "react";
 import { tv } from "tailwind-variants";
 import { focusRing } from "../../styles/focusRing.js";
+import type { LinkComponentType } from "../../types/linkComponent.js";
 
 export interface SidebarNavItem {
   /** Link text */
@@ -31,12 +32,7 @@ export interface SidebarNavProps {
    * `aria-current`, so a framework link (e.g. `next/link`) can be passed directly. Defaults to a
    * plain `<a>`. Define it outside the render function: an inline definition remounts the links.
    */
-  LinkComponent?: React.ElementType<{
-    href: string;
-    children: React.ReactNode;
-    className?: string;
-    "aria-current"?: "page";
-  }>;
+  LinkComponent?: LinkComponentType;
   /** Additional classes for the wrapper */
   className?: string;
 }

@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { LinkComponentProps } from "../../types/linkComponent";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, fn, userEvent, waitFor, within } from "storybook/test";
 import { Icon } from "../../Atoms/Icon/Icon";
@@ -28,17 +28,7 @@ type Story = StoryObj<typeof meta>;
 
 // Spy standing in for a framework link (e.g. next/link): records the props it receives.
 const linkSpy = fn(
-  ({
-    href,
-    children,
-    className,
-    "aria-current": ariaCurrent,
-  }: {
-    href: string;
-    children: ReactNode;
-    className?: string;
-    "aria-current"?: "page";
-  }) => (
+  ({ href, children, className, "aria-current": ariaCurrent }: LinkComponentProps) => (
     <a href={href} className={className} aria-current={ariaCurrent}>
       {children}
     </a>

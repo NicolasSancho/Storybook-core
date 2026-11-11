@@ -209,9 +209,14 @@ export default function Page() {
 }
 ```
 
-- `LinkComponent` receives `href`, `className` and `children` (and `aria-current` on `ChipLink`, which
-  `next/link` forwards). `ButtonLink` and `TextLink` take the same `LinkComponent`. `ImageComponent`
-  receives `src`, `alt`, `className` and the attributes in `imageProps`.
+- `LinkComponent` receives `href`, `className` and `children` (and `aria-current` on `ChipLink` and
+  `SidebarNav`, which `next/link` forwards). Its type is `LinkComponentType`, exported with
+  `LinkComponentProps` so you can type your own wrapper. `ImageComponent` receives `src`, `alt`,
+  `className` and the attributes in `imageProps`.
+- `ButtonLink`, `ChipLink` and `TextLink` take every `<a>` attribute (`aria-*`, `data-*`, `target`,
+  `rel`, `lang`, `hrefLang`, `ref`) and pass it to the link, for example
+  `<ChipLink href="/pt" lang="pt" hrefLang="pt">Português</ChipLink>`. Their own props win, so
+  `ChipLink` ignores a passed `aria-current`: `selected` sets it.
 - A product card with an `href` is a real link stretched over the whole card, so middle-click, new tab
   and crawlable URLs work. Its image is decorative (`alt=""`), because the title names the card. Without
   an `href` the card is display-only.
@@ -249,7 +254,7 @@ const Good = () => <Breadcrumbs LinkComponent={Link} items={items} />;
 
 With `typedRoutes: true` in `next.config`, Next types `Link`'s `href` as a known route. The library passes the
 `href` string you gave it, so `LinkComponent={Link}` fails the type check with "is not assignable to type
-ElementType". Wrap `Link` once and pass the wrapper. The hrefs are your own props, so the cast hides nothing
+LinkComponentType". Wrap `Link` once and pass the wrapper. The hrefs are your own props, so the cast hides nothing
 the compiler could have checked:
 
 ```tsx

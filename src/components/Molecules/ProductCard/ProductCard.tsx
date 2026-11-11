@@ -2,6 +2,7 @@ import React from "react";
 import { tv } from "tailwind-variants";
 import { Image, ImageProps } from "../../Atoms/Image/Image.js";
 import { Text } from "../../Atoms/Text/Text.js";
+import type { LinkComponentType } from "../../types/linkComponent.js";
 
 export interface ProductCardProps {
   /** Optional unique id, used as the React key when rendered in a list (falls back to `title`). */
@@ -22,11 +23,7 @@ export interface ProductCardProps {
    * `children`, so a framework link (e.g. `next/link`) can be passed directly. Defaults to a
    * plain `<a>`. Define it outside the render function: an inline definition remounts the link.
    */
-  LinkComponent?: React.ElementType<{
-    href: string;
-    children: React.ReactNode;
-    className?: string;
-  }>;
+  LinkComponent?: LinkComponentType;
   /**
    * Component used to render the product image. Receives `src`, `alt`, `className` and the
    * attributes in `imageProps`, so a framework image (e.g. `next/image`) can be passed
