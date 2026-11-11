@@ -5,6 +5,80 @@ All notable changes to `@nicolassancho/ui` are listed here. Up to 4.11.0 it was 
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## 5.0.0 - 2026-11-11
+
+The package is renamed `@nicolassancho/ui`: it is a design system, and Storybook is only where it is
+documented. The version line continues from `@nicolassancho/storybook-core` 4.11.0, which is the last
+release under the old name. This release is breaking, so it also removes what 4.x deprecated and
+fixes two contracts that were too loose for theming.
+
+`Icon`, the `SidebarNav` icon names and the old `LinkComponent` type change here without the
+deprecation release the versioning policy asks for. The rename already makes every consumer change
+its install and its imports, and the only 4.x consumers stay on 4.x, so a 4.12 warning would reach
+nobody who could act on it. The rest of the removals were deprecated in 4.x as the policy says.
+
+### Removed
+
+- `SearchInput`, deprecated in 4.3.0. Use `Input` with `type="search"` and `hideLabel`.
+- The `secondary-50` to `secondary-950` ramp and `secondary-lighter`, deprecated and used by no
+  component. `secondary` and `secondary-darker` stay.
+- `Icon` is no longer exported. The library's components still draw their own icons; apps use an icon
+  library such as `lucide-react`.
+
+### Changed
+
+- The package name, the repository (`NicolasSancho/ui`) and the Storybook URL
+  (https://nicolassancho.github.io/ui/).
+- `SidebarNav` items take `icon` as a `React.ReactNode` instead of an icon name. It is drawn at 16px
+  and hidden from screen readers.
+- `LinkComponent` is typed `LinkComponentType`: `"a"` or a component that takes `LinkComponentProps`
+  (`href`, `className`, `children` and the `<a>` attributes). The old type accepted any element,
+  including ones that are not links, such as `"button"`.
+- Buttons, fields and cards are rounded by role (see Added). The default values are the same as
+  before, so nothing changes on screen.
+
+### Added
+
+- `ButtonLink`, `ChipLink` and `TextLink` take every `<a>` attribute (`aria-*`, `data-*`, `target`,
+  `rel`, `lang`, `hrefLang`, `ref`) and pass it to the link. On `ChipLink`, `selected` sets
+  `aria-current` and a passed `aria-current` is ignored.
+- `LinkComponentType`, `LinkComponentProps` and `LinkAttributes` types, to type an app's own link
+  wrapper.
+- Radius roles: `--radius-button`, `--radius-field` and `--radius-card`, defaulting to
+  `var(--radius-sm)`, `var(--radius-sm)` and `var(--radius-lg)`. A brand overrides one to reshape that
+  kind of element only. A `rounded-*` class in `className` still wins.
+- `dot` on `Badge`: a small dot before the text, for a live status such as "Open now".
+
+### Migrating
+
+- Install the new name and update the imports and the CSS setup:
+
+  ```sh
+  npm uninstall @nicolassancho/storybook-core
+  npm install @nicolassancho/ui
+  ```
+
+  ```css
+  @import "@nicolassancho/ui/styles/theme.css";
+  @source "../node_modules/@nicolassancho/ui/dist";
+  ```
+
+- `SearchInput`: `<Input type="search" label="Search" hideLabel name="q" />`.
+- `Icon`: install `lucide-react` and import the icon by name. The names the library had map to
+  `ChevronDown`, `Menu`, `ArrowLeft`, `Package`, `House` (Home), `ShoppingCart`, `ArrowDown`, `X`,
+  `Sun`, `Moon`, `CircleAlert` (AlertCircle), `OctagonAlert` (AlertOctagon) and `TriangleAlert`
+  (AlertTriangle). Lucide draws at 24px: `size="small"` becomes `size={16}` and `size="large"`
+  becomes `size={32}`. It takes the text color like `color="current"`; for a token color, set a
+  class such as `className="text-primary"`. It is hidden from screen readers unless it gets an
+  accessible name, so `ariaLabel="Cart"` becomes `aria-label="Cart"`. `IconProps` is gone with it.
+- `SidebarNav`: `icon: "Package"` becomes `icon: <Package />` (from `lucide-react`).
+- `LinkComponent`: a component typed with narrower props than `<a>` (for example
+  `"aria-current"?: "page"`) no longer type-checks. Type its props as `LinkComponentProps`. A string
+  other than `"a"` is no longer accepted.
+- An app that themed `--radius-sm` or `--radius-lg` on `:root` keeps its shapes. One that set them on a
+  nested element to reshape the library's components now sets the role instead (`--radius-button`,
+  `--radius-field`, `--radius-card`).
+
 ## 4.11.0 - 2026-11-09
 
 ### Added
