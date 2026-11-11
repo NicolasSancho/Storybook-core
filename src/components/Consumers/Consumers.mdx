@@ -4,7 +4,7 @@ import { Meta } from "@storybook/addon-docs/blocks";
 
 # Using the library
 
-`@nicolassancho/storybook-core` is a set of accessible React components styled with Tailwind CSS v4.
+`@nicolassancho/ui` is a set of accessible React components styled with Tailwind CSS v4.
 This page covers what an app needs to consume it, with examples for the Next.js App Router.
 
 ## Install
@@ -12,7 +12,7 @@ This page covers what an app needs to consume it, with examples for the Next.js 
 The package is public on npm, so no registry or token setup is needed:
 
 ```bash
-npm install @nicolassancho/storybook-core
+npm install @nicolassancho/ui
 ```
 
 The library expects these peer dependencies in the app: `react` and `react-dom` (19), `tailwindcss` (v4), `tailwind-variants` (v3) and `tailwind-merge` (v3).
@@ -29,8 +29,8 @@ library's compiled files for classes:
 ```css
 /* app/globals.css */
 @import "tailwindcss";
-@import "@nicolassancho/storybook-core/styles/theme.css";
-@source "../node_modules/@nicolassancho/storybook-core/dist";
+@import "@nicolassancho/ui/styles/theme.css";
+@source "../node_modules/@nicolassancho/ui/dist";
 ```
 
 The `@source` line is required. Tailwind skips `node_modules` when it looks for classes, so without it
@@ -155,7 +155,7 @@ static and painted the right brand from the first frame. Reading the tenant in t
 Import components from the package root. Unused components are dropped from your bundle.
 
 ```tsx
-import { Button, Text } from "@nicolassancho/storybook-core";
+import { Button, Text } from "@nicolassancho/ui";
 
 export default function Page() {
   return (
@@ -177,7 +177,7 @@ image renders a plain `<img>` by default. To use your framework's components, pa
 ```tsx
 import Image from "next/image";
 import Link from "next/link";
-import { Breadcrumbs, ProductGrid } from "@nicolassancho/storybook-core";
+import { Breadcrumbs, ProductGrid } from "@nicolassancho/ui";
 
 export default function Page() {
   return (
@@ -278,7 +278,7 @@ The wrapper is a Server Component, so it adds no client JavaScript.
 most 72rem wide, with side padding. Wrap your page content in a `Container` to line it up with both:
 
 ```tsx
-import { Container } from "@nicolassancho/storybook-core";
+import { Container } from "@nicolassancho/ui";
 
 export default function Page() {
   return (
@@ -321,7 +321,7 @@ server page:
 "use client";
 
 import { useState } from "react";
-import { Button, Input, Text } from "@nicolassancho/storybook-core";
+import { Button, Input, Text } from "@nicolassancho/ui";
 
 export function SearchBar() {
   const [query, setQuery] = useState("");
@@ -365,7 +365,7 @@ Use `Button` for an action that runs code or submits a form. A link cannot be di
 ```tsx
 // app/products/page.tsx (a Server Component)
 import Link from "next/link";
-import { Button, ChipLink, Input, RadioGroup } from "@nicolassancho/storybook-core";
+import { Button, ChipLink, Input, RadioGroup } from "@nicolassancho/ui";
 import { addToCart } from "./actions";
 
 export default function Page() {
@@ -421,7 +421,7 @@ code:
 ```tsx
 // app/(app)/layout.tsx (a Server Component)
 import Link from "next/link";
-import { Button, Popover } from "@nicolassancho/storybook-core";
+import { Button, Popover } from "@nicolassancho/ui";
 import { signOut } from "./actions";
 
 <Popover trigger="Ana Ruiz" placement="bottom-end">
@@ -451,8 +451,8 @@ item for the page the user is on, which an app usually derives with `usePathname
 
 ## What the package exposes
 
-- `@nicolassancho/storybook-core`: every component and its types.
-- `@nicolassancho/storybook-core/styles/theme.css`: the design tokens.
+- `@nicolassancho/ui`: every component and its types.
+- `@nicolassancho/ui/styles/theme.css`: the design tokens.
 
 Other paths, such as files inside `dist/`, are not part of the public API. The package is ESM only. It
 works in bundlers (Next.js, Vite, webpack) and in Node's native ESM loader.

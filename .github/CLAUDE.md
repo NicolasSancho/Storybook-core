@@ -39,6 +39,6 @@ Rules for `.github/`. The root `CLAUDE.md` still applies.
   version).
 - On `main` only, the last step of `ci.yml` uploads `storybook-static` as the Pages artifact.
   After the checks pass, the `deploy-docs` job in `main.yml` deploys it to GitHub Pages
-  (https://nicolassancho.github.io/Storybook-core/). It builds nothing, so the site is exactly the
+  (https://nicolassancho.github.io/ui/). It builds nothing, so the site is exactly the
   build that passed the checks, and it does not wait for `publish`. The repo's Pages source must
   be set to "GitHub Actions".

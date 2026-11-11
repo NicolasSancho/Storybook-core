@@ -23,7 +23,7 @@ const peers = Object.keys(
 // Not peers, but the documented Tailwind setup needs them to compile the CSS.
 const toolchain = ["@tailwindcss/postcss", "postcss"];
 
-const workDir = mkdtempSync(join(tmpdir(), "storybook-core-package-"));
+const workDir = mkdtempSync(join(tmpdir(), "ui-package-"));
 
 try {
   const [{ filename }] = JSON.parse(

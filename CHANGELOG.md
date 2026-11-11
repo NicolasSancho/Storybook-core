@@ -1,6 +1,7 @@
 # Changelog
 
-All notable changes to `@nicolassancho/storybook-core` are listed here. The format follows
+All notable changes to `@nicolassancho/ui` are listed here. Up to 4.11.0 it was published as
+`@nicolassancho/storybook-core`. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses
 [Semantic Versioning](https://semver.org/).
 

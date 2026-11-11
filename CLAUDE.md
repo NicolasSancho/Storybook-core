@@ -1,6 +1,6 @@
-# Storybook-core
+# @nicolassancho/ui
 
-React + Tailwind component library published as `@nicolassancho/storybook-core`
+React + Tailwind component library published as `@nicolassancho/ui`
 on npm (public). Storybook is the development and documentation environment.
 
 ## Working rules
@@ -120,8 +120,8 @@ Use Node 24, the version CI runs.
   (auto-detection skips `node_modules`, so `@source` is required):
   ```css
   @import "tailwindcss";
-  @import "@nicolassancho/storybook-core/styles/theme.css";
-  @source "../node_modules/@nicolassancho/storybook-core/dist";
+  @import "@nicolassancho/ui/styles/theme.css";
+  @source "../node_modules/@nicolassancho/ui/dist";
   ```
 - `package.json` limits the public API with an `exports` map: `.` (components and types),
   `./styles/theme.css` and `./package.json`. Deep imports into `dist/` are blocked on purpose.

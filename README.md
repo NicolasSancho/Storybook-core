@@ -1,15 +1,15 @@
-# Storybook-core
+# @nicolassancho/ui
 
-[![npm version](https://img.shields.io/npm/v/@nicolassancho/storybook-core)](https://www.npmjs.com/package/@nicolassancho/storybook-core)
-[![CI](https://github.com/NicolasSancho/Storybook-core/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/NicolasSancho/Storybook-core/actions/workflows/main.yml)
+[![npm version](https://img.shields.io/npm/v/@nicolassancho/ui)](https://www.npmjs.com/package/@nicolassancho/ui)
+[![CI](https://github.com/NicolasSancho/ui/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/NicolasSancho/ui/actions/workflows/main.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 An accessible React component library styled with Tailwind CSS v4 and `tailwind-variants`, and
-documented in Storybook. It is published to npm as `@nicolassancho/storybook-core`.
+documented in Storybook. It is published to npm as `@nicolassancho/ui`.
 
-**[Browse the live Storybook](https://nicolassancho.github.io/Storybook-core/)**
+**[Browse the live Storybook](https://nicolassancho.github.io/ui/)**
 
-![A responsive product grid built with the library](https://raw.githubusercontent.com/NicolasSancho/Storybook-core/main/docs/product-grid.png)
+![A responsive product grid built with the library](https://raw.githubusercontent.com/NicolasSancho/ui/main/docs/product-grid.png)
 
 ## Highlights
 
@@ -43,22 +43,22 @@ documented in Storybook. It is published to npm as `@nicolassancho/storybook-cor
 The palette and the contrast of each text color are documented under **Foundations / Colors** in
 Storybook.
 
-![The color palette, with the text contrast of each step](https://raw.githubusercontent.com/NicolasSancho/Storybook-core/main/docs/colors.png)
+![The color palette, with the text contrast of each step](https://raw.githubusercontent.com/NicolasSancho/ui/main/docs/colors.png)
 
-![The same palette in the dark theme](https://raw.githubusercontent.com/NicolasSancho/Storybook-core/main/docs/colors-dark.png)
+![The same palette in the dark theme](https://raw.githubusercontent.com/NicolasSancho/ui/main/docs/colors-dark.png)
 
 ## Using the library
 
 Install the package, then add the design tokens and the source scan to your Tailwind v4 stylesheet:
 
 ```bash
-npm install @nicolassancho/storybook-core
+npm install @nicolassancho/ui
 ```
 
 ```css
 @import "tailwindcss";
-@import "@nicolassancho/storybook-core/styles/theme.css";
-@source "../node_modules/@nicolassancho/storybook-core/dist";
+@import "@nicolassancho/ui/styles/theme.css";
+@source "../node_modules/@nicolassancho/ui/dist";
 ```
 
 The library ships its design tokens (colors, font sizes, breakpoints), not compiled CSS: your app's
@@ -67,13 +67,13 @@ Tailwind generates the classes, and `@source` is what makes it scan the library.
 peer dependencies.
 
 ```tsx
-import { Button } from "@nicolassancho/storybook-core";
+import { Button } from "@nicolassancho/ui";
 
 const App = () => <Button variant="primary">Click Me</Button>;
 ```
 
 The full guide (install, links and images, the Next.js App Router) is the **Consumers** page in
-[Storybook](https://nicolassancho.github.io/Storybook-core/).
+[Storybook](https://nicolassancho.github.io/ui/).
 
 ## Versioning
 

@@ -11,9 +11,9 @@ import {
   Popover,
   ProductGrid,
   RadioGroup,
-} from "@nicolassancho/storybook-core";
+} from "@nicolassancho/ui";
 
-const distDir = new URL("./node_modules/@nicolassancho/storybook-core/dist/", import.meta.url);
+const distDir = new URL("./node_modules/@nicolassancho/ui/dist/", import.meta.url);
 
 // Presentational components are stateless, so they stay server-safe: a directive would stop a Server
 // Component from passing them functions and would ship JavaScript for nothing. A component that needs
