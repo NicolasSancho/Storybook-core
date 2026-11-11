@@ -1,15 +1,17 @@
 import React from "react";
 import { tv } from "tailwind-variants";
 import { focusRing } from "../../styles/focusRing.js";
-import { Icon, IconProps } from "../../Atoms/Icon/Icon.js";
 
 export interface SidebarNavItem {
   /** Link text */
   label: string;
   /** Where the link goes. It needs no JavaScript. */
   href: string;
-  /** Name of an icon shown before the label. It is decorative: the label names the link. */
-  icon?: IconProps["name"];
+  /**
+   * An icon shown before the label, such as an SVG from an icon library. The element passed is sized
+   * to 16px and hidden from screen readers, because the label names the link.
+   */
+  icon?: React.ReactNode;
   /**
    * Whether this is the page the user is on. It sets `aria-current="page"` and highlights the item.
    * The component cannot know the URL, so the app decides, usually with `usePathname`.
@@ -43,6 +45,7 @@ const sidebarNavStyles = tv({
   slots: {
     base: "flex flex-col gap-4",
     list: "flex flex-col gap-1",
+    icon: "flex size-4 shrink-0 items-center justify-center *:size-4",
     link: [
       "flex items-center gap-2 rounded-sm border-l-2 px-3 py-2 text-sm font-medium text-neutral-900",
       focusRing,
@@ -85,10 +88,10 @@ export const SidebarNav: React.FC<SidebarNavProps> = ({
                 className={sidebarNavStyles({ current: Boolean(current) }).link()}
                 aria-current={current ? "page" : undefined}
               >
-                {icon ? (
-                  <Icon name={icon} size="small" />
-                ) : (
-                  hasIcons && <span aria-hidden="true" className="size-4 shrink-0" />
+                {(icon || hasIcons) && (
+                  <span aria-hidden="true" className={styles.icon()}>
+                    {icon}
+                  </span>
                 )}
                 <span>{text}</span>
               </LinkComponent>

@@ -9,7 +9,6 @@ export * from "./components/Atoms/Spinner/Spinner.js";
 export * from "./components/Atoms/TableSkeleton/TableSkeleton.js";
 export * from "./components/Atoms/Text/Text.js";
 export * from "./components/Atoms/TextLink/TextLink.js";
-export * from "./components/Atoms/Icon/Icon.js";
 export * from "./components/Atoms/Image/Image.js";
 export * from "./components/Atoms/Label/Label.js";
 export * from "./components/Atoms/RadioButton/RadioButton.js";

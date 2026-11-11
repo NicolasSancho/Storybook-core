@@ -8,12 +8,18 @@ import { IconsMap } from "./iconsMap";
 const iconNames = Object.keys(IconsMap) as (keyof typeof IconsMap)[];
 
 const meta: Meta<typeof Icon> = {
-  title: "Atoms/Icon",
+  title: "Internal/Icon",
   component: Icon,
+  tags: ["autodocs"],
   parameters: {
     layout: "centered",
+    docs: {
+      description: {
+        component:
+          "Internal: the icons the library's own components draw. It is not exported. Apps use an icon library such as `lucide-react` and pass the icon as a node where a component takes one (`SidebarNav` items).",
+      },
+    },
   },
-  tags: ["autodocs"],
   argTypes: {
     name: {
       control: {

@@ -40,6 +40,10 @@ const iconStyles = tv({
   },
 });
 
+/**
+ * Internal: draws the icons the library's own components use (Alert, Breadcrumbs, Popover and
+ * others). It is not exported from the package; apps use their own icon library.
+ */
 export const Icon: React.FC<IconProps> = ({ name, size, color = "current", ariaLabel }) => {
   const IconComponent = IconsMap[name];
   const a11yProps = ariaLabel

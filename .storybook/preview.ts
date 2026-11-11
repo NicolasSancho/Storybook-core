@@ -73,6 +73,7 @@ const preview: Preview = {
           "Molecules",
           "Organisms",
           "Layouts",
+          "Internal",
         ],
       },
     },

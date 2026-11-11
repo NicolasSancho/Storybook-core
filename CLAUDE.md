@@ -104,10 +104,13 @@ Use Node 24, the version CI runs.
 
 ## Icons
 
-- Icons: inline SVGs from Feather (MIT), registered in `Atoms/Icon/iconsMap.tsx`, so the library has
-  no runtime dependencies. To add one, paste the shapes of its Feather SVG into a `createIcon` call
-  and register it in `IconsMap`; the license notice at the top of the file already covers it. Keep
-  `Icon`'s props the same.
+- The library has no public icon set. `Icon` is internal (not exported from `src/index.js`) and
+  draws only the icons its own components use: inline SVGs from Feather (MIT), registered in
+  `Atoms/Icon/iconsMap.tsx`, so the library has no runtime dependencies. Add an icon there only
+  when a library component draws it; the license notice at the top of the file covers it.
+- A component that shows an icon the app chooses takes it as a `React.ReactNode` (`SidebarNav`
+  items), never as an icon name. Apps use an icon library such as `lucide-react`.
+- Its story is under "Internal" in the sidebar, after the public groups.
 
 ## Packaging
 

@@ -35,7 +35,7 @@ documented in Storybook. It is published to npm as `@nicolassancho/ui`.
 
 | Layer     | Components                                                                                                                               |
 | --------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| Atoms     | Badge, Button, ButtonLink, Card, Chip, ChipLink, Icon, Image, Label, RadioButton, Spinner, TableSkeleton, Text, TextLink                 |
+| Atoms     | Badge, Button, ButtonLink, Card, Chip, ChipLink, Image, Label, RadioButton, Spinner, TableSkeleton, Text, TextLink                       |
 | Molecules | Alert, Breadcrumbs, CartIcon, EmptyState, Input, Pagination, Popover, ProductCard, ProductDetails, RadioGroup, Select, SidebarNav, Table |
 | Organisms | Footer, Header, ProductGrid                                                                                                              |
 | Layouts   | Container, Grid                                                                                                                          |

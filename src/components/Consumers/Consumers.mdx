@@ -271,6 +271,20 @@ export const NavLink = ({
 
 The wrapper is a Server Component, so it adds no client JavaScript.
 
+## Icons
+
+The library has no public icon set: its components draw the few icons they need themselves. Use an icon
+library in the app, such as `lucide-react`, and pass the icon as a node where a component takes one:
+
+```tsx
+import { Package } from "lucide-react";
+import { SidebarNav } from "@nicolassancho/ui";
+
+<SidebarNav items={[{ label: "Products", href: "/products", icon: <Package />, current: true }]} />;
+```
+
+`SidebarNav` draws the icon at 16px and hides it from screen readers, because the label names the link.
+
 ## Page width
 
 `Header` and `Footer` keep their bar full-width and put their content in a `Container`: centered, at
