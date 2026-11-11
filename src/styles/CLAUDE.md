@@ -11,8 +11,7 @@ Rules for `src/styles/`. The root `CLAUDE.md` still applies. The `tv()` and tail
   - Brand colors:
     - `primary` (also `-50..950`; `-600` is the lightest step usable as text on white).
     - `secondary` and `secondary-darker` are neutral, so they sit beside any brand. An app sets its own
-      second color through these two variables. The `-50..950` ramp and `secondary-lighter` are
-      deprecated, used by no component, and removed in 5.0.0.
+      second color through these two variables. There is no secondary ramp.
   - Semantic colors: `danger`, `success`, `warning`, each with `DEFAULT` (text/icons) and
     `subtle` (background). Use them instead of Tailwind's `red-*` / `green-*` / `yellow-*`,
     and never rely on color alone.
@@ -42,8 +41,8 @@ Rules for `src/styles/`. The root `CLAUDE.md` still applies. The `tv()` and tail
   root's `color-scheme` picks the side. It follows the operating system, and `data-theme` `"dark"`
   or `"light"` on `<html>` overrides it (on `<html>` only: Tailwind compiles `light-dark()` to
   toggles resolved at the root, so a nested `data-theme` does nothing). Components never use `dark:`
-  classes. The color names keep their jobs and only their values change: the `neutral`, `primary`
-  and `secondary` ramps are inverted (900 is still body text), and `DEFAULT`, `-darker` (the hover
+  classes. The color names keep their jobs and only their values change: the `neutral` and `primary`
+  ramps are inverted (900 is still body text), and `DEFAULT`, `-darker` (the hover
   step, lighter in dark), semantic and `on-*` colors have a dark side. Rules for editing it:
   - A new color token is written once, as `light-dark(...)`. Never add a second dark-only block.
   - Each dark step keeps the contrast its light twin has against white, measured against the dark
