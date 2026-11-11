@@ -2,6 +2,7 @@ import {
   brandColorTokenNames,
   brandFontTokenNames,
   brandRadiusTokenNames,
+  type Brand,
   type BrandColor,
   type BrandToken,
   type PairingColorToken,
@@ -145,4 +146,23 @@ export const validateBrand = (brand: unknown): BrandFailure[] => {
           ];
     });
   });
+};
+
+/**
+ * Turns a brand into CSS custom properties: `{ "--color-primary": "light-dark(#1f5f4a, #62a088)",
+ * "--radius-button": "9999px" }`. Use the result as a `style` object, or write it as declarations.
+ * It throws a `TypeError` on a brand whose format `validateBrand` rejects, so a value that could
+ * break the stylesheet never reaches it. Contrast is not checked here: run `validateBrand` first.
+ */
+export const brandToCssVariables = (brand: Brand): Partial<Record<`--${BrandToken}`, string>> => {
+  const failures = formatFailures(brand);
+  if (failures.length > 0) {
+    throw new TypeError(`Invalid brand: ${JSON.stringify(failures)}`);
+  }
+  return Object.fromEntries(
+    entries(brand as Record<string, unknown>).map(([token, value]) => [
+      `--${token}`,
+      Array.isArray(value) ? `light-dark(${value[0]}, ${value[1]})` : String(value),
+    ])
+  );
 };

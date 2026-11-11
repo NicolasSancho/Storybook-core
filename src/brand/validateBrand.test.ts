@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { mockedBrands } from "../components/Foundations/Brands/brandsMock";
 import { brandTokenNames, type Brand } from "./brand";
 import { defaultColors } from "./pairings";
-import { validateBrand } from "./validateBrand";
+import { brandToCssVariables, validateBrand } from "./validateBrand";
 import themeCss from "../styles/theme.css?raw";
 
 /** `#00548a` or `rgb(0 84 138)` to `#00548a`. */
@@ -190,6 +190,30 @@ describe("validateBrand contrast", () => {
     });
     expect(failures.map((failure) => failure.kind === "contrast" && failure.pairing)).toContain(
       "alert-body-text"
+    );
+  });
+});
+
+describe("brandToCssVariables", () => {
+  it("writes colors as light-dark() and the rest as they are", () => {
+    expect(
+      brandToCssVariables({
+        "color-primary": ["#1f5f4a", "#62a088"],
+        "radius-button": "9999px",
+        "font-display": '"Lora", serif',
+        "radius-card": undefined,
+      })
+    ).toEqual({
+      "--color-primary": "light-dark(#1f5f4a, #62a088)",
+      "--radius-button": "9999px",
+      "--font-display": '"Lora", serif',
+    });
+  });
+
+  it("throws on a brand whose format is invalid", () => {
+    expect(() => brandToCssVariables({ "font-sans": '"Inter\n", serif' })).toThrow(TypeError);
+    expect(() => brandToCssVariables({ "color-danger": ["#000000", "#ffffff"] } as Brand)).toThrow(
+      TypeError
     );
   });
 });

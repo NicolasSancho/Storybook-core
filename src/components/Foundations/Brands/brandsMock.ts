@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import type { Brand } from "../../../brand/brand";
+import { brandToCssVariables } from "../../../brand/validateBrand";
 
 /**
  * Example brands for Storybook and for the `validateBrand` unit test, which checks that each one
@@ -63,14 +64,9 @@ export const mockedBrands: MockedBrand[] = [
   },
 ];
 
-/** A brand as CSS custom properties: colors become `light-dark(light, dark)`. */
+/** A brand's CSS custom properties, through the exported conversion apps use. */
 export const brandTokens = ({ brand }: MockedBrand): Record<string, string> =>
-  Object.fromEntries(
-    Object.entries(brand).map(([token, value]) => [
-      `--${token}`,
-      Array.isArray(value) ? `light-dark(${value[0]}, ${value[1]})` : String(value),
-    ])
-  );
+  brandToCssVariables(brand) as Record<string, string>;
 
 /** The same overrides as a React `style` prop, to scope a brand to one element. */
 export const brandStyle = (brand: MockedBrand): CSSProperties =>
