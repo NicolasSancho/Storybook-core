@@ -12,6 +12,9 @@ import {
   Popover,
   ProductGrid,
   RadioGroup,
+  brandToCssVariables,
+  brandTokenNames,
+  validateBrand,
 } from "@nicolassancho/ui";
 
 const distDir = new URL("./node_modules/@nicolassancho/ui/dist/", import.meta.url);
@@ -61,6 +64,23 @@ assert.deepEqual(
   sourceClientFiles.sort(),
   'the files with "use client" in dist/ differ from the source files that start with it'
 );
+
+// An app may validate a brand in server code, and Next refuses to call a
+// function from a "use client" module there. The brand modules must stay out of the client files.
+const brandClientFiles = builtClientFiles.filter((file) => file.startsWith("brand/"));
+assert.deepEqual(brandClientFiles, [], 'a brand module starts with "use client"');
+assert.ok(
+  jsFiles.some((file) => file.startsWith("brand/")),
+  "dist/brand/ is missing"
+);
+
+// The brand contract works from the package root in plain Node.
+assert.ok(brandTokenNames.includes("color-primary"));
+assert.deepEqual(validateBrand({ "color-primary": ["#1f5f4a", "#62a088"] }), []);
+assert.equal(validateBrand({ "color-primary": ["#ffd84d", "#73b0e6"] })[0]?.kind, "contrast");
+assert.deepEqual(brandToCssVariables({ "radius-button": "9999px" }), {
+  "--radius-button": "9999px",
+});
 
 // A plain component renders on the server.
 assert.match(
