@@ -1,7 +1,8 @@
 import React from "react";
-import { tv } from "tailwind-variants";
+import { tv } from "../../styles/tv.js";
 import { linkStyles } from "../../styles/linkStyles.js";
 import { Icon } from "../../Atoms/Icon/Icon.js";
+import type { LinkComponentType } from "../../types/linkComponent.js";
 
 export interface BreadcrumbsProps {
   /**
@@ -17,11 +18,7 @@ export interface BreadcrumbsProps {
    * framework link (e.g. `next/link`) can be passed directly. Defaults to a plain `<a>`.
    * Define it outside the render function: an inline definition remounts the links.
    */
-  LinkComponent?: React.ElementType<{
-    href: string;
-    children: React.ReactNode;
-    className?: string;
-  }>;
+  LinkComponent?: LinkComponentType;
   className?: string;
 }
 

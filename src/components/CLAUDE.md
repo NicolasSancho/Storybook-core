@@ -49,16 +49,24 @@ Component. The exception is a component that needs interaction, which is a clien
 ## Links and images
 
 - Navigation uses `href`, never a router-specific prop such as `to`.
-- A component that renders links takes an optional `LinkComponent` prop, defaulting to `"a"`,
-  and passes it `href`, `className` and `children` (and `aria-current` on `ChipLink`, which
-  `next/link` forwards). Consumers pass a framework link (e.g. `next/link`) to get
-  client-side navigation.
+- A component that renders links takes an optional `LinkComponent` prop, typed
+  `LinkComponentType` from `src/components/types/linkComponent.ts` (exported, so apps can type
+  their own link wrappers): `"a"` (the default) or a component taking `LinkComponentProps`. It
+  passes `href`, `className` and `children` (and `aria-current` on `ChipLink` and `SidebarNav`,
+  which `next/link` forwards). Consumers pass a framework link (e.g. `next/link`) to get
+  client-side navigation. Do not type it as `React.ElementType<...>`: that accepts elements that
+  are not links and rejects forwarding attributes.
+- The single-link atoms (`ButtonLink`, `ChipLink`, `TextLink`) take every `<a>` attribute
+  (`LinkAttributes`) and spread it first, so the props the component owns (`href`, `className`,
+  and `aria-current` on `ChipLink`) win. Their `Attributes` stories check that the attributes and
+  the ref arrive, and ChipLink's that a passed `aria-current` loses to `selected`. Lists of
+  links (Header, Footer, Breadcrumbs) take only `{ label, href }` per item.
 - Images render through the `Image` atom, which takes an optional `ImageComponent`, defaulting
   to `"img"`, and forwards `src`, `alt`, `className` and any other `<img>` attribute
   (`srcSet`, `sizes`, `width`, `height`, `loading`). Components that show images expose those
   attributes through an `imageProps` prop. `ImageComponent` is typed as a minimal contract
-  (`src`, `alt`, `className`), like `LinkComponent`: extra attributes are forwarded but not
-  type-checked against it, because `next/image` narrows some (e.g. `width`).
+  (`src`, `alt`, `className`): extra attributes are forwarded but not type-checked against it,
+  because `next/image` narrows some (e.g. `width`).
 - Define `LinkComponent` and `ImageComponent` outside the render function: an inline definition
   remounts them.
 - Purely decorative images use `alt=""` (e.g. the ProductCard image, since the title names the
@@ -67,9 +75,10 @@ Component. The exception is a component that needs interaction, which is a clien
 
 ## Styling with `tv()`
 
-- Define a component's classes with `tv()` from `tailwind-variants` (variants / slots /
-  defaultVariants), and pass `className` into it, even when there are no variants (a `tv({ base })`
-  is not boilerplate). Reasons, so nobody "simplifies" it to a plain string:
+- Define a component's classes with `tv()` (variants / slots / defaultVariants), imported from
+  `src/components/styles/tv.ts`, never from `tailwind-variants` (an ESLint rule enforces it, so the
+  tailwind-merge configuration is the same in every component), and pass `className` into it,
+  even when there are no variants (a `tv({ base })` is not boilerplate). Reasons, so nobody "simplifies" it to a plain string:
   - tailwind-merge lets a consumer's `className` override ours (`px-8` replaces `px-4`). With
     concatenation both classes stay and the winner depends on CSS order.
   - Tailwind only generates classes it finds as complete names in the source. Never build class
@@ -90,9 +99,11 @@ Component. The exception is a component that needs interaction, which is a clien
   - Custom class names starting with a Tailwind prefix (`text-button`, `border-card`)
     are read as utilities and can silently remove real ones. Avoid them in mocks and
     `className` props.
-  - tailwind-merge only knows Tailwind's own scales, so custom radius, shadow or size
-    names (`rounded-btn`, `shadow-card`, `w-icon-small`) would not be overridden by a
-    consumer's `className` (both classes stay). Don't add them; colors are safe.
+  - tailwind-merge only knows Tailwind's own scales, so a custom radius, shadow or size name
+    (`shadow-card`, `w-icon-small`) is not overridden by a consumer's `className` (both classes
+    stay). The radius roles (`rounded-button`, `rounded-field`, `rounded-card`) work because
+    `src/components/styles/tv.ts` adds them to tailwind-merge's radius scale. A new custom name
+    needs the same entry and a test that a consumer class still wins; colors are safe.
 
 ## Visual rules
 

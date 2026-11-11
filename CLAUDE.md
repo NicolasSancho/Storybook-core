@@ -1,6 +1,6 @@
-# Storybook-core
+# @nicolassancho/ui
 
-React + Tailwind component library published as `@nicolassancho/storybook-core`
+React + Tailwind component library published as `@nicolassancho/ui`
 on npm (public). Storybook is the development and documentation environment.
 
 ## Working rules
@@ -42,7 +42,7 @@ Use Node 24, the version CI runs.
 - `npm run test:package`: builds, then checks the package as a consumer installs it: `publint`,
   `attw` (types and module resolution; the CSS entry point is excluded because attw reads only JS
   and types) and `scripts/test-package.mjs`. The script packs the tarball, installs it with the
-  peer dependencies in a temp project and, in plain Node, renders Button, Header (`LinkComponent`),
+  peer dependencies in a temp project and, in plain Node, renders Button, Header (`LinkComponent`), a ButtonLink with forwarded `<a>` attributes,
   ProductGrid (`ImageComponent`), an uncontrolled RadioGroup and an Input with its label, description and error, a Popover (a client component), asserts that the files
   with `"use client"` in `dist/` are the source files that start with it, and compiles the Consumers-guide Tailwind setup. It cannot test Next.js
   Server/Client behavior: that needs a real Next app. Add a check there only for a packaging risk
@@ -104,10 +104,13 @@ Use Node 24, the version CI runs.
 
 ## Icons
 
-- Icons: inline SVGs from Feather (MIT), registered in `Atoms/Icon/iconsMap.tsx`, so the library has
-  no runtime dependencies. To add one, paste the shapes of its Feather SVG into a `createIcon` call
-  and register it in `IconsMap`; the license notice at the top of the file already covers it. Keep
-  `Icon`'s props the same.
+- The library has no public icon set. `Icon` is internal (not exported from `src/index.js`) and
+  draws only the icons its own components use: inline SVGs from Feather (MIT), registered in
+  `Atoms/Icon/iconsMap.tsx`, so the library has no runtime dependencies. Add an icon there only
+  when a library component draws it; the license notice at the top of the file covers it.
+- A component that shows an icon the app chooses takes it as a `React.ReactNode` (`SidebarNav`
+  items), never as an icon name. Apps use an icon library such as `lucide-react`.
+- Its story is under "Internal" in the sidebar, after the public groups.
 
 ## Packaging
 
@@ -120,8 +123,8 @@ Use Node 24, the version CI runs.
   (auto-detection skips `node_modules`, so `@source` is required):
   ```css
   @import "tailwindcss";
-  @import "@nicolassancho/storybook-core/styles/theme.css";
-  @source "../node_modules/@nicolassancho/storybook-core/dist";
+  @import "@nicolassancho/ui/styles/theme.css";
+  @source "../node_modules/@nicolassancho/ui/dist";
   ```
 - `package.json` limits the public API with an `exports` map: `.` (components and types),
   `./styles/theme.css` and `./package.json`. Deep imports into `dist/` are blocked on purpose.

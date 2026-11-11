@@ -49,5 +49,24 @@ export default [
         'react-hooks/exhaustive-deps': 'warn',
     },
   },
+  {
+    // One `tv()` for the whole library: `src/components/styles/tv.ts` configures tailwind-merge, and a
+    // component that imported `tv` directly would merge a consumer's `className` differently.
+    files: ['src/**/*.ts', 'src/**/*.tsx'],
+    ignores: ['src/components/styles/tv.ts'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          paths: [
+            {
+              name: 'tailwind-variants',
+              message: 'Import `tv` from src/components/styles/tv.ts instead.',
+            },
+          ],
+        },
+      ],
+    },
+  },
   ...storybook.configs['flat/recommended'],
 ];

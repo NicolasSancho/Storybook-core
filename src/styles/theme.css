@@ -53,20 +53,6 @@
   --color-primary-lighter: light-dark(#0077cc, #4d94dc);
   --color-primary-darker: light-dark(#003366, #96c9f6);
 
-  /* Deprecated: the old orange ramp, no longer used by any component. Removed in 5.0.0. */
-  --color-secondary-50: light-dark(#fff7ed, #1e1a14);
-  --color-secondary-100: light-dark(#ffedd5, #272117);
-  --color-secondary-200: light-dark(#fed7aa, #382b1d);
-  --color-secondary-300: light-dark(#fdba74, #4e3922);
-  --color-secondary-400: light-dark(#fb923c, #6f4627);
-  --color-secondary-500: light-dark(#f97316, #924920);
-  --color-secondary-600: light-dark(#ea580c, #bf4401);
-  --color-secondary-700: light-dark(#c2410c, #d9653e);
-  --color-secondary-800: light-dark(#9a3412, #ec886b);
-  --color-secondary-900: light-dark(#7c2d12, #f7a58b);
-  --color-secondary-950: light-dark(#431407, #fee7e1);
-  --color-secondary-lighter: #f28b2d;
-
   /*
     `secondary` is neutral, so it sits beside any brand. An app that wants a second color sets these
     two variables in its own stylesheet, as it does for `primary`.
@@ -120,6 +106,16 @@
   --breakpoint-md: 940px;
   --breakpoint-lg: 1024px;
   --breakpoint-xl: 1280px;
+
+  /*
+    Radius roles. Components round buttons, fields and cards with these instead of Tailwind's scale,
+    so a brand can reshape one kind of element (pill buttons, say) without touching the others or the
+    app's own `rounded-*` classes. Each defaults to a step of the scale, so an app that already
+    overrides `--radius-sm` or `--radius-lg` keeps its shapes.
+  */
+  --radius-button: var(--radius-sm);
+  --radius-field: var(--radius-sm);
+  --radius-card: var(--radius-lg);
 }
 
 /*
@@ -130,10 +126,9 @@
   `light-dark()` to custom-property toggles that are resolved at the root, so a nested element
   with its own `data-theme` would not change.
 
-  The color names keep their jobs in both themes: the `neutral`, `primary` and `secondary` ramps
-  are inverted, so 900 is still body text, 200 still a divider and 50 the page background.
-  `-darker` is the hover step, so it is lighter in dark. `secondary-lighter` is decorative and the
-  same in both themes.
+  The color names keep their jobs in both themes: the `neutral` and `primary` ramps are
+  inverted, so 900 is still body text, 200 still a divider and 50 the page background.
+  `-darker` is the hover step, so it is lighter in dark.
 
   How the dark values were chosen: each step keeps the contrast ratio its light value has against
   white, measured against the dark surface (#141414), with the same hue. Tints (50 to 400) have

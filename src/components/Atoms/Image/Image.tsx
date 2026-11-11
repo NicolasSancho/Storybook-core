@@ -1,5 +1,5 @@
 import React from "react";
-import { tv } from "tailwind-variants";
+import { tv } from "../../styles/tv.js";
 
 export interface ImageProps extends Omit<React.ImgHTMLAttributes<HTMLImageElement>, "src" | "alt"> {
   src: string;

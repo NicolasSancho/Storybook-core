@@ -1,8 +1,9 @@
 import React from "react";
-import { tv } from "tailwind-variants";
+import { tv } from "../../styles/tv.js";
 import { linkStyles } from "../../styles/linkStyles.js";
 import { Text } from "../../Atoms/Text/Text.js";
 import { Container } from "../../Layouts/Container/Container.js";
+import type { LinkComponentType } from "../../types/linkComponent.js";
 
 export interface FooterColumn {
   /** Column heading, rendered as an `<h2>`. */
@@ -28,11 +29,7 @@ export interface FooterProps {
    * framework link (e.g. `next/link`) can be passed directly. Defaults to a plain `<a>`.
    * Define it outside the render function: an inline definition remounts the links.
    */
-  LinkComponent?: React.ElementType<{
-    href: string;
-    children: React.ReactNode;
-    className?: string;
-  }>;
+  LinkComponent?: LinkComponentType;
   /**
    * Accessible name of the navigation landmark. Change it when the page has another navigation
    * with the same name, or to translate it.

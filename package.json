@@ -1,6 +1,6 @@
 {
-  "name": "@nicolassancho/storybook-core",
-  "version": "4.11.0",
+  "name": "@nicolassancho/ui",
+  "version": "5.0.0",
   "description": "Accessible React + Tailwind component library built with tailwind-variants and documented in Storybook.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -46,11 +46,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/NicolasSancho/Storybook-core.git"
+    "url": "git+https://github.com/NicolasSancho/ui.git"
   },
-  "homepage": "https://nicolassancho.github.io/Storybook-core/",
+  "homepage": "https://nicolassancho.github.io/ui/",
   "bugs": {
-    "url": "https://github.com/NicolasSancho/Storybook-core/issues"
+    "url": "https://github.com/NicolasSancho/ui/issues"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.5",

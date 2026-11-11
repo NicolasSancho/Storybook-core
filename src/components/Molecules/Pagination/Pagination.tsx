@@ -1,6 +1,7 @@
 import React from "react";
-import { tv } from "tailwind-variants";
+import { tv } from "../../styles/tv.js";
 import { linkStyles } from "../../styles/linkStyles.js";
+import type { LinkComponentType } from "../../types/linkComponent.js";
 
 export interface PaginationProps {
   /**
@@ -24,11 +25,7 @@ export interface PaginationProps {
    * framework link (e.g. `next/link`) can be passed directly. Defaults to a plain `<a>`. Define it
    * outside the render function: an inline definition remounts the link.
    */
-  LinkComponent?: React.ElementType<{
-    href: string;
-    children: React.ReactNode;
-    className?: string;
-  }>;
+  LinkComponent?: LinkComponentType;
   /** Additional classes for custom styling */
   className?: string;
 }

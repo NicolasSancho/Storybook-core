@@ -1,5 +1,5 @@
 import React from "react";
-import { tv } from "tailwind-variants";
+import { tv } from "../../styles/tv.js";
 import { Grid } from "../../Layouts/Grid/Grid.js";
 import { ProductCard, ProductCardProps } from "../../Molecules/ProductCard/ProductCard.js";
 

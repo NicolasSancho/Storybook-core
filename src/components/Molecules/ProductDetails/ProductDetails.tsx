@@ -1,5 +1,5 @@
 import React from "react";
-import { tv } from "tailwind-variants";
+import { tv } from "../../styles/tv.js";
 import { Text } from "../../Atoms/Text/Text.js";
 
 export interface ProductDetailItem {

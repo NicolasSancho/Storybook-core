@@ -1,4 +1,4 @@
-import { tv } from "tailwind-variants";
+import { tv } from "./tv.js";
 import { focusRing } from "./focusRing.js";
 
 // Not exported from `src/index.js`. `inline` is always underlined, so a link in content reads as a

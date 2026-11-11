@@ -4,7 +4,7 @@ import { Meta } from "@storybook/addon-docs/blocks";
 
 # Using the library
 
-`@nicolassancho/storybook-core` is a set of accessible React components styled with Tailwind CSS v4.
+`@nicolassancho/ui` is a set of accessible React components styled with Tailwind CSS v4.
 This page covers what an app needs to consume it, with examples for the Next.js App Router.
 
 ## Install
@@ -12,7 +12,7 @@ This page covers what an app needs to consume it, with examples for the Next.js 
 The package is public on npm, so no registry or token setup is needed:
 
 ```bash
-npm install @nicolassancho/storybook-core
+npm install @nicolassancho/ui
 ```
 
 The library expects these peer dependencies in the app: `react` and `react-dom` (19), `tailwindcss` (v4), `tailwind-variants` (v3) and `tailwind-merge` (v3).
@@ -29,8 +29,8 @@ library's compiled files for classes:
 ```css
 /* app/globals.css */
 @import "tailwindcss";
-@import "@nicolassancho/storybook-core/styles/theme.css";
-@source "../node_modules/@nicolassancho/storybook-core/dist";
+@import "@nicolassancho/ui/styles/theme.css";
+@source "../node_modules/@nicolassancho/ui/dist";
 ```
 
 The `@source` line is required. Tailwind skips `node_modules` when it looks for classes, so without it
@@ -145,8 +145,25 @@ static and painted the right brand from the first frame. Reading the tenant in t
   4.5:1. A very light brand, such as yellow, fails with white text.
 - `secondary` is neutral, so it sits beside any brand. An app that wants a second color sets
   `--color-secondary` and `--color-secondary-darker` in its own stylesheet, and checks them against
-  `on-secondary` in both themes. The `secondary-50` to `950` ramp and `secondary-lighter` are deprecated
-  and removed in 5.0.0.
+  `on-secondary` in both themes.
+- Shape: buttons, fields and cards are rounded by role, `--radius-button`, `--radius-field` and
+  `--radius-card` (4px, 4px and 8px by default). A brand overrides a role to reshape that kind of element
+  only, for example pill buttons while fields keep their 4px:
+
+  ```css
+  :root[data-brand="green"] {
+    --radius-button: 9999px;
+    --radius-card: 1rem;
+  }
+  ```
+
+  The roles default to `var(--radius-sm)` and `var(--radius-lg)`. Overriding those steps reshapes the roles
+  too, but only on the root (in your `@theme` or on `:root`): a role resolves them where it is declared, so
+  setting `--radius-sm` on a nested element changes nothing. It also changes your own `rounded-sm` and
+  `rounded-lg` classes. A `rounded-*` class you pass in `className` still replaces the role. Your own
+  `tailwind-merge` or `tv()` calls do not know the role names, so `rounded-button` and `rounded-none` both
+  stay if you merge them yourself.
+
 - The **Foundations / Brands** story and the **Brand** control in the Storybook toolbar show three example
   brands. They are examples, not part of the package.
 
@@ -155,7 +172,7 @@ static and painted the right brand from the first frame. Reading the tenant in t
 Import components from the package root. Unused components are dropped from your bundle.
 
 ```tsx
-import { Button, Text } from "@nicolassancho/storybook-core";
+import { Button, Text } from "@nicolassancho/ui";
 
 export default function Page() {
   return (
@@ -177,7 +194,7 @@ image renders a plain `<img>` by default. To use your framework's components, pa
 ```tsx
 import Image from "next/image";
 import Link from "next/link";
-import { Breadcrumbs, ProductGrid } from "@nicolassancho/storybook-core";
+import { Breadcrumbs, ProductGrid } from "@nicolassancho/ui";
 
 export default function Page() {
   return (
@@ -210,9 +227,14 @@ export default function Page() {
 }
 ```
 
-- `LinkComponent` receives `href`, `className` and `children` (and `aria-current` on `ChipLink`, which
-  `next/link` forwards). `ButtonLink` and `TextLink` take the same `LinkComponent`. `ImageComponent`
-  receives `src`, `alt`, `className` and the attributes in `imageProps`.
+- `LinkComponent` receives `href`, `className` and `children` (and `aria-current` on `ChipLink` and
+  `SidebarNav`, which `next/link` forwards). Its type is `LinkComponentType`, exported with
+  `LinkComponentProps` so you can type your own wrapper. `ImageComponent` receives `src`, `alt`,
+  `className` and the attributes in `imageProps`.
+- `ButtonLink`, `ChipLink` and `TextLink` take every `<a>` attribute (`aria-*`, `data-*`, `target`,
+  `rel`, `lang`, `hrefLang`, `ref`) and pass it to the link, for example
+  `<ChipLink href="/pt" lang="pt" hrefLang="pt">Português</ChipLink>`. Their own props win, so
+  `ChipLink` ignores a passed `aria-current`: `selected` sets it.
 - A product card with an `href` is a real link stretched over the whole card, so middle-click, new tab
   and crawlable URLs work. Its image is decorative (`alt=""`), because the title names the card. Without
   an `href` the card is display-only.
@@ -250,7 +272,7 @@ const Good = () => <Breadcrumbs LinkComponent={Link} items={items} />;
 
 With `typedRoutes: true` in `next.config`, Next types `Link`'s `href` as a known route. The library passes the
 `href` string you gave it, so `LinkComponent={Link}` fails the type check with "is not assignable to type
-ElementType". Wrap `Link` once and pass the wrapper. The hrefs are your own props, so the cast hides nothing
+LinkComponentType". Wrap `Link` once and pass the wrapper. The hrefs are your own props, so the cast hides nothing
 the compiler could have checked:
 
 ```tsx
@@ -272,13 +294,27 @@ export const NavLink = ({
 
 The wrapper is a Server Component, so it adds no client JavaScript.
 
+## Icons
+
+The library has no public icon set: its components draw the few icons they need themselves. Use an icon
+library in the app, such as `lucide-react`, and pass the icon as a node where a component takes one:
+
+```tsx
+import { Package } from "lucide-react";
+import { SidebarNav } from "@nicolassancho/ui";
+
+<SidebarNav items={[{ label: "Products", href: "/products", icon: <Package />, current: true }]} />;
+```
+
+`SidebarNav` draws the icon at 16px and hides it from screen readers, because the label names the link.
+
 ## Page width
 
 `Header` and `Footer` keep their bar full-width and put their content in a `Container`: centered, at
 most 72rem wide, with side padding. Wrap your page content in a `Container` to line it up with both:
 
 ```tsx
-import { Container } from "@nicolassancho/storybook-core";
+import { Container } from "@nicolassancho/ui";
 
 export default function Page() {
   return (
@@ -321,7 +357,7 @@ server page:
 "use client";
 
 import { useState } from "react";
-import { Button, Input, Text } from "@nicolassancho/storybook-core";
+import { Button, Input, Text } from "@nicolassancho/ui";
 
 export function SearchBar() {
   const [query, setQuery] = useState("");
@@ -365,7 +401,7 @@ Use `Button` for an action that runs code or submits a form. A link cannot be di
 ```tsx
 // app/products/page.tsx (a Server Component)
 import Link from "next/link";
-import { Button, ChipLink, Input, RadioGroup } from "@nicolassancho/storybook-core";
+import { Button, ChipLink, Input, RadioGroup } from "@nicolassancho/ui";
 import { addToCart } from "./actions";
 
 export default function Page() {
@@ -421,7 +457,7 @@ code:
 ```tsx
 // app/(app)/layout.tsx (a Server Component)
 import Link from "next/link";
-import { Button, Popover } from "@nicolassancho/storybook-core";
+import { Button, Popover } from "@nicolassancho/ui";
 import { signOut } from "./actions";
 
 <Popover trigger="Ana Ruiz" placement="bottom-end">
@@ -451,8 +487,8 @@ item for the page the user is on, which an app usually derives with `usePathname
 
 ## What the package exposes
 
-- `@nicolassancho/storybook-core`: every component and its types.
-- `@nicolassancho/storybook-core/styles/theme.css`: the design tokens.
+- `@nicolassancho/ui`: every component and its types.
+- `@nicolassancho/ui/styles/theme.css`: the design tokens.
 
 Other paths, such as files inside `dist/`, are not part of the public API. The package is ESM only. It
 works in bundlers (Next.js, Vite, webpack) and in Node's native ESM loader.

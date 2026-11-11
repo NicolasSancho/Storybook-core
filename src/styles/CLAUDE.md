@@ -11,8 +11,7 @@ Rules for `src/styles/`. The root `CLAUDE.md` still applies. The `tv()` and tail
   - Brand colors:
     - `primary` (also `-50..950`; `-600` is the lightest step usable as text on white).
     - `secondary` and `secondary-darker` are neutral, so they sit beside any brand. An app sets its own
-      second color through these two variables. The `-50..950` ramp and `secondary-lighter` are
-      deprecated, used by no component, and removed in 5.0.0.
+      second color through these two variables. There is no secondary ramp.
   - Semantic colors: `danger`, `success`, `warning`, each with `DEFAULT` (text/icons) and
     `subtle` (background). Use them instead of Tailwind's `red-*` / `green-*` / `yellow-*`,
     and never rely on color alone.
@@ -24,9 +23,15 @@ Rules for `src/styles/`. The root `CLAUDE.md` still applies. The `tv()` and tail
     `on-secondary` and `on-danger`. Never `bg-white` or `text-white`: they stay white in dark mode.
     A dark chip that must stay a chip in both themes uses the ramp so it flips with the theme
     (`bg-neutral-950 text-neutral-25`, the ProductCard tag).
-  - Radius, shadow and icon sizes use Tailwind's scale: `rounded-sm` (4px) for controls,
-    `rounded-lg` (8px) for cards, `rounded-full` for pills, `shadow-xs` for cards, icons
-    `w/h-4`, `w/h-6`, `w/h-8` (see Icon).
+  - Radius roles: `rounded-button` (Button, ButtonLink), `rounded-field` (Input, Select) and
+    `rounded-card` (Card, Alert, ProductCard and its focus ring). They are `--radius-button`,
+    `--radius-field` and `--radius-card`, defaulting to `var(--radius-sm)` (4px) and
+    `var(--radius-lg)` (8px), so a brand can reshape one kind of element. Everything else uses
+    Tailwind's scale: `rounded-sm` for focus shapes, nav items and small tags, `rounded-lg` for
+    Popover, `rounded-full` for pills and chips. A new role needs its name in `twMergeConfig` in
+    `src/components/styles/tv.ts` and a row in the Controls story's `RadiusRoles` test.
+  - Shadow and icon sizes use Tailwind's scale: `shadow-xs` for cards, icons `w/h-4`, `w/h-6`,
+    `w/h-8` (see Icon).
   - Font sizes are a closed scale (only these exist): `xs`, `sm`, `base`, `lg`, `xl`, `2xl`, `3xl`
     and `4xl`, the fluid display size. Avoid `xs` on interactive text. Sizes are written in rem, and every size has its own
     `--text-*--line-height` (`4xl` also has a letter-spacing), so `text-sm` sets both. Keep the
@@ -42,8 +47,8 @@ Rules for `src/styles/`. The root `CLAUDE.md` still applies. The `tv()` and tail
   root's `color-scheme` picks the side. It follows the operating system, and `data-theme` `"dark"`
   or `"light"` on `<html>` overrides it (on `<html>` only: Tailwind compiles `light-dark()` to
   toggles resolved at the root, so a nested `data-theme` does nothing). Components never use `dark:`
-  classes. The color names keep their jobs and only their values change: the `neutral`, `primary`
-  and `secondary` ramps are inverted (900 is still body text), and `DEFAULT`, `-darker` (the hover
+  classes. The color names keep their jobs and only their values change: the `neutral` and `primary`
+  ramps are inverted (900 is still body text), and `DEFAULT`, `-darker` (the hover
   step, lighter in dark), semantic and `on-*` colors have a dark side. Rules for editing it:
   - A new color token is written once, as `light-dark(...)`. Never add a second dark-only block.
   - Each dark step keeps the contrast its light twin has against white, measured against the dark

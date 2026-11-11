@@ -1,5 +1,5 @@
 import React from "react";
-import { tv } from "tailwind-variants";
+import { tv } from "../../styles/tv.js";
 
 export interface ContainerProps extends React.HTMLAttributes<HTMLElement> {
   children: React.ReactNode;

@@ -6,14 +6,15 @@ import { createElement as h } from "react";
 import { renderToString } from "react-dom/server";
 import {
   Button,
+  ButtonLink,
   Header,
   Input,
   Popover,
   ProductGrid,
   RadioGroup,
-} from "@nicolassancho/storybook-core";
+} from "@nicolassancho/ui";
 
-const distDir = new URL("./node_modules/@nicolassancho/storybook-core/dist/", import.meta.url);
+const distDir = new URL("./node_modules/@nicolassancho/ui/dist/", import.meta.url);
 
 // Presentational components are stateless, so they stay server-safe: a directive would stop a Server
 // Component from passing them functions and would ship JavaScript for nothing. A component that needs
@@ -79,6 +80,15 @@ const header = renderToString(
 );
 assert.match(header, /<nav[^>]*aria-label="Main"/);
 assert.match(header, /<a[^>]*href="\/women"[^>]*data-injected="link"[^>]*>Women<\/a>/);
+
+// A link atom passes every <a> attribute through, and still renders its button classes.
+const cta = renderToString(
+  h(ButtonLink, { href: "/pt", lang: "pt", hrefLang: "pt", "data-analytics": "cta" }, "Português")
+);
+assert.match(cta, /<a[^>]*lang="pt"[^>]*>Português<\/a>/);
+assert.match(cta, /hrefLang="pt"|hreflang="pt"/);
+assert.match(cta, /data-analytics="cta"/);
+assert.match(cta, /class="[^"]+"/);
 
 // ImageComponent output is used for every product image.
 const Img = ({ src, alt, className }) =>
