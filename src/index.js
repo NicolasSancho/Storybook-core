@@ -1,3 +1,7 @@
+// Brand contract: the tokens a brand may override, and the check an app runs before applying one
+export * from "./brand/brand.js";
+export * from "./brand/validateBrand.js";
+
 // Types shared by components
 export * from "./components/types/linkComponent.js";
 
