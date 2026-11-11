@@ -26,6 +26,9 @@ documented in Storybook. It is published to npm as `@nicolassancho/ui`.
   plug in your framework.
 - **Design tokens, not compiled CSS.** Colors, font sizes and breakpoints ship as a Tailwind v4
   `@theme` file, and your app's Tailwind generates the classes.
+- **Brands with a checked contract.** An app overrides a fixed list of brand tokens (colors, radius
+  roles, fonts) per brand, and `validateBrand` checks a brand's format and the library's contrast pairings, in
+  both themes, before the app applies it.
 - **Light and dark themes.** The dark theme follows the operating system, a `data-theme` attribute
   on `<html>` overrides it, and every story is checked with axe and its `play` test in both themes.
 - **Typed and documented.** TypeScript strict, every prop documented in JSDoc, and interaction
@@ -96,7 +99,7 @@ migration under **Migrating**.
 ```bash
 npm install          # also builds the library (the `prepare` script)
 npm run storybook    # dev server on http://localhost:6006
-npm test             # runs every story in headless Chromium, in both themes, with axe and the play tests
+npm test             # runs the unit tests, then every story in headless Chromium, in both themes, with axe and the play tests
 npm run build        # compiles the library to dist/
 ```
 

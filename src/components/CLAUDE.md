@@ -168,8 +168,9 @@ conformance. Do not claim WCAG conformance without appropriate testing.
 ### Tests
 
 - Tests are `play` functions in `<Name>.stories.tsx`, using `expect`, `fn`, `userEvent` and
-  `within` from `storybook/test`. No `*.test.tsx` files and no other test library, unless an approved
-  change adds one (see the root `CLAUDE.md`).
+  `within` from `storybook/test`. No `*.test.tsx` files for components and no other test library, unless
+  an approved change adds one (see the root `CLAUDE.md`). Plain functions outside components (the brand
+  contract) have Node unit tests in `src/brand/*.test.ts`.
 - Put the `play` on the existing story that already shows the state. Create a separate
   story only when the interaction changes what is rendered (see RadioGroup, where the
   selection moves), so the visual stories keep their documented state.

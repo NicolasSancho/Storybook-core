@@ -8,8 +8,13 @@ Rules for `src/styles/`. The root `CLAUDE.md` still applies. The `tv()` and tail
   `tailwind.config.js`). It is the source of truth for every value, and the Colors and Typography
   stories show and assert them. Read the number there; do not copy values into this file, where
   they would drift:
+  - Brand tokens: what a brand may override is `brandTokenNames` in `src/brand/brand.ts` (primary and
+    secondary with their `-darker` steps, `surface`, the neutral scale, the radius roles and steps, and
+    the font families). Everything else is fixed. Components read only `primary` and `primary-darker`
+    from the primary family.
   - Brand colors:
-    - `primary` (also `-50..950`; `-600` is the lightest step usable as text on white).
+    - `primary`. The ramp `-50..950` and `primary-lighter` are deprecated (5.1.0, removed in 6.0): no
+      component reads them, and a brand leaves them blue.
     - `secondary` and `secondary-darker` are neutral, so they sit beside any brand. An app sets its own
       second color through these two variables. There is no secondary ramp.
   - Semantic colors: `danger`, `success`, `warning`, each with `DEFAULT` (text/icons) and
@@ -56,8 +61,12 @@ Rules for `src/styles/`. The root `CLAUDE.md` still applies. The `tv()` and tail
   - Every pairing must pass in both themes: 4.5:1 for text (neutral 900, 700, 600 and the 500
     placeholder, brand and semantic colors, all on `surface`), 3:1 for the 400 input border and
     the focus ring, and 4.5:1 for each `on-*` color on its fill and on the hover step. The list is
-    `pairings` in the Colors story, and its `play` function fails `npm test` on a miss. Add a
-    pairing there when a component starts using a new color on a new background.
+    `pairings` in `src/brand/pairings.ts`: the Colors story's `play` function fails `npm test` on a miss
+    against the page, and `validateBrand` runs the same list on every brand. Add a pairing there when a
+    component starts using a color on a new background (a translucent fill such as `bg-primary/10` is
+    written as `{ color, alpha, over }`). Each pairing has an `id` that apps use to translate a
+    failure: never rename one, add a new pairing instead. `defaultColors` in the same file must match `theme.css`; a unit
+    test compares them.
   - Focus rings that use an offset also set `focus-visible:ring-offset-surface`, or the gap is
     white in dark mode.
 - Every `Text` color option must reach 4.5:1 on the surface of both themes; don't add pale shades

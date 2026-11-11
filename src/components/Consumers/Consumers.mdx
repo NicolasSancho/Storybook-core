@@ -117,55 +117,92 @@ sets it).
 The Storybook toolbar has a theme switch (Light, Dark, System) so you can see every component in
 both themes. `npm test` runs every story in both, with the axe checks.
 
-## Brands (one app, many tenants)
+## Brands
 
-A brand is two tokens: `--color-primary` and `--color-primary-darker` (the hover step). Every component
-reads them through classes such as `bg-primary`, `text-primary`, `ring-primary` and `bg-primary/10`, so
-overriding the two variables re-themes everything below them. Each takes a light and a dark value:
+A brand overrides some of the **brand tokens**; everything else stays fixed. The package exports the list as
+`brandTokenNames` (each name is a CSS variable without the leading `--`), the `Brand` type, `validateBrand` and
+`brandToCssVariables`.
+
+- **Colors**, each a light and a dark value: `primary` and `primary-darker` (the hover step), `secondary` and
+  `secondary-darker`, `surface`, and the neutral scale `neutral-25` to `neutral-950`.
+- **Radius**: the roles `radius-button`, `radius-field` and `radius-card`, and the steps `radius-sm` and
+  `radius-lg` (root only, see below).
+- **Fonts**: `font-sans` and `font-display`.
+
+Fixed, whatever the brand: the semantic colors (`danger`, `success`, `warning` and their `subtle`
+backgrounds), the text on a fill (`on-primary`, `on-secondary`, `on-danger`: white in light mode, near-black in
+dark mode), `black` (the Popover backdrop), and the deprecated primary ramp. The package check fails when a
+component starts reading a token that is on neither list.
+
+### Applying a brand
+
+Set a brand's variables on `<html>`. Colors and radius roles also work on any element and everything inside it,
+but the radius steps and the `font-display` fallback only take effect on the root (see Shape below).
+
+In your stylesheet, for brands you know when you build the app:
 
 ```css
-/* app/globals.css, after the theme import */
+/* after the theme import */
 :root[data-brand="green"] {
   --color-primary: light-dark(#1f5f4a, #62a088);
   --color-primary-darker: light-dark(#024b38, #78b69e);
+  --radius-button: 9999px;
 }
 ```
 
-Then set `data-brand="green"` on `<html>`. To avoid a flash of the default brand, write the choice in a
-non-sensitive cookie and copy it to `<html>` with a small inline script in `<head>` that runs before the first
-paint (add `suppressHydrationWarning` to `<html>`). In a Next.js 16.4 production build, this kept the page
-static and painted the right brand from the first frame. Reading the tenant in the root layout, or injecting a
-`<style>` there, either fails the build with Cache Components or flashes the wrong brand.
+Then set `data-brand="green"` on `<html>`.
 
-- Keep the brand in your stylesheet. Turbopack rewrites every `light-dark()` in CSS files so a nested
-  `data-theme` cannot switch it, and a runtime `<style>` with native `light-dark()` only works in browsers that
-  support the function.
-- The text on a brand fill (`on-primary`) is white in light mode and near-black in dark mode, whatever the
-  brand. Check each brand in both themes: `primary` against `on-primary` and against the page surface needs
-  4.5:1. A very light brand, such as yellow, fails with white text.
-- `secondary` is neutral, so it sits beside any brand. An app that wants a second color sets
-  `--color-secondary` and `--color-secondary-darker` in its own stylesheet, and checks them against
-  `on-secondary` in both themes.
-- Shape: buttons, fields and cards are rounded by role, `--radius-button`, `--radius-field` and
-  `--radius-card` (4px, 4px and 8px by default). A brand overrides a role to reshape that kind of element
-  only, for example pill buttons while fields keep their 4px:
+At runtime, with `brandToCssVariables(brand)`, which turns a brand into custom properties, colors as
+`light-dark(light, dark)`:
 
-  ```css
-  :root[data-brand="green"] {
-    --radius-button: 9999px;
-    --radius-card: 1rem;
-  }
-  ```
+```ts
+import { brandToCssVariables } from "@nicolassancho/ui";
 
-  The roles default to `var(--radius-sm)` and `var(--radius-lg)`. Overriding those steps reshapes the roles
-  too, but only on the root (in your `@theme` or on `:root`): a role resolves them where it is declared, so
-  setting `--radius-sm` on a nested element changes nothing. It also changes your own `rounded-sm` and
-  `rounded-lg` classes. A `rounded-*` class you pass in `className` still replaces the role. Your own
-  `tailwind-merge` or `tv()` calls do not know the role names, so `rounded-button` and `rounded-none` both
-  stay if you merge them yourself.
+brandToCssVariables({ "color-primary": ["#1f5f4a", "#62a088"], "radius-button": "9999px" });
+// { "--color-primary": "light-dark(#1f5f4a, #62a088)", "--radius-button": "9999px" }
+```
 
-- The **Foundations / Brands** story and the **Brand** control in the Storybook toolbar show three example
-  brands. They are examples, not part of the package.
+Use the result as the `style` of `<html>`, or write it as declarations in a `<style>` element. It throws a
+`TypeError` on a brand whose format is invalid, so it never writes a value that could break the stylesheet. It
+does not check contrast. Your CSS build may compile `light-dark()` in stylesheets for older browsers; values set
+at runtime are not compiled, so they need a browser that supports `light-dark()`.
+
+### Checking a brand
+
+Run `validateBrand` on any brand you did not write yourself:
+
+```ts
+import { validateBrand } from "@nicolassancho/ui";
+
+const failures = validateBrand(input); // [] when the brand is valid
+```
+
+It takes `unknown`, so input can be passed as it arrives. It checks the format first: the brand must be a plain
+object, every key a brand token, every color a `[light, dark]` pair of `#rrggbb` values, every radius a length
+in `px`, `rem` or `em`, and every font a font-family list. Brand values end up in CSS, so anything else
+(`var()`, `url()`, a `;`, a newline, a keyword such as `initial`) is rejected. If the format is valid, it lays
+the brand over the library defaults and checks the library's list of pairings (each text, border or focus ring
+color on the background a component puts it on) in both themes: text 4.5:1, borders and focus rings 3:1. A very
+light `primary`, such as yellow, fails under the white button text. The list is kept by hand with the
+components. Each failure is data: `kind`, the token, or for contrast the pairing's stable `pairing` id, the
+theme, the colors and the ratio. Key your messages on `kind` and `pairing`, never on the English `label`. It has
+no `"use client"`, so server code can call it.
+
+### Shape
+
+Buttons, fields and cards are rounded by role, `--radius-button`, `--radius-field` and `--radius-card` (4px,
+4px and 8px by default). A brand overrides a role to reshape that kind of element only, for example pill
+buttons while fields keep their 4px. The roles default to `var(--radius-sm)` and `var(--radius-lg)`.
+Overriding those steps reshapes the roles too, but only on the root (in your `@theme` or on `:root`): a role
+resolves them where it is declared, so setting `--radius-sm` on a nested element changes nothing. It also
+changes your own `rounded-sm` and `rounded-lg` classes. Fonts work the same way: `--font-display` defaults to
+`var(--font-sans)` at the root, so a `font-sans` set on a nested element does not reach display headings
+there unless the brand also sets `font-display`. A `rounded-*` class you pass in `className` still
+replaces the role. Your own `tailwind-merge` or `tv()` calls do not know the role names, so `rounded-button`
+and `rounded-none` both stay if you merge them yourself.
+
+The **Foundations / Brands** story and the **Brand** control in the Storybook toolbar show four example
+brands; "Example warm" overrides every brand token. They are examples, not part of the package.
 
 ## Quick start
 
