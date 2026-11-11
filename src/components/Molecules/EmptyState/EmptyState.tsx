@@ -1,5 +1,5 @@
 import React from "react";
-import { tv } from "tailwind-variants";
+import { tv } from "../../styles/tv.js";
 
 export interface EmptyStateProps {
   /** What is empty, for example "No products yet." */

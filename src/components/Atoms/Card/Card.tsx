@@ -1,5 +1,5 @@
 import React from "react";
-import { tv } from "tailwind-variants";
+import { tv } from "../../styles/tv.js";
 
 export interface CardProps extends React.HTMLAttributes<HTMLElement> {
   /**

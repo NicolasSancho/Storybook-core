@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, TextProps } from "../Text/Text.js";
-import { tv } from "tailwind-variants";
+import { tv } from "../../styles/tv.js";
 
 export interface LabelProps extends Pick<TextProps, "color"> {
   htmlFor?: string;

@@ -1,5 +1,5 @@
 import React from "react";
-import { tv } from "tailwind-variants";
+import { tv } from "../../styles/tv.js";
 import { linkStyles } from "../../styles/linkStyles.js";
 import type { LinkComponentType } from "../../types/linkComponent.js";
 

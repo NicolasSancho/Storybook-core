@@ -1,4 +1,4 @@
-import { tv } from "tailwind-variants";
+import { tv } from "../../styles/tv.js";
 import { focusRing } from "../../styles/focusRing.js";
 
 // Shared by Button and ButtonLink, not exported from `src/index.js`. The hover classes are in

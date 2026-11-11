@@ -1,5 +1,5 @@
 import React from "react";
-import { tv } from "tailwind-variants";
+import { tv } from "../../styles/tv.js";
 import { Image, ImageProps } from "../../Atoms/Image/Image.js";
 import { Text } from "../../Atoms/Text/Text.js";
 import type { LinkComponentType } from "../../types/linkComponent.js";

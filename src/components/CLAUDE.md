@@ -75,9 +75,10 @@ Component. The exception is a component that needs interaction, which is a clien
 
 ## Styling with `tv()`
 
-- Define a component's classes with `tv()` from `tailwind-variants` (variants / slots /
-  defaultVariants), and pass `className` into it, even when there are no variants (a `tv({ base })`
-  is not boilerplate). Reasons, so nobody "simplifies" it to a plain string:
+- Define a component's classes with `tv()` (variants / slots / defaultVariants), imported from
+  `src/components/styles/tv.ts`, never from `tailwind-variants` (an ESLint rule enforces it, so the
+  tailwind-merge configuration is the same in every component), and pass `className` into it,
+  even when there are no variants (a `tv({ base })` is not boilerplate). Reasons, so nobody "simplifies" it to a plain string:
   - tailwind-merge lets a consumer's `className` override ours (`px-8` replaces `px-4`). With
     concatenation both classes stay and the winner depends on CSS order.
   - Tailwind only generates classes it finds as complete names in the source. Never build class

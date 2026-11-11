@@ -1,5 +1,5 @@
 import React from "react";
-import { tv } from "tailwind-variants";
+import { tv } from "../../styles/tv.js";
 
 export interface TableSkeletonProps {
   /** Text for screen readers while the content loads, for example "Loading products". */

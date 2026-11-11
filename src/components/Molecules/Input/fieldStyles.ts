@@ -1,4 +1,4 @@
-import { tv } from "tailwind-variants";
+import { tv } from "../../styles/tv.js";
 import { focusRing } from "../../styles/focusRing.js";
 
 /** The look shared by form fields, so `Input` and `Select` stay the same. */

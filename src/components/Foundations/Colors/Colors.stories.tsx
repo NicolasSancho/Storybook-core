@@ -1,7 +1,7 @@
 import React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect } from "storybook/test";
-import { tv } from "tailwind-variants";
+import { tv } from "../../styles/tv";
 
 /**
  * Documentation-only story that previews the palette in both themes. It has no color data of its

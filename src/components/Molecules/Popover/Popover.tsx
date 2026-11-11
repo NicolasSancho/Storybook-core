@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect, useId, useRef, useState } from "react";
-import { tv } from "tailwind-variants";
+import { tv } from "../../styles/tv.js";
 import { buttonStyles } from "../../Atoms/Button/buttonStyles.js";
 import { Icon } from "../../Atoms/Icon/Icon.js";
 

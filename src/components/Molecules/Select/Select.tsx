@@ -1,5 +1,5 @@
 import React, { useId } from "react";
-import { tv } from "tailwind-variants";
+import { tv } from "../../styles/tv.js";
 import { Label } from "../../Atoms/Label/Label.js";
 import { fieldStyles } from "../Input/fieldStyles.js";
 

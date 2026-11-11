@@ -1,4 +1,4 @@
-import { tv } from "tailwind-variants";
+import { tv } from "../../styles/tv.js";
 import { focusRing } from "../../styles/focusRing.js";
 
 // Shared by Chip (a button) and ChipLink (a link) so the two look the same. It is not exported

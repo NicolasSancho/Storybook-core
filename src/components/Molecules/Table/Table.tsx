@@ -1,5 +1,5 @@
 import React from "react";
-import { tv } from "tailwind-variants";
+import { tv } from "../../styles/tv.js";
 import { focusRing } from "../../styles/focusRing.js";
 import { Icon } from "../../Atoms/Icon/Icon.js";
 import type { LinkComponentType } from "../../types/linkComponent.js";

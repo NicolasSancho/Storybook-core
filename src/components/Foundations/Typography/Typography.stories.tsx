@@ -1,7 +1,7 @@
 import React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, within } from "storybook/test";
-import { tv } from "tailwind-variants";
+import { tv } from "../../styles/tv";
 
 /**
  * Documentation-only story for the type scale. It has no size data of its own: every size and

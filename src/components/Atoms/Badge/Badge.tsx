@@ -1,5 +1,5 @@
 import React from "react";
-import { tv } from "tailwind-variants";
+import { tv } from "../../styles/tv.js";
 
 export interface BadgeProps {
   /** The text. It is always visible, so meaning never depends on color alone. */
