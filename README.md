@@ -33,12 +33,12 @@ documented in Storybook. It is published to npm as `@nicolassancho/ui`.
 
 ## Components
 
-| Layer     | Components                                                                                                                                         |
-| --------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Atoms     | Badge, Button, ButtonLink, Card, Chip, ChipLink, Icon, Image, Label, RadioButton, SearchInput (deprecated), Spinner, TableSkeleton, Text, TextLink |
-| Molecules | Alert, Breadcrumbs, CartIcon, EmptyState, Input, Pagination, Popover, ProductCard, ProductDetails, RadioGroup, Select, SidebarNav, Table           |
-| Organisms | Footer, Header, ProductGrid                                                                                                                        |
-| Layouts   | Container, Grid                                                                                                                                    |
+| Layer     | Components                                                                                                                               |
+| --------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| Atoms     | Badge, Button, ButtonLink, Card, Chip, ChipLink, Icon, Image, Label, RadioButton, Spinner, TableSkeleton, Text, TextLink                 |
+| Molecules | Alert, Breadcrumbs, CartIcon, EmptyState, Input, Pagination, Popover, ProductCard, ProductDetails, RadioGroup, Select, SidebarNav, Table |
+| Organisms | Footer, Header, ProductGrid                                                                                                              |
+| Layouts   | Container, Grid                                                                                                                          |
 
 The palette and the contrast of each text color are documented under **Foundations / Colors** in
 Storybook.
@@ -89,7 +89,7 @@ The package follows [Semantic Versioning](https://semver.org/), and every releas
 A deprecated component or prop is marked `@deprecated` in its JSDoc, which editors show where it is
 used, and listed under **Deprecated** in the changelog with its replacement. It keeps working for
 the rest of that major version and is removed in the next one, whose changelog explains the
-migration under **Migrating**. `SearchInput`, deprecated in 4.3.0, is removed in 5.0.0.
+migration under **Migrating**.
 
 ## Development
 

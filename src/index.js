@@ -13,7 +13,6 @@ export * from "./components/Atoms/Icon/Icon.js";
 export * from "./components/Atoms/Image/Image.js";
 export * from "./components/Atoms/Label/Label.js";
 export * from "./components/Atoms/RadioButton/RadioButton.js";
-export * from "./components/Atoms/SearchInput/SearchInput.js";
 
 // Layouts
 export * from "./components/Layouts/Container/Container.js";

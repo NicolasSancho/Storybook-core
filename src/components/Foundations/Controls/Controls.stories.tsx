@@ -5,7 +5,6 @@ import { Button } from "../../Atoms/Button/Button";
 import { ButtonLink } from "../../Atoms/ButtonLink/ButtonLink";
 import { Chip } from "../../Atoms/Chip/Chip";
 import { ChipLink } from "../../Atoms/ChipLink/ChipLink";
-import { SearchInput } from "../../Atoms/SearchInput/SearchInput";
 import { Text } from "../../Atoms/Text/Text";
 import { Input } from "../../Molecules/Input/Input";
 import { Select } from "../../Molecules/Select/Select";
@@ -77,9 +76,6 @@ export const Rules: Story = {
           <Chip>Filter</Chip>
           <ButtonLink href="#button-link">Button link</ButtonLink>
           <ChipLink href="#chip-link">Chip link</ChipLink>
-          <div className="w-56">
-            <SearchInput aria-label="Search products" />
-          </div>
         </div>
       </Section>
       <Section title="Radius">
@@ -131,6 +127,5 @@ export const Rules: Story = {
     await expect(height(canvas.getByRole("button", { name: "Filter" }))).toBe(40);
     await expect(height(canvas.getByRole("link", { name: "Button link" }))).toBe(40);
     await expect(height(canvas.getByRole("link", { name: "Chip link" }))).toBe(40);
-    await expect(height(canvas.getByRole("searchbox", { name: "Search products" }))).toBe(40);
   },
 };
