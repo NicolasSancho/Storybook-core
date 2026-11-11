@@ -46,7 +46,7 @@ export interface ProductCardProps {
 }
 
 const productCardStyles = tv({
-  base: "relative rounded-lg border border-neutral-200 shadow-xs flex flex-col overflow-hidden",
+  base: "relative rounded-card border border-neutral-200 shadow-xs flex flex-col overflow-hidden",
   slots: {
     imageWrapper: "relative aspect-3/4",
     image: "w-full h-full object-cover",
@@ -55,7 +55,7 @@ const productCardStyles = tv({
     productInfo: "flex flex-col",
     title: "text-sm",
     titleAction:
-      "text-left after:absolute after:inset-0 after:content-[''] focus-visible:outline-hidden focus-visible:after:ring-2 focus-visible:after:ring-inset focus-visible:after:ring-primary focus-visible:after:rounded-lg",
+      "text-left after:absolute after:inset-0 after:content-[''] focus-visible:outline-hidden focus-visible:after:ring-2 focus-visible:after:ring-inset focus-visible:after:ring-primary focus-visible:after:rounded-card",
     subTitle: "text-sm text-neutral-600",
     price: "text-sm text-neutral-600",
     action: "relative z-10 mt-2",

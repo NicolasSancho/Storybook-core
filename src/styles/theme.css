@@ -106,6 +106,16 @@
   --breakpoint-md: 940px;
   --breakpoint-lg: 1024px;
   --breakpoint-xl: 1280px;
+
+  /*
+    Radius roles. Components round buttons, fields and cards with these instead of Tailwind's scale,
+    so a brand can reshape one kind of element (pill buttons, say) without touching the others or the
+    app's own `rounded-*` classes. Each defaults to a step of the scale, so an app that already
+    overrides `--radius-sm` or `--radius-lg` keeps its shapes.
+  */
+  --radius-button: var(--radius-sm);
+  --radius-field: var(--radius-sm);
+  --radius-card: var(--radius-lg);
 }
 
 /*

@@ -20,7 +20,7 @@ export interface AlertProps {
 
 const alertStyles = tv({
   slots: {
-    base: "flex flex-wrap items-start gap-3 rounded-lg border p-4",
+    base: "flex flex-wrap items-start gap-3 rounded-card border p-4",
     icon: "mt-0.5 shrink-0",
     content: "min-w-0 flex-1",
     title: "text-sm font-semibold",

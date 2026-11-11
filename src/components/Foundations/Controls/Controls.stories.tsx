@@ -2,6 +2,7 @@ import React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, within } from "storybook/test";
 import { Button } from "../../Atoms/Button/Button";
+import { Card } from "../../Atoms/Card/Card";
 import { ButtonLink } from "../../Atoms/ButtonLink/ButtonLink";
 import { Chip } from "../../Atoms/Chip/Chip";
 import { ChipLink } from "../../Atoms/ChipLink/ChipLink";
@@ -35,8 +36,9 @@ const Section = ({ title, children }: { title: string; children: React.ReactNode
 );
 
 const radii = [
-  { name: "Controls", className: "rounded-sm" },
-  { name: "Surfaces", className: "rounded-lg" },
+  { name: "Buttons", className: "rounded-button" },
+  { name: "Fields", className: "rounded-field" },
+  { name: "Cards", className: "rounded-card" },
   { name: "Pills", className: "rounded-full" },
 ];
 
@@ -127,5 +129,79 @@ export const Rules: Story = {
     await expect(height(canvas.getByRole("button", { name: "Filter" }))).toBe(40);
     await expect(height(canvas.getByRole("link", { name: "Button link" }))).toBe(40);
     await expect(height(canvas.getByRole("link", { name: "Chip link" }))).toBe(40);
+  },
+};
+
+// One button, field and card per row, so each row can be measured on its own.
+const RadiusRow = ({
+  name,
+  className,
+  style,
+}: {
+  name: string;
+  className?: string;
+  style?: React.CSSProperties;
+}) => (
+  <section aria-label={name} style={style} className="flex items-center gap-2">
+    <Button className={className}>Save</Button>
+    <Input label="Name" hideLabel name={`radius-${name}`} className={className} />
+    <Card as="article" aria-label="Card" className={`p-4 ${className ?? ""}`}>
+      Card
+    </Card>
+  </section>
+);
+
+/**
+ * Buttons, fields and cards are rounded by role (`--radius-button`, `--radius-field`,
+ * `--radius-card`). The `play` function checks the three things the roles promise: the defaults
+ * follow Tailwind's scale, a brand can override each role, and a consumer's `rounded-*` class
+ * still wins over the role.
+ */
+export const RadiusRoles: Story = {
+  render: () => (
+    <div className="flex flex-col gap-4">
+      <RadiusRow name="Default" />
+      <RadiusRow
+        name="Brand"
+        style={
+          {
+            "--radius-button": "9999px",
+            "--radius-field": "12px",
+            "--radius-card": "24px",
+          } as React.CSSProperties
+        }
+      />
+      <RadiusRow name="Class" className="rounded-2xl" />
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const radiiIn = (row: string) => {
+      const section = within(within(canvasElement).getByRole("region", { name: row }));
+      const radius = (element: HTMLElement) => getComputedStyle(element).borderTopLeftRadius;
+      return [
+        radius(section.getByRole("button", { name: "Save" })),
+        radius(section.getByRole("textbox", { name: "Name" })),
+        radius(section.getByRole("article", { name: "Card" })),
+      ];
+    };
+
+    await expect(radiiIn("Default")).toEqual(["4px", "4px", "8px"]);
+    // The roles default to `--radius-sm` and `--radius-lg`, so an app that set those on the root
+    // (in its own `@theme`) keeps its shapes. A role resolves them where it is declared, the root, so
+    // setting them on a nested element would do nothing.
+    const root = document.documentElement.style;
+    root.setProperty("--radius-sm", "2px");
+    root.setProperty("--radius-lg", "6px");
+    try {
+      await expect(radiiIn("Default")).toEqual(["2px", "2px", "6px"]);
+    } finally {
+      root.removeProperty("--radius-sm");
+      root.removeProperty("--radius-lg");
+    }
+    await expect(radiiIn("Brand")).toEqual(["9999px", "12px", "24px"]);
+    // A consumer's class replaces each role (one component per role is measured). `rounded-2xl` comes before the role
+    // names in the generated CSS, so without the tailwind-merge config in `tv.ts` both classes would
+    // stay and the role would win.
+    await expect(radiiIn("Class")).toEqual(["16px", "16px", "16px"]);
   },
 };

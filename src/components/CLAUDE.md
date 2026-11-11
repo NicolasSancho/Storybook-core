@@ -99,9 +99,11 @@ Component. The exception is a component that needs interaction, which is a clien
   - Custom class names starting with a Tailwind prefix (`text-button`, `border-card`)
     are read as utilities and can silently remove real ones. Avoid them in mocks and
     `className` props.
-  - tailwind-merge only knows Tailwind's own scales, so custom radius, shadow or size
-    names (`rounded-btn`, `shadow-card`, `w-icon-small`) would not be overridden by a
-    consumer's `className` (both classes stay). Don't add them; colors are safe.
+  - tailwind-merge only knows Tailwind's own scales, so a custom radius, shadow or size name
+    (`shadow-card`, `w-icon-small`) is not overridden by a consumer's `className` (both classes
+    stay). The radius roles (`rounded-button`, `rounded-field`, `rounded-card`) work because
+    `src/components/styles/tv.ts` adds them to tailwind-merge's radius scale. A new custom name
+    needs the same entry and a test that a consumer class still wins; colors are safe.
 
 ## Visual rules
 

@@ -14,7 +14,7 @@ export interface CardProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 const cardStyles = tv({
-  base: "rounded-lg border border-neutral-200 bg-surface shadow-xs",
+  base: "rounded-card border border-neutral-200 bg-surface shadow-xs",
 });
 
 /**

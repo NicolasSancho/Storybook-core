@@ -23,9 +23,15 @@ Rules for `src/styles/`. The root `CLAUDE.md` still applies. The `tv()` and tail
     `on-secondary` and `on-danger`. Never `bg-white` or `text-white`: they stay white in dark mode.
     A dark chip that must stay a chip in both themes uses the ramp so it flips with the theme
     (`bg-neutral-950 text-neutral-25`, the ProductCard tag).
-  - Radius, shadow and icon sizes use Tailwind's scale: `rounded-sm` (4px) for controls,
-    `rounded-lg` (8px) for cards, `rounded-full` for pills, `shadow-xs` for cards, icons
-    `w/h-4`, `w/h-6`, `w/h-8` (see Icon).
+  - Radius roles: `rounded-button` (Button, ButtonLink), `rounded-field` (Input, Select) and
+    `rounded-card` (Card, Alert, ProductCard and its focus ring). They are `--radius-button`,
+    `--radius-field` and `--radius-card`, defaulting to `var(--radius-sm)` (4px) and
+    `var(--radius-lg)` (8px), so a brand can reshape one kind of element. Everything else uses
+    Tailwind's scale: `rounded-sm` for focus shapes, nav items and small tags, `rounded-lg` for
+    Popover, `rounded-full` for pills and chips. A new role needs its name in `twMergeConfig` in
+    `src/components/styles/tv.ts` and a row in the Controls story's `RadiusRoles` test.
+  - Shadow and icon sizes use Tailwind's scale: `shadow-xs` for cards, icons `w/h-4`, `w/h-6`,
+    `w/h-8` (see Icon).
   - Font sizes are a closed scale (only these exist): `xs`, `sm`, `base`, `lg`, `xl`, `2xl`, `3xl`
     and `4xl`, the fluid display size. Avoid `xs` on interactive text. Sizes are written in rem, and every size has its own
     `--text-*--line-height` (`4xl` also has a letter-spacing), so `text-sm` sets both. Keep the
