@@ -141,21 +141,18 @@ conformance. Do not claim WCAG conformance without appropriate testing.
 - Icon-only controls must have an accessible name: `aria-label`, or visually hidden (`sr-only`)
   text when the element is rendered by the consumer (e.g. Breadcrumbs' `LinkComponent` may not
   forward `aria-*` props).
-- Inputs need an accessible name and must expose invalid states appropriately, including
-  `aria-invalid` when applicable. Never hard-code `id` values; use `useId()` or another
-  appropriate mechanism to ensure uniqueness.
-- Groups of related controls use `<fieldset>` and `<legend>` when appropriate. Radio `name`
+- Inputs need an accessible name. An invalid field sets `aria-invalid` and links its error
+  with `aria-describedby` (see Input). Never hard-code `id` values; use `useId()`.
+- Groups of related controls, such as radio groups, use `<fieldset>` and `<legend>`. Radio `name`
   values default to `useId()` (see RadioGroup). Duplicate names on the same page merge
   radio buttons into a single group; for example, the Autodocs page may render the primary
   story more than once.
-- Check text and UI contrast when adding or modifying colors: target at least 4.5:1 for
-  normal text and 3:1 for large text. Verify applicable contrast requirements for UI
-  components and focus indicators as well.
-- Animations must respect `prefers-reduced-motion`, using Tailwind's `motion-safe:` and
-  `motion-reduce:` variants where appropriate.
+- Check contrast when adding or modifying colors: 4.5:1 for all text, including large text,
+  and 3:1 for borders and focus indicators. The pairings in `src/brand/pairings.ts` enforce it.
+- Animations respect `prefers-reduced-motion` through Tailwind's `motion-safe:` and
+  `motion-reduce:` variants (see Spinner).
 - When modifying interactive components, verify keyboard navigation, focus visibility,
-  accessible names, and relevant state announcements. Do not assume that following these
-  conventions alone guarantees accessibility or WCAG conformance.
+  accessible names, and relevant state announcements.
 
 ## Stories
 

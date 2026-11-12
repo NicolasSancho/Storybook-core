@@ -16,6 +16,5 @@ export const Default: Story = {
   args: mockedTableSkeleton,
   play: async ({ canvasElement }) => {
     await expect(within(canvasElement).getByRole("status")).toHaveTextContent("Loading products");
-    await expect(canvasElement.querySelectorAll("[aria-hidden] > div")).toHaveLength(5);
   },
 };

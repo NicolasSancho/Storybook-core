@@ -36,8 +36,15 @@ export const Default: Story = {
 export const HiddenLabel: Story = {
   args: { ...mockedSelect, hideLabel: true },
   play: async ({ canvasElement }) => {
-    await expect(within(canvasElement).getByLabelText("Status")).toBeInTheDocument();
-    await expect(canvasElement.querySelector("label")).toHaveClass("sr-only");
+    // The label still names the select, but takes no visible space.
+    const select = within(canvasElement).getByRole<HTMLSelectElement>("combobox", {
+      name: "Status",
+    });
+    const label = select.labels[0];
+    if (!label) throw new Error("The select needs a label");
+    const box = label.getBoundingClientRect();
+    await expect(box.width).toBeLessThanOrEqual(1);
+    await expect(box.height).toBeLessThanOrEqual(1);
   },
 };
 

@@ -5,6 +5,14 @@ All notable changes to `@nicolassancho/ui` are listed here. Up to 4.11.0 it was 
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## 5.1.1 - 2026-11-12
+
+### Changed
+
+- Story tests query by role and accessible name instead of CSS classes and DOM structure (Select,
+  Breadcrumbs, ProductDetails, TableSkeleton), and CartIcon's accessible name is tested for an empty cart
+  and a single item. The package contents do not change.
+
 ## 5.1.0 - 2026-11-11
 
 A brand contract: the package now says which tokens a brand may override, and checks a brand before an

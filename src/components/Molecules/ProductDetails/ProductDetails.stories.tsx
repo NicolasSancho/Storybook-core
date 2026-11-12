@@ -26,11 +26,14 @@ export const Default: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const terms = canvas.getAllByRole("term");
-    expect(terms).toHaveLength(mockedProductDetailsDefault.details.length);
-    mockedProductDetailsDefault.details.forEach(({ label, value }, index) => {
-      expect(terms[index]).toHaveTextContent(label);
-      expect(terms[index].nextElementSibling).toHaveTextContent(String(value));
-    });
+    const definitions = canvas.getAllByRole("definition");
+    const { details } = mockedProductDetailsDefault;
+    await expect(terms).toHaveLength(details.length);
+    await expect(definitions).toHaveLength(details.length);
+    for (const [index, { label, value }] of details.entries()) {
+      await expect(terms[index]).toHaveTextContent(label);
+      await expect(definitions[index]).toHaveTextContent(String(value));
+    }
   },
 };
 
