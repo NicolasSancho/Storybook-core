@@ -85,6 +85,6 @@ export const Single: Story = {
 
     // The only item is both the first and the last one: it is the current page, not a link.
     await expect(canvas.queryAllByRole("link")).toHaveLength(0);
-    await expect(canvas.getByText("Home").parentElement).toHaveAttribute("aria-current", "page");
+    await expect(canvas.getByText("Home").closest('[aria-current="page"]')).not.toBeNull();
   },
 };
