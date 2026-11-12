@@ -26,10 +26,23 @@ type Story = StoryObj<typeof meta>;
 
 export const Empty: Story = {
   args: mockedCartIconEmpty,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // An empty cart still names its count, but shows no badge.
+    await expect(canvas.getByRole("button", { name: "Shopping cart, 0 items" })).toBeVisible();
+    await expect(canvas.queryByText("0")).not.toBeInTheDocument();
+  },
 };
 
 export const SingleItem: Story = {
   args: mockedCartIconSingleItem,
+  play: async ({ canvasElement }) => {
+    // One item reads in the singular.
+    await expect(
+      within(canvasElement).getByRole("button", { name: "Shopping cart, 1 item" })
+    ).toBeVisible();
+  },
 };
 
 export const PrimaryColor: Story = {
